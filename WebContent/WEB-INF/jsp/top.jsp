@@ -1,0 +1,143 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="Materialize/style.css" type="text/css">
+<meta charset="UTF-8">
+<title>メノレカリ</title>
+</head>
+<body>
+
+<!-- header -->
+<nav class="my-2 my-md-0 mr-md-3 ">
+	<div class=" row d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-danger border-bottom shadow-sm" style=height:100%;min-height:100%;>
+
+		<div class="col-sm-4"></div>
+		<div class="col-sm-4 text-center h3 ">
+			<a class="text-dark" href="#">メノレカリ</a>
+		</div>
+		<div class="col-sm-4 text-right ">
+			<a class="text-dark p-4" href="#">Pricing</a>
+			<a class="btn btn-outline-primary text-right" href="#">Sign in</a>
+		</div>
+	</div>
+</nav>
+<!-- /header -->
+
+<!-- sideBar -->
+<div class="container-fluid">
+	<div class="row">
+		<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+			<form method="post" action="#">
+				<input class="col-md-11" type="search" name="searchWord" style=margin-top:10px; placeholder="検索ワード" >
+				<p style=margin-top:30px;>＜ジャンル＞</p>
+				<p><input type="checkbox" name="tag" value="tag1" style=vertical-align:middle;>ジャンル1</p>
+				<p><input type="checkbox" name="tag" value="tag1" style=vertical-align:middle;>ジャンル2</p>
+				<p><input type="checkbox" name="tag" value="tag1" style=vertical-align:middle;>ジャンル3</p>
+				<p><input type="checkbox" name="tag" value="tag1" style=vertical-align:middle;>ジャンル4</p>
+				<p><input type="checkbox" name="tag" value="tag1" style=vertical-align:middle;>ジャンル5</p>
+				<p><input type="checkbox" name="tag" value="tag1" style=vertical-align:middle;>ジャンル6</p>
+				<p><input type="checkbox" name="tag" value="tag1" style=vertical-align:middle;>ジャンル7</p>
+				<p><input type="checkbox" name="tag" value="tag1" style=vertical-align:middle;>ジャンル8</p>
+				<p><input type="checkbox" name="tag" value="tag1" style=vertical-align:middle;>ジャンル9</p>
+				<p><input type="checkbox" name="tag" value="tag1" style=vertical-align:middle;>ジャンル10</p>
+				<p><input type="submit" value="絞り込み">
+			</form>
+		</nav>
+
+<!-- /sideBar -->
+
+<!-- body -->
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
+				<div class="row">
+				<div class=col-md-4></div>
+				<div class="col-md-4 text-center my-5">
+				<h3 >商品一覧</h3>
+				</div>
+				<div class=col-md-4></div>
+
+				<div class="col-md-3 text-center my-3">
+				<div class="card" style="width: 15rem;">
+				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
+				<div class="card-body">
+					<p class="card-text">サンプル名</p>
+				</div>
+				</div>
+			</div>
+
+			<div class="col-md-3 text-center my-3">
+			<div class="card" style="width: 15rem;">
+				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
+				<div class="card-body">
+					<p class="card-text">サンプル名</p>
+				</div>
+			</div>
+			</div>
+
+			<div class="col-md-3 text-center my-3">
+			<div class="card" style="width: 15rem;">
+				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
+				<div class="card-body">
+					<p class="card-text">サンプル名</p>
+				</div>
+			</div>
+			</div>
+
+			<div class="col-md-3 text-center my-3">
+				<div class="card" style="width: 15rem;">
+				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
+				<div class="card-body">
+					<p class="card-text">サンプル名</p>
+				</div>
+				</div>
+			</div>
+
+			<div class="col-md-3 text-center my-3">
+				<div class="card" style="width: 15rem;">
+				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
+				<div class="card-body">
+					<p class="card-text">サンプル名</p>
+				</div>
+				</div>
+			</div>
+
+			<div class="col-md-3 text-center my-3">
+				<div class="card" style="width: 15rem;">
+				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
+				<div class="card-body">
+					<p class="card-text">サンプル名</p>
+				</div>
+				</div>
+			</div>
+
+			<div class="col-md-3 text-center my-3">
+				<div class="card" style="width: 15rem;">
+				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
+				<div class="card-body">
+					<p class="card-text">サンプル名</p>
+				</div>
+				</div>
+			</div>
+
+			<div class="col-md-3 text-center my-3">
+				<div class="card" style="width: 15rem;">
+				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
+				<div class="card-body">
+					<p class="card-text">サンプル名</p>
+				</div>
+				</div>
+			</div>
+
+
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

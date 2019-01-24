@@ -1,0 +1,18 @@
+@charset "UTF-8";
+.top-nav{
+	text-align:center;
+	font-size:130%;
+}
+
+.bgc-main{
+	background-color:#99FFFF;
+}
+
+.mgn-top{
+	margin-top:150px;
+}
+.text-p-re{
+	position:relative;
+	top:20px;
+	left:20px;
+}

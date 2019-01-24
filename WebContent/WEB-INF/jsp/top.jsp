@@ -12,21 +12,7 @@
 </head>
 <body>
 
-<!-- header -->
-<nav class="my-2 my-md-0 mr-md-3 ">
-	<div class=" row d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-danger border-bottom shadow-sm" style=height:100%;min-height:100%;>
-
-		<div class="col-sm-4"></div>
-		<div class="col-sm-4 text-center h3 ">
-			<a class="text-dark" href="#">メノレカリ</a>
-		</div>
-		<div class="col-sm-4 text-right ">
-			<a class="text-dark p-4" href="#">Pricing</a>
-			<a class="btn btn-outline-primary text-right" href="#">Sign in</a>
-		</div>
-	</div>
-</nav>
-<!-- /header -->
+<jsp:include page="/baselayout/header.jsp" />
 
 <!-- sideBar -->
 <div class="container-fluid">

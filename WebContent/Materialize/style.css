@@ -16,3 +16,13 @@
 	top:20px;
 	left:20px;
 }
+
+.left-content{
+	width: 49%;
+	float: left;
+}
+
+.right-content{
+	width: 49%;
+	float: right;
+}

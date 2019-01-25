@@ -17,7 +17,7 @@
 	<div class=container>
 		<div class="card text-center mx-auto mgn-top" style=width:500px;>
 			<div class="card-header bgc-main">
-				<h2>メノレカリ</h2>
+				<h2>食料品ECサイト</h2>
 				<h4>ログイン</h4>
 			</div>
 			<form method="post" action="#">

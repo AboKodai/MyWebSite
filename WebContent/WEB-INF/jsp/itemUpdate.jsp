@@ -7,12 +7,12 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" href="Materialize/style.css" type="text/css">
 <meta charset="UTF-8">
-<title>商品登録</title>
+<title>商品情報更新</title>
 </head>
 <body>
 <jsp:include page="/baselayout/header.jsp" />
 <div class=container>
-	<h2 class="mgn-top text-center">商品登録</h2>
+	<h2 class="mgn-top text-center">商品情報更新</h2>
 
 		<form method="post" action="#">
 			<div class="row mt-5">
@@ -88,7 +88,7 @@
 					<input type="submit" class="btn btn-muted my-5" value="キャンセル">
 				</div>
 				<div class="mx-auto">
-					<input type="submit" class="btn btn-primary my-5" value="登録" style=width:110px;>
+					<input type="submit" class="btn btn-primary my-5" value="更新" style=width:110px;>
 				</div>
 			</div>
 

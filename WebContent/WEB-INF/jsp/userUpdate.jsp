@@ -15,7 +15,7 @@
 <div class=container>
 		<div class="card mx-auto mgn-top" style=width:500px;>
 			<div class="card-header bg-right text-center">
-				<h2>会員情報更新</h2>
+				<h3>会員情報更新</h3>
 			</div>
 			<form method="post" action="#">
 				<div class="card-body my-3">
@@ -40,6 +40,13 @@
 						</div>
 						<div class="col-sm-5">
 							<input type="text" value="loginIdHogehoge" name="homeAddress">
+						</div>
+						<div class="col-sm-2"></div>
+						<div class="card-text mb-4 col-sm-4">
+							メールアドレス
+						</div>
+						<div class="col-sm-5">
+							<input type="text" value="loginIdHogehoge" name="address">
 						</div>
 					</div>
 					<div class="row">

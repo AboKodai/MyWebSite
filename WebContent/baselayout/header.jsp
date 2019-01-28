@@ -8,8 +8,8 @@
 			<a class="text-dark" href="#">食料品ECサイト</a>
 		</div>
 		<div class="col-sm-4 text-right pr-5">
-			<a class="text-dark p-4" href="#">Pricing</a>
-			<a class="btn btn-outline-danger text-right " href="#">Sign in</a>
+			<a class="text-dark p-4" href="#">カート</a>
+			<a class="btn btn-outline-danger text-right " href="#">ログイン</a>
 		</div>
 	</div>
 </nav>

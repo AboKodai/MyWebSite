@@ -20,29 +20,37 @@
 				<div class="card-body my-3">
 					<div class="row">
 						<div class="col-sm-2"></div>
-						<div class="card-text mb-4 col-sm-4">
+						<div class="card-text col-sm-4">
 							ログインID
 						</div>
-						<div class="col-sm-5">
+						<div class="col-sm-5 mb-4">
 							${loginIdHogehoge}loginidhogehoge
 							<input type="hidden" value="${loginIdHogehoge}" name="loginId">
 						</div>
 						<div class="col-sm-2"></div>
-						<div class="card-text mb-4 col-sm-4">
+						<div class="card-text col-sm-4">
 							ユーザ名
 						</div>
-						<div class="col-sm-5">
+						<div class="col-sm-5 mb-4">
 							${userNameHogehoge}usernamehogehoge
 							<input type="hidden" value="${userNameHogehoge}" name="userName">
 						</div>
 						<input type="hidden" value="${passwordHogehoge}" name="password">
 						<div class="col-sm-2"></div>
-						<div class="card-text mb-4 col-sm-4">
+						<div class="card-text col-sm-4">
 							住所
 						</div>
-						<div class="col-sm-5">
+						<div class="col-sm-5 mb-4">
 							${homeAddressHogehoge}homeaddresshogehogehogehogehogehogegehogehogehogehogehogehogehogehoge
 							<input type="hidden" value="${homeAddress}" name="homeAddress">
+						</div>
+						<div class="col-sm-2"></div>
+						<div class="card-text mb-4 col-sm-4">
+							メールアドレス
+						</div>
+						<div class="col-sm-5 mb-4">
+							${homeAddressHogehoge}homeaddresshogehogehogehogehogehogegehogehogehogehogehogehogehogehoge
+							<input type="hidden" value="${address}" name="address">
 						</div>
 					</div>
 					<p class="text-center text-danger my-4">以上の内容で登録します。よろしいですか？</p>

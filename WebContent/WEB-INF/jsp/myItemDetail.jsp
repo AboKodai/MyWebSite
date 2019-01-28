@@ -12,7 +12,7 @@
 <body>
 <jsp:include page="/baselayout/header.jsp" />
 <div class=container>
-	<h2 class="mgn-top text-center">出品商品詳細</h2>
+	<h3 class="mgn-top text-center">出品商品詳細</h3>
 
 	<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
 	<div class="row mt-5">

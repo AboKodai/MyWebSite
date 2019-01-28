@@ -54,6 +54,13 @@
 					<div class="col-sm-5">
 						<input type="text" name="homeAddress" >
 					</div>
+					<div class="col-sm-2"></div>
+					<div class="card-text mb-5 col-sm-4">
+						メールアドレス
+					</div>
+					<div class="col-sm-5">
+						<input type="text" name="address" >
+					</div>
 					<input type="submit" class="btn btn-primary mx-auto" value="確認画面へ">
 				</div>
 			</form>

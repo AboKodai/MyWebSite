@@ -12,7 +12,7 @@
 <body>
 <jsp:include page="/baselayout/header.jsp" />
 <div class=container>
-	<h2 class="text-center mgn-top">購入商品</h2>
+	<h3 class="text-center mgn-top">購入商品</h3>
 	<div style=width:800px; class=mx-auto>
 		<table class="table table-bordered">
 			<thead>
@@ -40,13 +40,8 @@
 				</tr>
 			</tbody>
 		</table>
-		<div class="text-right my-5">配送方法
-			<select name="deliveryMethod">
-				<option disabled selected>～配送方法選択～</option>
-				<option value="1">あああ配送</option>
-				<option value="2">いいい配送</option>
-				<option value="3">ううう配送</option>
-			</select>
+		<div class="text-right my-5">配送希望日
+			<input type="date" name="deliveryDate">
 		</div>
 		<div class="text-right my-5">
 			<input type="submit" class="btn btn-primary mt-4" style=width:200px; value="購入確認画面へ">

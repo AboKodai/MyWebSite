@@ -14,7 +14,7 @@
 	<div class=container>
 		<div class="card mx-auto mgn-top" style=width:500px;>
 			<div class="card-header bg-right text-center">
-				<h2>退会</h2>
+				<h3>退会</h3>
 			</div>
 			<form method="post" action="#">
 				<p class="text-danger p-5">退会処理を行うと現在登録されている会員情報・商品情報はすべて削除されます。</p>

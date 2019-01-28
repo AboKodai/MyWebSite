@@ -52,6 +52,7 @@
 				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
 				<div class="card-body">
 					<p class="card-text">サンプル名</p>
+					<p class="card-text">1000円</p>
 				</div>
 				</div>
 			</div>
@@ -61,6 +62,7 @@
 				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
 				<div class="card-body">
 					<p class="card-text">サンプル名</p>
+					<p class="card-text">1000円</p>
 				</div>
 			</div>
 			</div>
@@ -70,6 +72,7 @@
 				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
 				<div class="card-body">
 					<p class="card-text">サンプル名</p>
+					<p class="card-text">1000円</p>
 				</div>
 			</div>
 			</div>
@@ -79,6 +82,7 @@
 				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
 				<div class="card-body">
 					<p class="card-text">サンプル名</p>
+					<p class="card-text">1000円</p>
 				</div>
 				</div>
 			</div>
@@ -88,6 +92,7 @@
 				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
 				<div class="card-body">
 					<p class="card-text">サンプル名</p>
+					<p class="card-text">1000円</p>
 				</div>
 				</div>
 			</div>
@@ -97,6 +102,7 @@
 				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
 				<div class="card-body">
 					<p class="card-text">サンプル名</p>
+					<p class="card-text">1000円</p>
 				</div>
 				</div>
 			</div>
@@ -106,6 +112,7 @@
 				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
 				<div class="card-body">
 					<p class="card-text">サンプル名</p>
+					<p class="card-text">1000円</p>
 				</div>
 				</div>
 			</div>
@@ -115,6 +122,7 @@
 				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
 				<div class="card-body">
 					<p class="card-text">サンプル名</p>
+					<p class="card-text">1000円</p>
 				</div>
 				</div>
 			</div>

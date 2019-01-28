@@ -13,7 +13,7 @@
 	<div class=container>
 		<div class="card mx-auto mgn-top" style=width:500px;>
 			<div class="card-header bg-right text-center">
-				<h2>商品削除</h2>
+				<h3>商品削除</h3>
 			</div>
 			<form method="post" action="#">
 				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">

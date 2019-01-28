@@ -12,7 +12,7 @@
 <body>
 <jsp:include page="/baselayout/header.jsp" />
 <div class=container>
-	<h2 class="mgn-top text-center">商品登録</h2>
+	<h3 class="mgn-top text-center">商品登録</h3>
 
 		<form method="post" action="#">
 			<div class="row mt-5">

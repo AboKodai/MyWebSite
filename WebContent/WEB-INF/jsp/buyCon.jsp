@@ -12,7 +12,7 @@
 <body>
 <jsp:include page="/baselayout/header.jsp" />
 <div class=container>
-	<h2 class="text-center mgn-top">購入商品</h2>
+	<h3 class="text-center mgn-top">購入商品</h3>
 	<div style=width:800px; class=mx-auto>
 		<table class="table table-bordered" >
 			<thead>
@@ -38,15 +38,15 @@
 					<td>8</td>
 					<td>8000</td>
 				</tr>
-				<tr>
-					<th>あああ配送</th>
-					<td></td>
-					<td>800</td>
-				</tr>
 			</tbody>
 		</table>
-		<div class="text-right my-5 h4">
-			合計：9999999円
+		<div class="row">
+			<div class="text-right my-5 h4 mr-5 ml-auto">
+				配送希望日：mm月dd日
+			</div>
+			<div class="text-right my-5 h4 ">
+				合計：9999999円
+			</div>
 		</div>
 		<div class="text-right my-5">
 			<input type="submit" class="btn btn-primary mt-4" style=width:200px; value="購入確定">

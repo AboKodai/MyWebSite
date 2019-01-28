@@ -15,7 +15,7 @@
 <div class=container>
 		<div class="card mx-auto mgn-top" style=width:500px;>
 			<div class="card-header bg-right text-center">
-				<h2>パスワード更新</h2>
+				<h3>パスワード更新</h3>
 			</div>
 			<form method="post" action="#">
 				<div class="card-body my-3">

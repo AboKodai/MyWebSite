@@ -40,9 +40,6 @@
 				</tr>
 			</tbody>
 		</table>
-		<div class="text-right my-5">配送希望日
-			<input type="date" name="deliveryDate">
-		</div>
 		<div class="text-right my-5">
 			<input type="submit" class="btn btn-primary mt-4" style=width:200px; value="購入確認画面へ">
 		</div>

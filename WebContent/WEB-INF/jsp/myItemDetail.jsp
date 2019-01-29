@@ -30,7 +30,7 @@
 			商品説明
 		</div>
 		<div class="col-sm-6 h5">
-			商品の詳しい説明でぇぇぇぇぇぇぇぇぇぇぇぇぇぇぇぇぇす
+			商品の詳しい説明です
 		</div>
 	</div>
 	<div class="row mt-5">
@@ -49,6 +49,15 @@
 		</div>
 		<div class="col-sm-6 h5">
 			777777個
+		</div>
+	</div>
+	<div class="row mt-5">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-2 h5">
+			送料
+		</div>
+		<div class="col-sm-6 h5">
+			出品者負担
 		</div>
 	</div>
 	<div class="row mt-5">

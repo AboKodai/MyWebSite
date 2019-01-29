@@ -77,6 +77,18 @@
 			<div class="row mt-5">
 				<div class="col-sm-4"></div>
 				<div class="col-sm-2 h5">
+					送料
+				</div>
+				<div class="col-sm-6 h5">
+					<select name="deliveryPrice" style=width:150px;>
+						<option value=0>出品者負担</option>
+						<option value=1>購入者負担</option>
+					</select>
+				</div>
+			</div>
+				<div class="row mt-5">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-2 h5">
 					写真
 				</div>
 				<div class="col-sm-6 h5">

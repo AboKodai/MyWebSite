@@ -40,14 +40,9 @@
 				</tr>
 			</tbody>
 		</table>
-		<div class="row">
-			<div class="text-right my-5 h4 mr-5 ml-auto">
-				配送希望日：mm月dd日
-			</div>
 			<div class="text-right my-5 h4 ">
 				合計：9999999円
 			</div>
-		</div>
 		<div class="text-right my-5">
 			<input type="submit" class="btn btn-primary mt-4" style=width:200px; value="購入確定">
 			<br>

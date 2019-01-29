@@ -77,8 +77,7 @@
 				<tr>
 					<th>発送状況</th>
 					<th>購入者</th>
-					<th>購入日時</th>
-					<th>配送希望日</th>
+					<th>受注日時</th>
 					<th>住所</th>
 				</tr>
 			</thead>
@@ -87,28 +86,24 @@
 					<td><a href="#" class="btn bg-info mr-1" style=color:white;>詳細</a>発送処理<input type="checkbox"  class="ml-1"></td>
 					<td>ユーザ名</td>
 					<td>yyyy年mm月dd日hh時mm分ss秒</td>
-					<td>ｍｍ月ｄｄ日</td>
 					<td>購入ユーザ住所</td>
 				</tr>
 				<tr>
 					<td><a href="#" class="btn bg-info mr-1" style=color:white;>詳細</a>発送処理<input type="checkbox" class="ml-1"></td>
 					<td>ユーザ名</td>
 					<td>yyyy年mm月dd日hh時mm分ss秒</td>
-					<td>ｍｍ月ｄｄ日</td>
 					<td>購入ユーザ住所</td>
 				</tr>
 				<tr>
 					<td><a href="#" class="btn bg-info mr-1" style=color:white;>詳細</a>発送処理<input type="checkbox" class="ml-1"></td>
 					<td>ユーザ名</td>
 					<td>yyyy年mm月dd日hh時mm分ss秒</td>
-					<td>ｍｍ月ｄｄ日</td>
 					<td>購入ユーザ住所</td>
 				</tr>
 				<tr>
 					<td><a href="#" class="btn bg-info mr-1" style=color:white;>詳細</a>発送処理<input type="checkbox" class="ml-1"></td>
 					<td>ユーザ名</td>
 					<td>yyyy年mm月dd日hh時mm分ss秒</td>
-					<td>ｍｍ月ｄｄ日</td>
 					<td>購入ユーザ住所</td>
 				</tr>
 			</tbody>
@@ -120,18 +115,62 @@
 		<table class="table table-bordered">
 			<thead class="thead-light">
 				<tr>
-					<th></th>
-					<th>商品名</th>
-					<th>価格</th>
-					<th>残数</th>
+					<th width="150px"></th>
+					<th width="150px">商品名</th>
+					<th width="150px">価格</th>
+					<th width="150px">残数</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td>
-						<a href="#" class="btn bg-info" style=color:white;>詳細</a>
-						<a href="#" class="btn bg-warning" style=color:white;>更新</a>
-						<a href="#" class="btn bg-danger" style=color:white;>削除</a>
+						<div class=row>
+							<div class="col-sm-4">
+								<a href="#" class="btn bg-info" style=color:white;>詳細</a>
+							</div>
+							<div class="col-sm-4">
+								<a href="#" class="btn bg-warning" style=color:white;>更新</a>
+							</div>
+							<div class="col-sm-4">
+								<a href="#" class="btn bg-danger" style=color:white;>削除</a>
+							</div>
+						</div>
+					</td>
+					<td>もも</td>
+					<td>500円</td>
+					<td>10個</td>
+				</tr>
+				<tr>
+					<td>
+						<div class=row>
+							<div class="col-sm-4">
+								<a href="#" class="btn bg-info" style=color:white;>詳細</a>
+							</div>
+							<div class="col-sm-4">
+								<a href="#" class="btn bg-warning" style=color:white;>更新</a>
+							</div>
+							<div class="col-sm-4">
+								<a href="#" class="btn bg-danger" style=color:white;>削除</a>
+							</div>
+						</div>
+					</td>
+					<td>もも</td>
+					<td>500円</td>
+					<td>10個</td>
+				</tr>
+				<tr>
+					<td>
+						<div class=row>
+							<div class="col-sm-4">
+								<a href="#" class="btn bg-info" style=color:white;>詳細</a>
+							</div>
+							<div class="col-sm-4">
+								<a href="#" class="btn bg-warning" style=color:white;>更新</a>
+							</div>
+							<div class="col-sm-4">
+								<a href="#" class="btn bg-danger" style=color:white;>削除</a>
+							</div>
+						</div>
 					</td>
 					<td>もも</td>
 					<td>500円</td>

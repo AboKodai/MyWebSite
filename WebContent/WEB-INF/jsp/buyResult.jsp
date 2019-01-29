@@ -31,14 +31,12 @@
 			<thead class="thead-light">
 				<tr>
 					<th width=400>購入日時</th>
-					<th width=200>配送希望日</th>
 					<th width=200>合計金額</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td>ｙｙｙｙ年ｍｍ月ｄｄ日hh時MM分ｓｓ秒</td>
-					<td>mm月dd日</td>
 					<td>999999円</td>
 				</tr>
 			</tbody>

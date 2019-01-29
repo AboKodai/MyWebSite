@@ -35,6 +35,13 @@
 					</div>
 					<div class="col-sm-2"></div>
 					<div class="card-text mb-4 col-sm-4">
+						生年月日
+					</div>
+					<div class="col-sm-5">
+						<input type="date" name="birthDate"  style=width:180px;>
+					</div>
+					<div class="col-sm-2"></div>
+					<div class="card-text mb-4 col-sm-4">
 						パスワード
 					</div>
 					<div class="col-sm-5">

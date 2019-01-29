@@ -34,6 +34,7 @@
 						<div class="col-sm-5">
 							<input type="text" value="loginIdHogehoge" name="userName">
 						</div>
+
 						<div class="col-sm-2"></div>
 						<div class="card-text mb-4 col-sm-4">
 							住所

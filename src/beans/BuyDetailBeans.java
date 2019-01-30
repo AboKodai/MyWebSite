@@ -1,6 +1,6 @@
 package beans;
 
-public class BuyDetail {
+public class BuyDetailBeans {
 
 	private int buyDetailId;
 	private int buyId;

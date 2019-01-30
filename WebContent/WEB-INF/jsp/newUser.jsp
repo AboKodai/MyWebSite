@@ -17,56 +17,56 @@
 				<h2>食料品ECサイト</h2>
 				<h4>会員登録</h4>
 			</div>
-			<form method="post" action="#">
+			<form method="post" action="NewUser">
 				<div class="card-body my-3 row">
 					<div class="col-sm-2"></div>
 					<div class="card-text mb-4 col-sm-4">
 						ログインID
 					</div>
 					<div class="col-sm-5">
-						<input type="text" name="loginId" >
+						<input type="text" name="loginId" value="${loginId}" required>
 					</div>
 					<div class="col-sm-2"></div>
 					<div class="card-text mb-4 col-sm-4">
 						ユーザ名
 					</div>
 					<div class="col-sm-5">
-						<input type="text" name="userId" >
+						<input type="text" name="userName" value="${userName}" required>
 					</div>
 					<div class="col-sm-2"></div>
 					<div class="card-text mb-4 col-sm-4">
 						生年月日
 					</div>
 					<div class="col-sm-5">
-						<input type="date" name="birthDate"  style=width:180px;>
+						<input type="date" name="birthDate"  style=width:180px; value="${birthDate}" required>
 					</div>
 					<div class="col-sm-2"></div>
 					<div class="card-text mb-4 col-sm-4">
 						パスワード
 					</div>
 					<div class="col-sm-5">
-						<input type="password" name="password" >
+						<input type="password" name="password" required>
 					</div>
 					<div class="col-sm-2"></div>
 					<div class="card-text mb-4 col-sm-4">
 						パスワード確認
 					</div>
 					<div class="col-sm-5">
-						<input type="password" name="passwordCon" >
+						<input type="password" name="passwordCon" required>
 					</div>
 					<div class="col-sm-2"></div>
 					<div class="card-text mb-4 col-sm-4">
 						住所
 					</div>
 					<div class="col-sm-5">
-						<input type="text" name="homeAddress" >
+						<input type="text" name="homeAddress" value="${homeAddress}" required>
 					</div>
 					<div class="col-sm-2"></div>
 					<div class="card-text mb-5 col-sm-4">
 						メールアドレス
 					</div>
 					<div class="col-sm-5">
-						<input type="text" name="address" >
+						<input type="text" name="address" value="${address}" required>
 					</div>
 					<input type="submit" class="btn btn-primary mx-auto" value="確認画面へ">
 				</div>

@@ -20,7 +20,7 @@
 				<h2>食料品ECサイト</h2>
 				<h4>ログイン</h4>
 			</div>
-			<form method="post" action="#">
+			<form method="post" action="Login">
 				<div class="card-body my-3">
 					<p class="card-text mb-5">
 						ログインID：<input type="text" name="loginId">
@@ -32,7 +32,7 @@
 				</div>
 			</form>
 		</div>
-		<p class="text-right mt-2">会員登録がまだの方は<a href="#">こちら</a>
+		<p class="text-right mt-2">会員登録がまだの方は<a href="NewUser">こちら</a>
 	</div>
 </body>
 </html>

@@ -16,15 +16,15 @@
 			<div class="card-header bg-right text-center">
 				<h3>退会</h3>
 			</div>
-			<form method="post" action="#">
+			<form method="post" action="UserDelete">
 				<p class="text-danger p-5">退会処理を行うと現在登録されている会員情報・商品情報はすべて削除されます。</p>
-				<p class=text-center>userNameさんの退会処理を行ってもよろしいですか？
+				<p class=text-center>${userInfo.userName }さんの退会処理を行ってもよろしいですか？
 				<div class="row">
 					<div class="mx-auto">
-						<input type="submit" class="btn btn-muted mt-4" value="キャンセル">
+						<button type="submit" class="btn btn-muted mt-4" value="cancel" name="confirm">キャンセル</button>
 					</div>
 					<div class="mx-auto mb-5">
-						<input type="submit" class="btn btn-primary mt-4" style=width:110px; value="退会する">
+						<button type="submit" class="btn btn-primary mt-4" style=width:110px; value="permit" name="confirm">退会する</button>
 					</div>
 				</div>
 			</form>

@@ -19,13 +19,14 @@
 			</div>
 			<form method="post" action="#">
 				<div class="card-body my-3">
+					<p class="text-center text-danger">${sysMsg }</p>
 					<div class="row">
 						<div class="col-sm-2"></div>
 						<div class="card-text mb-4 col-sm-4">
 							現在のパスワード
 						</div>
 						<div class="col-sm-5">
-							<input type="password" name="nowPassword">
+							<input type="password" name="password">
 						</div>
 						<div class="col-sm-2"></div>
 						<div class="card-text mb-4 col-sm-4">
@@ -44,10 +45,10 @@
 					</div>
 					<div class="row">
 						<div class="mx-auto">
-							<input type="submit" class="btn btn-muted mt-4" value="キャンセル">
+							<button type="submit" class="btn btn-muted mt-4" value="cancel"name="confirm">キャンセル</button>
 						</div>
 						<div class="mx-auto">
-							<input type="submit" class="btn btn-primary mt-4" style=width:110px; value="更新">
+							<button type="submit" class="btn btn-primary mt-4" style=width:110px; value="permit"name="confirm">更新</button>
 						</div>
 					</div>
 				</div>

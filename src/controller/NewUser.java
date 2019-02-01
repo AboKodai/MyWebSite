@@ -1,6 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import beans.UserBeans;
 import dao.UserDao;
@@ -32,6 +36,13 @@ public class NewUser extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		//ログインセッションがある場合はマイページにリダイレクト
+		if(session.getAttribute("userInfo") != null) {
+			response.sendRedirect("MyPage");
+			return;
+		}
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/newUser.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -41,44 +52,54 @@ public class NewUser extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/**フォームに入力された値を取得し、userテーブルに追加。
-		 * 追加に成功したらマイページへ
+		/**フォームに入力された値を取得し登録可能か確認
+		 * OKなら登録確認画面へ
 		 */
 		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+
 		//入力されたデータの取得
 		String loginId = request.getParameter("loginId");
 		String userName = request.getParameter("userName");
-		String birthDate = request.getParameter("birthDate");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date birthDate = null;
+		try {
+			birthDate = sdf.parse(request.getParameter("birthDate"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		String password = request.getParameter("password");
 		String passwordCon = request.getParameter("passwordCon");
 		String homeAddress = request.getParameter("homeAddress");
 		String address = request.getParameter("address");
 
-		//パスワードとパスワード確認の入力内容が異なっていた場合はエラーメッセージをセットして新規登録画面へ
+		//パスワードとパスワード確認の入力内容確認
 		if (!(password.equals(passwordCon))) {
 			request.setAttribute("sysMsg", "パスワードの入力内容が異なっています");
 
 			//入力内容を引き継ぐため、リクエストスコープにセット
-			UserBeans user = new UserBeans(loginId, userName, birthDate, homeAddress, address);
+			UserBeans user = new UserBeans(loginId, userName, birthDate, password, homeAddress, address);
 			request.setAttribute("user", user);
+			request.setAttribute("birthDate", request.getParameter("birthDate"));
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/newUser.jsp");
 			dispatcher.forward(request, response);
 			return;
 		}
 
-		//ユーザIDとメールアドレスが使用済みかどうか確認する
+		//ログインIDとメールアドレスが使用済みかどうか確認
 		UserDao userDao = new UserDao();
-		boolean checkId = userDao.userCheckId(loginId);
-		boolean checkAddress = userDao.userCheckAddress(address);
+		boolean checkId = userDao.userCheckId("",loginId);
+		boolean checkAddress = userDao.userCheckAddress("",address);
 
-		//ユーザIDが使用済みだった場合、エラーメッセージをセットして新規登録画面に遷移
+		//ログインIDが使用済みだった場合、エラーメッセージをセットして新規登録画面に遷移
 		if(checkId) {
-			request.setAttribute("sysMsg", "このユーザIDは既に使用されています");
+			request.setAttribute("sysMsg", "このログインIDは既に使用されています");
 
 			//入力内容を引き継ぐため、リクエストスコープにセット
-			UserBeans user = new UserBeans(loginId, userName, birthDate, homeAddress, address);
+			UserBeans user = new UserBeans(loginId, userName, birthDate, password, homeAddress, address);
 			request.setAttribute("user", user);
+			request.setAttribute("birthDate", request.getParameter("birthDate"));
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/newUser.jsp");
 			dispatcher.forward(request, response);
@@ -90,19 +111,20 @@ public class NewUser extends HttpServlet {
 			request.setAttribute("sysMsg", "このメールアドレスは既に使用されています");
 
 			//入力内容を引き継ぐため、リクエストスコープにセット
-			UserBeans user = new UserBeans(loginId, userName, birthDate, homeAddress, address);
+			UserBeans user = new UserBeans(loginId, userName, birthDate, password, homeAddress, address);
 			request.setAttribute("user", user);
+			request.setAttribute("birthDate", request.getParameter("birthDate"));
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/newUser.jsp");
 			dispatcher.forward(request, response);
 			return;
 		}
 
-
 		//入力された内容が問題ない場合、入力内容をセッションスコープにセット
-
-		//新規登録に成功した場合マイページにリダイレクト
-		response.sendRedirect("MyPage");
+		UserBeans user = new UserBeans(loginId, userName, birthDate, password, homeAddress, address);
+		session.setAttribute("user", user);
+		//登録確認画面にリダイレクト
+		response.sendRedirect("NewUserCon");
 
 	}
 

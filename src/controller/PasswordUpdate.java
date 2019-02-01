@@ -8,6 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import beans.UserBeans;
+import dao.UserDao;
 
 /**
  * Servlet implementation class PasswordUpdate
@@ -28,6 +32,13 @@ public class PasswordUpdate extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+
+	//ログインセッションがない場合、新規登録画面へリダイレクト
+		if(session.getAttribute("userInfo") == null) {
+			response.sendRedirect("NewUser");
+			return;
+		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/passwordUpdate.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -36,8 +47,43 @@ public class PasswordUpdate extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
 
+	//更新とキャンセルどちらが押されたか判定
+		String confirm = request.getParameter("confirm");
+		switch(confirm) {
+		case "cancel":
+			response.sendRedirect("MyPage");
+			break;
+
+		case "permit":
+		//現在のパスワード及び入力内容を取得
+			UserDao userDao = new UserDao();
+			UserBeans user = new UserBeans();
+			user = (UserBeans) session.getAttribute("userInfo");
+			String password = user.getPassword();
+			String inputPassword = request.getParameter("password");
+			String newPassword = request.getParameter("newPassword");
+			String newPasswordCon = request.getParameter("newPasswordCon");
+
+		//エラーが発生する条件を複数設定
+			if(!password.equals(inputPassword) || !newPassword.equals(newPasswordCon)) {
+				request.setAttribute("sysMsg", "パスワードが間違っています");
+
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/passwordUpdate.jsp");
+				dispatcher.forward(request, response);
+				return;
+			}
+		//更新可能だった場合
+			if(userDao.passwordUpdate(user.getUserId(), newPassword)) {
+				System.out.println("更新成功");
+
+			//ログインセッションを更新
+				user = userDao.findUser(user.getLoginId(), newPasswordCon);
+			//マイページへリダイレクト
+				response.sendRedirect("MyPage");
+			}
+		}
+	}
 }

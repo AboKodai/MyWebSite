@@ -18,61 +18,80 @@
 				<h4>会員登録</h4>
 			</div>
 			<form method="post" action="NewUser">
-				<div class="card-body my-3 row">
-					<div class="col-sm-2"></div>
-					<div class="card-text mb-4 col-sm-4">
-						ログインID
+				<div class="card-body my-3">
+					<c:if test="${sysMsg != null }">
+						<p class="text-danger text-center">${sysMsg }</p>
+					</c:if>
+					<div class=row>
+						<div class="col-sm-2"></div>
+						<div class="card-text mb-4 col-sm-4">
+							ログインID
+						</div>
+						<div class="col-sm-5">
+							<input type="text" name="loginId" value="${user.loginId}" required>
+						</div>
 					</div>
-					<div class="col-sm-5">
-						<input type="text" name="loginId" value="${loginId}" required>
+					<div class=row>
+						<div class="col-sm-2"></div>
+						<div class="card-text mb-4 col-sm-4">
+							ユーザ名
+						</div>
+						<div class="col-sm-5">
+							<input type="text" name="userName" value="${user.userName}" required>
+						</div>
 					</div>
-					<div class="col-sm-2"></div>
-					<div class="card-text mb-4 col-sm-4">
-						ユーザ名
+					<div class=row>
+						<div class="col-sm-2"></div>
+						<div class="card-text mb-4 col-sm-4">
+							生年月日
+						</div>
+						<div class="col-sm-5">
+							<input type="date" name="birthDate"  style=width:180px; value="${birthDate}" required>
+						</div>
 					</div>
-					<div class="col-sm-5">
-						<input type="text" name="userName" value="${userName}" required>
+					<div class=row>
+						<div class="col-sm-2"></div>
+						<div class="card-text mb-4 col-sm-4">
+							パスワード
+						</div>
+						<div class="col-sm-5">
+							<input type="password" name="password" required>
+						</div>
 					</div>
-					<div class="col-sm-2"></div>
-					<div class="card-text mb-4 col-sm-4">
-						生年月日
+					<div class=row>
+						<div class="col-sm-2"></div>
+						<div class="card-text mb-4 col-sm-4">
+							パスワード確認
+						</div>
+						<div class="col-sm-5">
+							<input type="password" name="passwordCon" required>
+						</div>
 					</div>
-					<div class="col-sm-5">
-						<input type="date" name="birthDate"  style=width:180px; value="${birthDate}" required>
+					<div class=row>
+						<div class="col-sm-2"></div>
+						<div class="card-text mb-4 col-sm-4">
+							住所
+						</div>
+						<div class="col-sm-5">
+							<input type="text" name="homeAddress" value="${user.homeAddress}" required>
+						</div>
 					</div>
-					<div class="col-sm-2"></div>
-					<div class="card-text mb-4 col-sm-4">
-						パスワード
+					<div class=row>
+						<div class="col-sm-2"></div>
+						<div class="card-text mb-5 col-sm-4">
+							メールアドレス
+						</div>
+						<div class="col-sm-5">
+							<input type="text" name="address" value="${user.address}" required>
+						</div>
 					</div>
-					<div class="col-sm-5">
-						<input type="password" name="password" required>
+					<div class=text-center>
+						<button type="submit" class="btn btn-primary mx-auto " >確認画面へ</button>
 					</div>
-					<div class="col-sm-2"></div>
-					<div class="card-text mb-4 col-sm-4">
-						パスワード確認
-					</div>
-					<div class="col-sm-5">
-						<input type="password" name="passwordCon" required>
-					</div>
-					<div class="col-sm-2"></div>
-					<div class="card-text mb-4 col-sm-4">
-						住所
-					</div>
-					<div class="col-sm-5">
-						<input type="text" name="homeAddress" value="${homeAddress}" required>
-					</div>
-					<div class="col-sm-2"></div>
-					<div class="card-text mb-5 col-sm-4">
-						メールアドレス
-					</div>
-					<div class="col-sm-5">
-						<input type="text" name="address" value="${address}" required>
-					</div>
-					<input type="submit" class="btn btn-primary mx-auto" value="確認画面へ">
 				</div>
 			</form>
 		</div>
-		<p class="text-right mt-2">会員登録済の方は<a href="#">こちら</a>
+		<p class="text-right mt-2">会員登録済の方は<a href="Login">こちら</a>
 	</div>
 </div>
 </body>

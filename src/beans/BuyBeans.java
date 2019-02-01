@@ -1,5 +1,6 @@
 package beans;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class BuyBeans {
@@ -40,6 +41,11 @@ public class BuyBeans {
 	}
 	public void setCheckboxInfo(int checkboxInfo) {
 		this.checkboxInfo = checkboxInfo;
+	}
+
+	public String getFormatDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日HH時mm分");
+		return sdf.format(buyDate);
 	}
 
 }

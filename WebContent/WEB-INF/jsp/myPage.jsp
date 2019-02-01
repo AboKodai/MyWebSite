@@ -18,31 +18,25 @@
 	<table class="table table-bordered bg-light">
 		<tbody>
 			<tr>
-				<td>ユーザ名：userName</td>
-				<td>ログインID：loginId</td>
-				<td>生年月日：yyyy年mm月dd日</td>
+				<td>ユーザ名：${userInfo.userName }</td>
+				<td>ログインID：${userInfo.loginId }</td>
+				<td>生年月日：${userInfo.formatDate}</td>
 			</tr>
 			<tr>
-				<td>メールアドレス：address</td>
-				<td colspan="2">住所：homeAddress</td>
+				<td>メールアドレス：${userInfo.address}</td>
+				<td colspan="2">住所：${userInfo.homeAddress }</td>
 		</tbody>
 	</table>
 	<div class=row>
-		<form action="#" method="get" class="mx-auto">
-			<div class="text-center">
-				<input type="submit" class="btn btn-success my-5" value="基本情報変更">
-			</div>
-		</form>
-		<form action="#" method="get" class="mx-auto">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary my-5" value="パスワード変更">
-			</div>
-		</form>
-		<form action="#" method="get" class="mx-auto">
-			<div class="text-center">
-				<input type="submit" class="btn btn-danger my-5" value="退会">
-			</div>
-		</form>
+		<div class="text-center mx-auto">
+			<a href="UserDelete?user_id=${userInfo.userId}"><button type="submit" class="btn btn-danger my-5" >退会</button></a>
+		</div>
+		<div class="text-center mx-auto">
+			<a href="UserUpdate?user_id=${userInfo.userId}"><button type="submit" class="btn btn-success my-5" >会員情報変更</button></a>
+		</div>
+		<div class="text-center mx-auto">
+			<a href="PasswordUpdate?user_id=${userInfo.userId}"><button type="submit" class="btn btn-primary my-5" >パスワード変更</button></a>
+		</div>
 	</div>
 </div>
 	<hr>

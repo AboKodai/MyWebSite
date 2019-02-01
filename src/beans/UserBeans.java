@@ -1,28 +1,42 @@
 package beans;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class UserBeans {
 
 	private int userId;
 	private String loginId;
 	private String userName;
-	private String birthDate;
+	private Date birthDate;
 	private String password;
 	private String homeAddress;
 	private String address;
 
+	public UserBeans() {
+
+	}
+
 	//ログイン処理
-	public UserBeans(int userId, String userName) {
+	public UserBeans(int userId, String loginId, String userName,String password, Date birthDate, String homeAddress,
+			String address) {
 		super();
 		this.userId = userId;
+		this.loginId = loginId;
 		this.userName = userName;
+		this.password = password;
+		this.birthDate = birthDate;
+		this.homeAddress = homeAddress;
+		this.address = address;
 	}
 
 	//新規登録時の入力内容引継ぎ
-	public UserBeans(String loginId, String userName, String birthDate, String homeAddress, String address) {
+	public UserBeans(String loginId, String userName, Date birthDate, String password, String homeAddress, String address) {
 		super();
 		this.loginId = loginId;
 		this.userName = userName;
 		this.birthDate = birthDate;
+		this.password = password;
 		this.homeAddress = homeAddress;
 		this.address = address;
 	}
@@ -46,10 +60,10 @@ public class UserBeans {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public String getBirthDate() {
+	public Date getBirthDate() {
 		return birthDate;
 	}
-	public void setBirthDate(String birthDate) {
+	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
 	public String getPassword() {
@@ -71,4 +85,8 @@ public class UserBeans {
 		this.address = address;
 	}
 
+	public String getFormatDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+		return sdf.format(birthDate);
+	}
 }

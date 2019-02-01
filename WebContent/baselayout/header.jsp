@@ -18,7 +18,7 @@
 			<div class="col-sm-4 text-right pr-5">
 				<a href="MyPage?userId=${userInfo.userId }">${userInfo.userName}</a>　さん
 				<a class="text-dark p-4" href="#">カート</a>
-				<a class="btn btn-outline-danger text-right " href="#">ログアウト</a>
+				<a class="btn btn-outline-danger text-right " href="Logout">ログアウト</a>
 			</div>
 		</c:if>
 	</div>

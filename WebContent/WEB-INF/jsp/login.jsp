@@ -15,24 +15,29 @@
 </head>
 <body>
 	<div class=container>
-		<div class="card text-center mx-auto mgn-top" style=width:500px;>
-			<div class="card-header bgc-main">
-				<h2>食料品ECサイト</h2>
-				<h4>ログイン</h4>
-			</div>
-			<form method="post" action="Login">
-				<div class="card-body my-3">
-					<p class="card-text mb-5">
-						ログインID：<input type="text" name="loginId">
-					</p>
-					<p class="card-text mb-5">
-						パスワード：<input type="password" name="password">
-					</p>
-					<input type="submit" class="btn btn-primary" value="ログイン">
+		<div  class="mx-auto" style=width:500px;>
+			<div class="card text-center mgn-top">
+				<div class="card-header bgc-main">
+					<h2>食料品ECサイト</h2>
+					<h4>ログイン</h4>
 				</div>
-			</form>
+				<form method="post" action="Login">
+					<div class="card-body my-3">
+						<c:if test="${sysMsg != null}">
+							<p class="text-danger text-center">${sysMsg}</p>
+						</c:if>
+						<p class="card-text mb-5">
+							ログインID：<input type="text" name="loginId" required value="${loginId}">
+						</p>
+						<p class="card-text mb-5">
+							パスワード：<input type="password" name="password" required>
+						</p>
+						<input type="submit" class="btn btn-primary" value="ログイン">
+					</div>
+				</form>
+			</div>
+			<p class="text-right mt-2">会員登録がまだの方は<a href="NewUser">こちら</a></p>
 		</div>
-		<p class="text-right mt-2">会員登録がまだの方は<a href="NewUser">こちら</a>
 	</div>
 </body>
 </html>

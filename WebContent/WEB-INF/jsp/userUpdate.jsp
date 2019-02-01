@@ -17,49 +17,97 @@
 			<div class="card-header bg-right text-center">
 				<h3>会員情報更新</h3>
 			</div>
-			<form method="post" action="#">
-				<div class="card-body my-3">
-					<div class="row">
-						<div class="col-sm-2"></div>
-						<div class="card-text mb-4 col-sm-4">
-							ログインID
-						</div>
-						<div class="col-sm-5">
-							<input type="text" value="loginIdHogehoge" name="loginId">
-						</div>
-						<div class="col-sm-2"></div>
-						<div class="card-text mb-4 col-sm-4">
-							ユーザ名
-						</div>
-						<div class="col-sm-5">
-							<input type="text" value="loginIdHogehoge" name="userName">
-						</div>
+			<c:if test="${sysMsg != null }">
+				<form method="post" action="#">
+					<div class="card-body my-3">
+						<p class="text-center text-danger">${sysMsg }</p>
+						<div class="row">
+							<div class="col-sm-2"></div>
+							<div class="card-text mb-4 col-sm-4">
+								ログインID
+							</div>
+							<div class="col-sm-5">
+								<input type="text" value="${userUpdate.loginId }" name="loginId">
+							</div>
+							<div class="col-sm-2"></div>
+							<div class="card-text mb-4 col-sm-4">
+								ユーザ名
+							</div>
+							<div class="col-sm-5">
+								<input type="text" value="${userUpdate.userName}" name="userName">
+							</div>
 
-						<div class="col-sm-2"></div>
-						<div class="card-text mb-4 col-sm-4">
-							住所
+							<div class="col-sm-2"></div>
+							<div class="card-text mb-4 col-sm-4">
+								住所
+							</div>
+							<div class="col-sm-5">
+								<input type="text" value="${userUpdate.homeAddress }" name="homeAddress">
+							</div>
+							<div class="col-sm-2"></div>
+							<div class="card-text mb-4 col-sm-4">
+								メールアドレス
+							</div>
+							<div class="col-sm-5">
+								<input type="text" value="${userUpdate.address }" name="address">
+							</div>
 						</div>
-						<div class="col-sm-5">
-							<input type="text" value="loginIdHogehoge" name="homeAddress">
-						</div>
-						<div class="col-sm-2"></div>
-						<div class="card-text mb-4 col-sm-4">
-							メールアドレス
-						</div>
-						<div class="col-sm-5">
-							<input type="text" value="loginIdHogehoge" name="address">
+						<div class="row">
+							<div class="mx-auto">
+								<button type="submit" class="btn btn-muted mt-4" value="cancel" name="confirm">キャンセル</button>
+							</div>
+							<div class="mx-auto">
+								<button type="submit" class="btn btn-primary mt-4" style=width:110px; value="permit"name="confirm">更新</button>
+							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="mx-auto">
-							<input type="submit" class="btn btn-muted mt-4" value="キャンセル">
+				</form>
+			</c:if>
+			<c:if test="${sysMsg == null }">
+				<form method="post" action="#">
+					<div class="card-body my-3">
+						<div class="row">
+							<div class="col-sm-2"></div>
+							<div class="card-text mb-4 col-sm-4">
+								ログインID
+							</div>
+							<div class="col-sm-5">
+								<input type="text" value="${userInfo.loginId }" name="loginId">
+							</div>
+							<div class="col-sm-2"></div>
+							<div class="card-text mb-4 col-sm-4">
+								ユーザ名
+							</div>
+							<div class="col-sm-5">
+								<input type="text" value="${userInfo.userName}" name="userName">
+							</div>
+
+							<div class="col-sm-2"></div>
+							<div class="card-text mb-4 col-sm-4">
+								住所
+							</div>
+							<div class="col-sm-5">
+								<input type="text" value="${userInfo.homeAddress }" name="homeAddress">
+							</div>
+							<div class="col-sm-2"></div>
+							<div class="card-text mb-4 col-sm-4">
+								メールアドレス
+							</div>
+							<div class="col-sm-5">
+								<input type="text" value="${userInfo.address }" name="address">
+							</div>
 						</div>
-						<div class="mx-auto">
-							<input type="submit" class="btn btn-primary mt-4" style=width:110px; value="更新">
+						<div class="row">
+							<div class="mx-auto">
+								<button type="submit" class="btn btn-muted mt-4" value="cancel" name="confirm">キャンセル</button>
+							</div>
+							<div class="mx-auto">
+								<button type="submit" class="btn btn-primary mt-4" style=width:110px; value="permit"name="confirm">更新</button>
+							</div>
 						</div>
 					</div>
-				</div>
-			</form>
+				</form>
+			</c:if>
 		</div>
 	</div>
 </body>

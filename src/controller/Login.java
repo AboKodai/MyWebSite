@@ -31,6 +31,13 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		//ログインセッションがある場合はマイページにリダイレクト
+		if(session.getAttribute("userInfo") != null) {
+			response.sendRedirect("MyPage");
+			return;
+		}
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -52,7 +59,7 @@ public class Login extends HttpServlet {
 
 		if(user == null) {
 			request.setAttribute("sysMsg", "ログインIDまたはパスワードが異なります");
-
+			request.setAttribute("loginId", loginId);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 			dispatcher.forward(request, response);
 			return;

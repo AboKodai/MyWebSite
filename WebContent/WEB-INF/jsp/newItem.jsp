@@ -21,7 +21,7 @@
 					商品名
 				</div>
 				<div class="col-sm-6">
-					<input type="text" name="itemName" style=width:350px;>
+					<input type="text" name="itemName" style=width:350px; required>
 				</div>
 			</div>
 			<div class="row mt-5">
@@ -30,7 +30,7 @@
 					商品説明
 				</div>
 				<div class="col-sm-6">
-					<input type="text" name="itemDetail" style=width:350px;height:400px;>
+					<input type="text" name="itemDetail" style=width:350px;height:400px; required>
 				</div>
 			</div>
 			<div class="row mt-5">
@@ -39,7 +39,7 @@
 					価格
 				</div>
 				<div class="col-sm-6 h5">
-					<input type="number" name="itemPrice" style=width:150px; class="mr-3">円
+					<input type="number" name="itemPrice" style=width:150px; class="mr-3" required>円
 				</div>
 			</div>
 			<div class="row mt-5">
@@ -48,7 +48,7 @@
 					個数
 				</div>
 				<div class="col-sm-6 h5">
-					<input type="number" name="itemNumber" style=width:150px; class="mr-3">個
+					<input type="number" name="itemNumber" style=width:150px; class="mr-3" required>個
 				</div>
 			</div>
 			<div class="row mt-5">
@@ -57,21 +57,11 @@
 					種類
 				</div>
 				<div class="col-sm-6 h5">
-					<div class="form-inline mb-3">
-						<input type="checkbox" name="tag" value="1"><div class="mr-3">タグ１</div>
-						<input type="checkbox" name="tag" value="1"><div class="mr-3">タグ１</div>
-						<input type="checkbox" name="tag" value="1">タグ１
-					</div>
-					<div class="form-inline mb-3">
-						<input type="checkbox" name="tag" value="1"><div class="mr-3">タグ１</div>
-						<input type="checkbox" name="tag" value="1"><div class="mr-3">タグ１</div>
-						<input type="checkbox" name="tag" value="1">タグ１
-					</div>
-					<div class="form-inline">
-						<input type="checkbox" name="tag" value="1"><div class="mr-3">タグ１</div>
-						<input type="checkbox" name="tag" value="1"><div class="mr-3">タグ１</div>
-						<input type="checkbox" name="tag" value="1">タグ１
-					</div>
+					<c:forEach var="itbList" items="${itbList }">
+						<div class="form-inline mb-3">
+							<input type="checkbox" name="type" value="${itbList.itemTypeId }" ><div>${itbList.itemTypeName }</div>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 			<div class="row mt-5">
@@ -80,9 +70,10 @@
 					送料
 				</div>
 				<div class="col-sm-6 h5">
-					<select name="deliveryPrice" style=width:150px;>
-						<option value=0>出品者負担</option>
-						<option value=1>購入者負担</option>
+					<select name="deliveryMethod" style=width:150px; required>
+						<c:forEach var="dmbList" items="${dmbList }">
+							<option value=${dmbList. delivaryMethodId }>${dmbList.delivaryMethod}</option>
+						</c:forEach>
 					</select>
 				</div>
 			</div>
@@ -92,7 +83,7 @@
 					写真
 				</div>
 				<div class="col-sm-6 h5">
-					<input type="file" name="itemImg"  class="mr-3">
+					<input type="file" name="fileName"  class="mr-3">
 				</div>
 			</div>
 			<div class="row mx-auto"style=width:40%;>

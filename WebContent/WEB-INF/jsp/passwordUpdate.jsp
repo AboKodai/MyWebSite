@@ -26,21 +26,21 @@
 							現在のパスワード
 						</div>
 						<div class="col-sm-5">
-							<input type="password" name="password">
+							<input type="password" name="password" required>
 						</div>
 						<div class="col-sm-2"></div>
 						<div class="card-text mb-4 col-sm-4">
 							新パスワード
 						</div>
 						<div class="col-sm-5">
-							<input type="password" name="newPassword">
+							<input type="password" name="newPassword" required>
 						</div>
 						<div class="col-sm-2"></div>
 						<div class="card-text mb-4 col-sm-4">
 							新パスワード確認
 						</div>
 						<div class="col-sm-5">
-							<input type="password" name="newPasswordCon">
+							<input type="password" name="newPasswordCon" required>
 						</div>
 					</div>
 					<div class="row">

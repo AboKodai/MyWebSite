@@ -38,6 +38,7 @@
 			<a href="PasswordUpdate?user_id=${userInfo.userId}"><button type="submit" class="btn btn-primary my-5" >パスワード変更</button></a>
 		</div>
 	</div>
+
 </div>
 	<hr>
 
@@ -62,9 +63,11 @@
 	</p>
 </div>
 <hr>
-
+<div class="text-center mx-auto">
+		<a href="NewItem?user_id=${userInfo.userId}"><button type="submit" class="btn btn- my-5" >商品の出品</button></a>
+	</div>
 <div class="row px-5">
-	<div class="col-sm-6 mgn-top">
+	<div class="col-sm-6 ">
 		<h3 class="text-center">受注一覧</h3>
 		<table class="table table-bordered">
 			<thead class="thead-light">
@@ -104,7 +107,8 @@
 		</table>
 	</div>
 
-	<div class="col-sm-6 mgn-top">
+	<div class="col-sm-6 ">
+
 		<h3 class="text-center">出品商品一覧</h3>
 		<table class="table table-bordered">
 			<thead class="thead-light">

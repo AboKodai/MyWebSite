@@ -80,7 +80,7 @@ public class NewUser extends HttpServlet {
 			//入力内容を引き継ぐため、リクエストスコープにセット
 			UserBeans user = new UserBeans(loginId, userName, birthDate, password, homeAddress, address);
 			request.setAttribute("user", user);
-			request.setAttribute("birthDate", request.getParameter("birthDate"));
+			request.setAttribute("birthDate",(String)request.getParameter("birthDate"));
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/newUser.jsp");
 			dispatcher.forward(request, response);
@@ -99,7 +99,7 @@ public class NewUser extends HttpServlet {
 			//入力内容を引き継ぐため、リクエストスコープにセット
 			UserBeans user = new UserBeans(loginId, userName, birthDate, password, homeAddress, address);
 			request.setAttribute("user", user);
-			request.setAttribute("birthDate", request.getParameter("birthDate"));
+			request.setAttribute("birthDate", (String)request.getParameter("birthDate"));
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/newUser.jsp");
 			dispatcher.forward(request, response);
@@ -113,7 +113,7 @@ public class NewUser extends HttpServlet {
 			//入力内容を引き継ぐため、リクエストスコープにセット
 			UserBeans user = new UserBeans(loginId, userName, birthDate, password, homeAddress, address);
 			request.setAttribute("user", user);
-			request.setAttribute("birthDate", request.getParameter("birthDate"));
+			request.setAttribute("birthDate", (String)request.getParameter("birthDate"));
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/newUser.jsp");
 			dispatcher.forward(request, response);

@@ -21,7 +21,7 @@
 					商品名
 				</div>
 				<div class="col-sm-6">
-					<input type="text" name="itemName" style=width:350px; required>
+					<textarea rows="3" cols="47"name="itemName"required></textarea>
 				</div>
 			</div>
 			<div class="row mt-5">
@@ -30,7 +30,7 @@
 					商品説明
 				</div>
 				<div class="col-sm-6">
-					<input type="text" name="itemDetail" style=width:350px;height:400px; required>
+					<textarea rows="15" cols="47"name="itemDetail"required></textarea>
 				</div>
 			</div>
 			<div class="row mt-5">

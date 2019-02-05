@@ -11,7 +11,7 @@
 	crossorigin="anonymous">
 <link rel="stylesheet" href="Materialize/style.css" type="text/css">
 <meta charset="UTF-8">
-<title>食料品ECサイト</title>
+<title>検索結果</title>
 </head>
 <body>
 
@@ -46,14 +46,14 @@
 					<h3>商品一覧</h3>
 				</div>
 				<div class=col-md-4></div>
-				<c:forEach var="randomList" items="${randomList }">
+				<c:forEach var="itemList" items="${itemList }">
 					<div class="col-md-3 text-center my-3">
 						<div class="card" style="width: 20rem;height:30rem">
-							<img class="card-img-top" src="img/${randomList.failName }"
+							<img class="card-img-top" src="img/${itemList.failName }"
 								alt="Card image cap" style="max-height:20rem;width:20rem;">
 							<div class="card-body">
-								<p class="card-text">${randomList.itemName }</p>
-								<p class="card-text">${randomList.itemPrice }　円</p>
+								<p class="card-text">${itemList.itemName }</p>
+								<p class="card-text">${itemList.itemPrice }　円</p>
 							</div>
 						</div>
 					</div>

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import beans.ItemBeans;
 
@@ -43,7 +44,7 @@ public class ItemDao {
 				itemId = rs.getInt(1);
 			}
 
-			System.out.println("商品登録成功");
+			System.out.println("entry item");
 			return itemId;
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -88,10 +89,152 @@ public class ItemDao {
 			ib.setItemNumber(rs.getInt("item_number"));
 			ib.setDelivaryMethod(rs.getInt("delivery_method_id"));
 			ib.setFailName(rs.getString("file_name"));
-			System.out.println("商品情報を検索");
+			System.out.println("get item info");
 			return ib;
 
 		}catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
+
+	/**ランダムに商品を取得
+	 *
+	 * @return
+	 */
+	public ArrayList<ItemBeans> getRandomItem() {
+		Connection con = null;
+		Statement stmt = null;
+		String sql = null;
+
+		try {
+			con = DBManager.getConnection();
+
+			sql = "SELECT * FROM item ORDER BY RAND() LIMIT 8";
+			stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery(sql);
+			ArrayList<ItemBeans> ibList = new ArrayList<ItemBeans>();
+
+			while (rs.next()) {
+				ItemBeans ib = new ItemBeans();
+				ib.setItemId(rs.getInt(1));
+				ib.setUserId(rs.getInt(2));
+				ib.setItemName(rs.getString(3));
+				ib.setItemDetail(rs.getString(4));
+				ib.setItemPrice(rs.getInt(5));
+				ib.setItemNumber(rs.getInt(6));
+				ib.setDelivaryMethod(rs.getInt(7));
+				ib.setFailName(rs.getString(8));
+				ibList.add(ib);
+			}
+			System.out.println("get randon Item");
+			return ibList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
+
+	/**商品検索
+	 *
+	 * @return
+	 */
+	public ArrayList<ItemBeans> findItem(String searchWord, int[] itemTypeIdList, int pageNum, int pageMaxItemCount ) {
+		Connection con = null;
+		PreparedStatement pStmt = null;
+		String sql = null;
+
+		try {
+			int startItemNum = (pageNum - 1) * pageMaxItemCount;
+			con = DBManager.getConnection();
+
+			if(searchWord.length() == 0 && itemTypeIdList == null) {
+			//全検索
+				sql = "SELECT * FROM item ORDER BY RAND() ASC LIMIT ?,?;";
+				pStmt = con.prepareStatement(sql);
+				pStmt.setInt(1, startItemNum);
+				pStmt.setInt(2, pageMaxItemCount);
+			}
+			else if(searchWord.length() > 0 && itemTypeIdList == null) {
+			//商品名検索
+				sql = "SELECT * FROM item WHERE item_name LIKE '%" +searchWord+ "%' ORDER BY item_id ASC LIMIT ?,?";
+				pStmt = con.prepareStatement(sql);
+				pStmt.setInt(1, startItemNum);
+				pStmt.setInt(2, pageMaxItemCount);
+			}
+			else if (searchWord.length() == 0 && itemTypeIdList.length > 0 ) {
+			//種類検索
+				sql = "SELECT item.*, item_type_table.*, item_type.* "
+						+ "FROM item INNER JOIN item_type_table ON item.item_id = item_type_table.item_id "
+						+ "INNER JOIN item_type ON item_type_table.item_type_id = item_type.item_type_id "
+						+ "WHERE ";
+				for(int i = 0 ; i < itemTypeIdList.length; i++) {
+					sql += "item_type.item_type_id ="+itemTypeIdList[i];
+					if(i<itemTypeIdList.length-1) {
+						sql += " OR ";
+					}
+				}
+				sql += " GROUP BY item.item_id ORDER BY item.item_id ASC LIMIT ?,?";
+
+				pStmt = con.prepareStatement(sql);
+				pStmt.setInt(1, startItemNum);
+				pStmt.setInt(2, pageMaxItemCount);
+			}
+			else {
+			//商品名検索＋種類検索
+				sql = "SELECT item.*, item_type_table.*, item_type.* "
+						+ "FROM item INNER JOIN item_type_table ON item.item_id = item_type_table.item_id "
+						+ "INNER JOIN item_type  ON item_type_table.item_type_id = item_type.item_type_id "
+						+ "WHERE (";
+				for(int i = 0 ; i < itemTypeIdList.length; i++) {
+					sql += "item_type.item_type_id ="+itemTypeIdList[i];
+					if(i<itemTypeIdList.length-1) {
+						sql += " OR ";
+					}
+				}
+				sql += ") AND item_name LIKE '%" +searchWord+"%' GROUP BY item.item_id ORDER BY item.item_id ASC LIMIT ?,?";
+
+				pStmt = con.prepareStatement(sql);
+				pStmt.setInt(1, startItemNum);
+				pStmt.setInt(2, pageMaxItemCount);
+			}
+
+			ResultSet rs = pStmt.executeQuery();
+			ArrayList<ItemBeans> ibList = new ArrayList<ItemBeans>();
+			while (rs.next()) {
+				ItemBeans ib = new ItemBeans();
+				ib.setItemId(rs.getInt(1));
+				ib.setUserId(rs.getInt(2));
+				ib.setItemName(rs.getString(3));
+				ib.setItemDetail(rs.getString(4));
+				ib.setItemPrice(rs.getInt(5));
+				ib.setItemNumber(rs.getInt(6));
+				ib.setDelivaryMethod(rs.getInt(7));
+				ib.setFailName(rs.getString(8));
+				ibList.add(ib);
+			}
+			System.out.println("get all item");
+			return ibList;
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		} finally {

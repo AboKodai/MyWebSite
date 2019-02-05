@@ -20,7 +20,7 @@ public class ItemTypeDao {
 		try {
 			con = DBManager.getConnection();
 			ArrayList<ItemTypeBeans> itbList = new ArrayList<ItemTypeBeans>();
-			//SERECT文の準備
+			//SELECT文の準備
 			String sql = "SELECT * FROM item_type";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);

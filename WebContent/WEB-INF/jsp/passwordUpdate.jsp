@@ -43,14 +43,9 @@
 							<input type="password" name="newPasswordCon" required>
 						</div>
 					</div>
-					<div class="row">
-						<div class="mx-auto">
-							<button type="submit" class="btn btn-muted mt-4" value="cancel"name="confirm">キャンセル</button>
-						</div>
-						<div class="mx-auto">
+						<div class="text-center">
 							<button type="submit" class="btn btn-primary mt-4" style=width:110px; value="permit"name="confirm">更新</button>
 						</div>
-					</div>
 				</div>
 			</form>
 		</div>

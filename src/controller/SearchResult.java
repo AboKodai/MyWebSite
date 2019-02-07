@@ -39,13 +39,14 @@ public class SearchResult extends HttpServlet {
 		ArrayList<ItemBeans> ibList = new ArrayList<ItemBeans>();
 		ItemDao itemDao = new ItemDao();
 
-	//itemType一覧読み取り
+	//itemType一覧をセット
 		ItemTypeDao itDao = new ItemTypeDao();
 		ArrayList<ItemTypeBeans> itbList = new ArrayList<ItemTypeBeans>();
 		itbList = itDao.findItemType();
+		request.setAttribute("typeList", itbList);
 
 	//１ページに表示する商品の数
-		final int PAGE_MAX_ITEM_COUNT = 8;
+		final int PAGE_MAX_ITEM_COUNT = 100;
 
 	//表示ページ番号未指定の場合、1ページ目を表示
 		int pageNum = Integer.parseInt(request.getParameter("pageNum") == null ? "1" : request.getParameter("pageNum"));
@@ -74,7 +75,6 @@ public class SearchResult extends HttpServlet {
 
 	//表示ページの配列をセット
 		request.setAttribute("itemList", ibList);
-		request.setAttribute("typeList", itbList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/searchResult.jsp");
 		dispatcher.forward(request, response);
 

@@ -16,76 +16,35 @@
 
 <div class="container">
 	<h3 class="mgn-top text-center">カート</h3>
-	<div class="row mx-auto"style=width:45%;>
-		<form action="#" method="get" class="mx-auto">
-			<div class="text-center">
+	<c:if test="${sysMsg != null }">
+		<p class="text-center text-danger"> ${sysMsg }</p>
+	</c:if>
+	<form action="ItemDeleteFromCart" method="get" class="mx-auto">
+		<div class="row mx-auto"style=width:45%;>
+			<div class="text-center mx-auto">
 				<input type="submit" class="btn btn-muted my-5" value="削除" style=width:110px;>
 			</div>
-		</form>
-		<form action="#" method="get" class="mx-auto">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary my-5" value="購入手続き"style=width:110px;>
-			</div>
-		</form>
-	</div>
-	<div class="row">
-		<div class="card mb-3 mx-3" style=width:20%;>
-			<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
-			<div class="card-body">
-				<p class="card-text">サンプル名</p>
-				<p class="card-text">1000円</p>
-				<input type="checkbox" name="" value="">カートから削除
+			<div class="text-center mx-auto">
+				<a href="Buy">
+					 <button type="button" class="btn btn-primary my-5" value="購入手続き"style=width:110px;>購入手続き</button>
+				</a>
 			</div>
 		</div>
-		<div class="card mb-3 mx-3" style=width:20%;>
-			<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
-			<div class="card-body">
-				<p class="card-text">サンプル名</p>
-				<p class="card-text">1000円</p>
-				<input type="checkbox" name="" value="">カートから削除
-			</div>
+		<div class="row">
+			<c:forEach items="${cart}" var="item">
+				<div class="card mb-3 mx-3" style=width:20rem;height:30rem;>
+					<a href="ItemDetail?item_id=${item.itemId }">
+						<img class="card-img-top" src="img/${item.failName}" alt="Card image cap" style="max-height:15rem;width:20rem;">
+					</a>
+					<div class="card-body">
+						<p class="card-text">${item.itemName}</p>
+						<p class="card-text">${item.itemPrice}円×${item.sellNumber }</p>
+						<input type="checkbox" name="itemDelete" value="${item.itemId }"id="${item.itemId }">削除
+					</div>
+				</div>
+			</c:forEach>
 		</div>
-		<div class="card mb-3 mx-3" style=width:20%;>
-			<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
-			<div class="card-body">
-				<p class="card-text">サンプル名</p>
-				<p class="card-text">1000円</p>
-				<input type="checkbox" name="" value="">カートから削除
-			</div>
-		</div>
-		<div class="card mb-3 mx-3" style=width:20%;>
-			<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
-			<div class="card-body">
-				<p class="card-text">サンプル名</p>
-				<p class="card-text">1000円</p>
-				<input type="checkbox" name="" value="">カートから削除
-			</div>
-		</div>
-		<div class="card mb-3 mx-3" style=width:20%;>
-			<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
-			<div class="card-body">
-				<p class="card-text">サンプル名</p>
-				<p class="card-text">1000円</p>
-				<input type="checkbox" name="" value="">カートから削除
-			</div>
-		</div>
-		<div class="card mb-3 mx-3" style=width:20%;>
-			<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
-			<div class="card-body">
-				<p class="card-text">サンプル名</p>
-				<p class="card-text">1000円</p>
-				<input type="checkbox" name="" value="">カートから削除
-			</div>
-		</div>
-		<div class="card mb-3 mx-3" style=width:20%;>
-			<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
-			<div class="card-body">
-				<p class="card-text">サンプル名</p>
-				<p class="card-text">1000円</p>
-				<input type="checkbox" name="" value="">カートから削除
-			</div>
-		</div>
-	</div>
+	</form>
 </div>
 </body>
 </html>

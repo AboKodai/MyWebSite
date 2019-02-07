@@ -13,38 +13,30 @@
 <jsp:include page="/baselayout/header.jsp" />
 <div class=container>
 	<div class="left-content">
-		<img class="card-img-top mr-5 mgn-top" src="img/image.jpg" alt="Card image cap" style="max-width:500px; max-height:500px;">
+		<img class="card-img-top mr-5 mgn-top" src="img/${item.failName}" alt="Card image cap" style="max-width:500px; max-height:500px;">
 	</div>
 	<div class="right-content">
-		<h3 class="mgn-top">サンプル商品名</h3>
-		<h5 class="mt-4"><説明><br>しょうひんしょうさいしょうひんしょうさいしょうひんしょうさいしょうひんしょうさいしょうひんしょうさい</h5>
-		<h5 class="mt-4">価格：100000円</h5>
-		<h5 class="mt-4">送料：出品者負担</h5>
-		<h5 class="mt-4">
-			購入数
-			<select name="buyNumber">
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-				<option value="10">10</option>
-				<option value="11">11</option>
-				<option value="12">12</option>
-				<option value="13">13</option>
-				<option value="14">14</option>
-			</select>
-		</h5>
-		<div class="mx-auto">
-			<input type="submit" class="btn btn-danger mt-4" value="カートに入れる">
-		</div>
-		<div class="mx-auto mb-5">
-			<input type="submit" class="btn btn-primary mt-4" style=width:140px; value="購入手続き">
-		</div>
+		<h3 class="mgn-top">${item.itemName }</h3>
+		<h5 class="mt-4"><説明><br>${item.itemDetail }</h5>
+		<h5 class="mt-4">価格：${item.itemPrice }円</h5>
+		<h5 class="mt-4">送料：${dmb.delivaryMethod }</h5>
+		<form action="ItemDetail" method = "post">
+			<h5 class="mt-4">
+				購入数
+				<select name="sellNumber">
+					<c:forEach var="i" step="1" begin="1" end="${item.itemNumber }">
+						<option value="${i}">${i}</option>
+					</c:forEach>
+				</select>
+				<input type="hidden" name="itemId" value="${item.itemId }">
+			</h5>
+			<div class="mx-auto">
+				<button type="submit" class="btn btn-danger mt-4" value="addItem" name="select">カートに入れる</button>
+			</div>
+			<div class="mx-auto mb-5">
+				<button type="submit" class="btn btn-primary mt-4" style=width:140px; value="buy"name="select">購入手続き</button>
+			</div>
+		</form>
 	</div>
 </div>
 

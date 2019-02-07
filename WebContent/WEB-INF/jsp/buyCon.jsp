@@ -23,25 +23,26 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<th>タン</th>
-					<td>1</td>
-					<td>200</td>
-				</tr>
-				<tr>
-					<th>バラ</th>
-					<td>100</td>
-					<td>100000</td>
-				</tr>
-				<tr>
-					<th>モモあああ配送ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ</th>
-					<td>8</td>
-					<td>8000</td>
-				</tr>
+				<c:forEach items="${cart}" var="item">
+					<c:if test="${item.delivaryMethod == 1 }">
+						<tr>
+							<td>${item.itemName }</td>
+							<td>${item.sellNumber }</td>
+							<td>${item.itemPrice * item.sellNumber }円</td>
+						</tr>
+					</c:if>
+					<c:if test="${item.delivaryMethod == 2 }">
+						<tr>
+							<td>${item.itemName }</td>
+							<td>${item.sellNumber }</td>
+							<td>${item.itemPrice * item.sellNumber}円+送料</td>
+						</tr>
+					</c:if>
+				</c:forEach>
 			</tbody>
 		</table>
 			<div class="text-right my-5 h4 ">
-				合計：9999999円
+				合計：${buy.totalPrice}円<c:if test="${flag }">＋送料</c:if>
 			</div>
 		<div class="text-right my-5">
 			<input type="submit" class="btn btn-primary mt-4" style=width:200px; value="購入確定">

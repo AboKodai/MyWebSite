@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class MyPage
@@ -28,6 +29,14 @@ public class MyPage extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Helper.makeLoginSession(session,"isLogin");
+		if(!(boolean)session.getAttribute("isLogin")) {
+			//ログインセッションがない場合ログイン画面にリダイレクト
+			response.sendRedirect("Login");
+
+		}
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/myPage.jsp");
 		dispatcher.forward(request, response);
 	}

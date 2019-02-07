@@ -25,11 +25,11 @@
 					<input class="col-md-11" type="search" name="searchWord"
 						style="margin-top: 10px;" placeholder="検索ワード">
 					<p style="margin-top: 30px;">＜ジャンル＞</p>
-					<c:forEach var="typeList" items="${typeList }">
-						<p>
-							<input type="checkbox" name="type"
-								value="${typeList.itemTypeId }" style="vertical-align: middle;">${typeList.itemTypeName }</p>
-					</c:forEach>
+						<c:forEach var="typeList" items="${typeList }">
+							<p>
+								<input type="checkbox" name="type"value="${typeList.itemTypeId }" style="vertical-align: middle;">${typeList.itemTypeName }
+							</p>
+						</c:forEach>
 					<p>
 						<input type="submit" value="絞り込み">
 				</form>
@@ -49,8 +49,9 @@
 				<c:forEach var="itemList" items="${itemList }">
 					<div class="col-md-3 text-center my-3">
 						<div class="card" style="width: 20rem;height:30rem">
-							<img class="card-img-top" src="img/${itemList.failName }"
-								alt="Card image cap" style="max-height:20rem;width:20rem;">
+							<a href="ItemDetail?item_id=${itemList.itemId }">
+								<img class="card-img-top" src="img/${itemList.failName }"alt="Card image cap" style="max-height:20rem;width:20rem;">
+							</a>
 							<div class="card-body">
 								<p class="card-text">${itemList.itemName }</p>
 								<p class="card-text">${itemList.itemPrice }　円</p>

@@ -248,6 +248,51 @@ public class ItemDao {
 			}
 		}
 	}
+
+	/**itemIdをもとに商品情報を取得。商品詳細
+	 *
+	 * @param itemId
+	 * @return
+	 */
+	public ItemBeans itemDetail(int itemId) {
+		Connection con = null;
+
+		try {
+			con = DBManager.getConnection();
+
+			String sql = "SELECT * FROM item WHERE item_id = ?";
+			PreparedStatement pStmt = con.prepareStatement(sql);
+			pStmt.setInt(1, itemId);
+			ResultSet rs = pStmt.executeQuery();
+			ItemBeans item = new ItemBeans();
+			while(rs.next()) {
+				item.setItemId(rs.getInt("item_id"));
+				item.setUserId(rs.getInt("user_id"));
+				item.setItemName(rs.getString("item_name"));
+				item.setItemDetail(rs.getString("item_detail"));
+				item.setItemPrice(rs.getInt("item_price"));
+				item.setItemNumber(rs.getInt("item_number"));
+				item.setDelivaryMethod(rs.getInt("delivery_method_id"));
+				item.setFailName(rs.getString("file_name"));
+			}
+
+			System.out.println("get item info");
+			return item;
+
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
 }
 
 

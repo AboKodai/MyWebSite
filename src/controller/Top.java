@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import beans.ItemBeans;
 import beans.ItemTypeBeans;
@@ -34,11 +35,14 @@ public class Top extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	//itemType一覧読み取り
+		HttpSession session = request.getSession();
+		Helper.makeLoginSession(session,"isLogin");
+
+		//itemType一覧読み取り
 		ItemTypeDao itDao = new ItemTypeDao();
 		ArrayList<ItemTypeBeans> itbList = new ArrayList<ItemTypeBeans>();
 		itbList = itDao.findItemType();
-	//全商品情報の取得
+		//全商品情報の取得
 		ItemDao itemDao = new ItemDao();
 		ArrayList<ItemBeans> ibList = itemDao.getRandomItem();
 		request.setAttribute("randomList", ibList);
@@ -52,7 +56,7 @@ public class Top extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 	}
 
 }

@@ -6,18 +6,18 @@
 	<div class=" row bgc-main shadow-sm" >
 		<div class="col-sm-4"></div>
 		<div class="col-sm-4 text-center h3 ">
-			<a class="text-dark" href="#">食料品ECサイト</a>
+			<a class="text-dark" href="Top">食料品ECサイト</a>
 		</div>
-		<c:if test="${userInfo == null}">
+		<c:if test="${!isLogin}">
 			<div class="col-sm-4 text-right pr-5">
-				<a class="text-dark p-4" href="#">カート</a>
+				<a class="text-dark p-4" href="Cart">カート</a>
 				<a class="btn btn-outline-danger text-right " href="Login">ログイン</a>
 			</div>
 		</c:if>
-		<c:if test="${userInfo != null}">
+		<c:if test="${isLogin}">
 			<div class="col-sm-4 text-right pr-5">
 				<a href="MyPage?userId=${userInfo.userId }">${userInfo.userName}</a>　さん
-				<a class="text-dark p-4" href="#">カート</a>
+				<a class="text-dark p-4" href="Cart">カート</a>
 				<a class="btn btn-outline-danger text-right " href="Logout">ログアウト</a>
 			</div>
 		</c:if>

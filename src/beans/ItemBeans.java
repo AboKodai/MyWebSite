@@ -12,6 +12,8 @@ public class ItemBeans {
 	private int delivaryMethod;
 	private String failName;
 
+	private int sellNumber;
+
 
 	public int getItemId() {
 		return itemId;
@@ -66,6 +68,12 @@ public class ItemBeans {
 	}
 	public void setFailName(String failName) {
 		this.failName = failName;
+	}
+	public int getSellNumber() {
+		return sellNumber;
+	}
+	public void setSellNumber(int sellNumber) {
+		this.sellNumber = sellNumber;
 	}
 
 

@@ -49,11 +49,12 @@
 				<c:forEach var="randomList" items="${randomList }">
 					<div class="col-md-3 text-center my-3">
 						<div class="card" style="width: 20rem;height:30rem">
-							<img class="card-img-top" src="img/${randomList.failName }"
-								alt="Card image cap" style="max-height:20rem;width:20rem;">
+							<a href="ItemDetail?item_id=${randomList.itemId }">
+								<img class="card-img-top" src="img/${randomList.failName }"alt="Card image cap" style="max-height:15rem;width:20rem;">
+							</a>
 							<div class="card-body">
 								<p class="card-text">${randomList.itemName }</p>
-								<p class="card-text">${randomList.itemPrice }　円</p>
+								<p class="card-text">${randomList.itemPrice }円</p>
 							</div>
 						</div>
 					</div>

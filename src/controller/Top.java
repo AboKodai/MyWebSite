@@ -36,7 +36,6 @@ public class Top extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Helper.makeLoginSession(session,"isLogin");
 
 		//itemType一覧読み取り
 		ItemTypeDao itDao = new ItemTypeDao();

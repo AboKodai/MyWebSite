@@ -9,21 +9,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import beans.BuyBeans;
 import beans.ItemBeans;
+import dao.ItemDao;
 
 /**
- * Servlet implementation class Buy
+ * Servlet implementation class DecreaseItemNumber
  */
-@WebServlet("/Buy")
-public class Buy extends HttpServlet {
+@WebServlet("/DecreaseItemNumber")
+public class DecreaseItemNumber extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Buy() {
+    public DecreaseItemNumber() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,27 +33,28 @@ public class Buy extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		ArrayList<ItemBeans> cart = (ArrayList<ItemBeans>) session.getAttribute("cart");
+		ItemDao itemDao = new ItemDao();
 
-		if(session.getAttribute("userInfo") == null) {
-			//ログインセッションがない場合ログイン画面にリダイレクト
-			response.sendRedirect("Login");
-			return;
-		}
-		if(cart.size() == 0 ) {
-			//カートに商品がない場合カートにフォワード
-			request.setAttribute("sysMsg", "購入する商品がありません");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/cart.jsp");
-			dispatcher.forward(request, response);
-			return;
+		//リクエストスコープ情報の取得
+		BuyBeans resultBuy = (BuyBeans) request.getAttribute("resultBuy");
+		ArrayList<ItemBeans> resultBuyDetail = (ArrayList<ItemBeans>) request.getAttribute("resultBuyDetail");
 
-		}else {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/buy.jsp");
-			dispatcher.forward(request, response);
-		}
+		//商品数量の更新
+		for(ItemBeans item : resultBuyDetail) {
+			//商品の現在数量を取得
+			ItemBeans itemTable = new ItemBeans();
+			itemTable = itemDao.itemDetail(item.getItemId());
+			int ItemNumber = itemTable.getItemNumber();
+			//購入された商品数量を取得
+			int decreaseItemNumber = item.getSellNumber();
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/buy.jsp");
+			int newItemNumber = ItemNumber - decreaseItemNumber;
+
+			//商品数量を更新
+			itemDao.decreaseItemNumber(newItemNumber, item.getItemId());
+
+				}
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/buyResult.jsp");
 		dispatcher.forward(request, response);
 	}
 

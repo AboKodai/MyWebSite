@@ -15,19 +15,12 @@ public class Helper {
 		return o;
 	}
 
-	//ログインセッションがnullだった場合はfalseを入れる
-	public static void makeLoginSession(HttpSession session, String str) {
-		Object o = session.getAttribute(str);
-		if(o==null) {
-			session.setAttribute("isLogin", false);
-		}
-	}
 
 	//カートの合計金額の算出
 	public static int getTotalItemPrice(ArrayList<ItemBeans> cart) {
 		int total = 0;
 		for(ItemBeans item : cart) {
-			total += item.getItemPrice();
+			total += item.getItemPrice()*item.getSellNumber();
 		}
 		return total;
 	}

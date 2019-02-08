@@ -293,6 +293,39 @@ public class ItemDao {
 			}
 		}
 	}
+
+	/**商品数量から購入数を減算
+	 *
+	 * @param buyId
+	 * @param userId
+	 */
+	public void decreaseItemNumber(int itemNumber, int itemId) {
+		Connection con = null;
+
+		try {
+			con = DBManager.getConnection();
+
+			String sql = "UPDATE item SET item_number = ? WHERE item_id = ?";
+
+			PreparedStatement pStmt = con.prepareStatement(sql);
+			pStmt.setInt(1, itemNumber);
+			pStmt.setInt(2, itemId);
+			pStmt.executeUpdate();
+
+			System.out.println("update itemNumber");
+
+	}catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		try {
+			if (con != null) {
+				con.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}
 }
 
 

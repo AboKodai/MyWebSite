@@ -30,8 +30,7 @@ public class Logout extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.removeAttribute("userInfo");
-		session.setAttribute("isLogin", false);
-		if(!(boolean)session.getAttribute("isLogin")) {
+		if(session.getAttribute("userInfo") == null) {
 			System.out.println("ログアウト完了");
 		}
 		response.sendRedirect("Top");

@@ -35,8 +35,7 @@ public class BuyCon extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Helper.makeLoginSession(session,"isLogin");
-		if(!(boolean)session.getAttribute("isLogin")) {
+		if(session.getAttribute("userInfo") == null) {
 			//ログインセッションがない場合ログイン画面にリダイレクト
 			response.sendRedirect("Login");
 		}
@@ -71,8 +70,7 @@ public class BuyCon extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
 	}
 
 }

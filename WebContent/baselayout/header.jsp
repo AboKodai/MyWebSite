@@ -8,13 +8,13 @@
 		<div class="col-sm-4 text-center h3 ">
 			<a class="text-dark" href="Top">食料品ECサイト</a>
 		</div>
-		<c:if test="${!isLogin}">
+		<c:if test="${userInfo == null }">
 			<div class="col-sm-4 text-right pr-5">
 				<a class="text-dark p-4" href="Cart">カート</a>
 				<a class="btn btn-outline-danger text-right " href="Login">ログイン</a>
 			</div>
 		</c:if>
-		<c:if test="${isLogin}">
+		<c:if test="${userInfo != null }">
 			<div class="col-sm-4 text-right pr-5">
 				<a href="MyPage?userId=${userInfo.userId }">${userInfo.userName}</a>　さん
 				<a class="text-dark p-4" href="Cart">カート</a>

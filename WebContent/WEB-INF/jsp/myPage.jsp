@@ -48,13 +48,11 @@
 		<thead class="thead-light">
 			<tr>
 				<th>購入日時</th>
-				<th>希望配送日</th>
 				<th>合計</th>
 			</tr>
 			<tr>
-				<td>yyyy年mm月dd日</td>
-				<td>mm月dd日</td>
-				<td>8000円</td>
+				<td>${buy.formatDate }</td>
+				<td>${buy.totalPrice }円</td>
 			</tr>
 		</tbody>
 	</table>
@@ -73,8 +71,10 @@
 			<thead class="thead-light">
 				<tr>
 					<th>発送状況</th>
-					<th>購入者</th>
 					<th>受注日時</th>
+					<th>商品</th>
+					<th>数量</th>
+					<th>購入者</th>
 					<th>住所</th>
 				</tr>
 			</thead>

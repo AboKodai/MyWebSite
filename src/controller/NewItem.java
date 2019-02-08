@@ -38,7 +38,16 @@ public class NewItem extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	//商品の種類を取得
+
+		HttpSession session = request.getSession();
+		if(session.getAttribute("userInfo") == null) {
+			//ログインセッションがない場合ログイン画面にリダイレクト
+			response.sendRedirect("Login");
+			return;
+
+		}
+
+		//商品の種類を取得
 		ItemTypeDao itDao = new ItemTypeDao();
 		ArrayList<ItemTypeBeans> itbList = new ArrayList<ItemTypeBeans>();
 		itbList = itDao.findItemType();

@@ -14,16 +14,16 @@
 <div class=container>
 	<h3 class="text-center mt-5">購入が完了しました</h3>
 		<div class="row mx-auto"style=width:50%;>
-			<form action="#" method="get" class="mx-auto">
-				<div class="text-center">
-					<input type="submit" class="btn btn-muted my-5" value="買い物を続ける">
-				</div>
-			</form>
-			<form action="#" method="get" class="mx-auto">
-				<div class="text-center mx-5">
-					<input type="submit" class="btn btn-primary my-5" value="マイページへ">
-				</div>
-			</form>
+			<div class="text-center mx-auto">
+				<a href="Top">
+					<button type="button" class="btn btn-muted my-5">買い物を続ける</button>
+				</a>
+			</div>
+			<div class="text-center mx-auto">
+				<a href="MyPage">
+					<button type="button" class="btn btn-primary my-5">マイページへ</button>
+				</a>
+			</div>
 		</div>
 	<h2 class="text-center">購入情報</h2>
 	<div style=width:800px; class=mx-auto>
@@ -36,8 +36,8 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>ｙｙｙｙ年ｍｍ月ｄｄ日hh時MM分ｓｓ秒</td>
-					<td>999999円</td>
+					<td>${resultBuy.formatDate}</td>
+					<td>${resultBuy.totalPrice }</td>
 				</tr>
 			</tbody>
 		</table>
@@ -48,11 +48,13 @@
 					<th width=200>個数</th>
 					<th width=200>小計</th>
 				</tr>
-				<tr>
-					<td>モモ</td>
-					<td>8</td>
-					<td>8000円</td>
-				</tr>
+				<c:forEach items="${resultBuyDetail }" var="item">
+					<tr>
+						<td>${item.itemName }</td>
+						<td>${item.sellNumber }</td>
+						<td>${item.itemPrice *item.sellNumber}</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 	</div>

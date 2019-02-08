@@ -34,10 +34,9 @@ public class PasswordUpdate extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-
-		//ログインセッションがない場合、新規登録画面へリダイレクト
+		//ログインセッションがない場合、ログイン画面へリダイレクト
 		if (session.getAttribute("userInfo") == null) {
-			response.sendRedirect("NewUser");
+			response.sendRedirect("Login");
 			return;
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/passwordUpdate.jsp");

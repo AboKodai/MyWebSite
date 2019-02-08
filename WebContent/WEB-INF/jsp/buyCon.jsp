@@ -45,7 +45,9 @@
 				合計：${buy.totalPrice}円<c:if test="${flag }">＋送料</c:if>
 			</div>
 		<div class="text-right my-5">
-			<input type="submit" class="btn btn-primary mt-4" style=width:200px; value="購入確定">
+			<a href="BuyResult">
+				<button type="button" class="btn btn-primary mt-4" style=width:200px; >購入確定</button>
+			</a>
 			<br>
 		</div>
 	</div>

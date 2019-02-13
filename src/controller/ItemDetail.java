@@ -40,6 +40,10 @@ public class ItemDetail extends HttpServlet {
 		DeliveryMethodBeans dmb = new DeliveryMethodBeans();
 		DeliveryMethodDao dmDao = new DeliveryMethodDao();
 		item = itemDao.itemDetail( Integer.parseInt(request.getParameter("item_id")));
+		if(item.getItemNumber() == 0) {
+			//在庫なしのとき
+			request.setAttribute("sysMsg", "売り切れ");
+		}
 		request.setAttribute("item", item);
 		dmb = dmDao.getDeliveryMethod(item.getDelivaryMethod());
 		request.setAttribute("dmb", dmb);

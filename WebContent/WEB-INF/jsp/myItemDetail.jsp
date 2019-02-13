@@ -14,14 +14,16 @@
 <div class=container>
 	<h3 class="mgn-top text-center">出品商品詳細</h3>
 
-	<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
+	<p class="text-center">
+		<img src="img/${item.failName }" alt="Card image cap" width="500px" height="500px">
+	</p>
 	<div class="row mt-5">
 		<div class="col-sm-4"></div>
 		<div class="col-sm-2 h5">
 			商品名
 		</div>
 		<div class="col-sm-6 h5">
-			サンプル名
+			${item.itemName}
 		</div>
 	</div>
 	<div class="row mt-5">
@@ -30,7 +32,7 @@
 			商品説明
 		</div>
 		<div class="col-sm-6 h5">
-			商品の詳しい説明です
+			${item.itemDetail }
 		</div>
 	</div>
 	<div class="row mt-5">
@@ -39,7 +41,7 @@
 			単価
 		</div>
 		<div class="col-sm-6 h5">
-			10000円
+			${item.itemPrice }円
 		</div>
 	</div>
 	<div class="row mt-5">
@@ -48,7 +50,7 @@
 			残数
 		</div>
 		<div class="col-sm-6 h5">
-			777777個
+			${item.itemNumber }
 		</div>
 	</div>
 	<div class="row mt-5">
@@ -57,7 +59,7 @@
 			送料
 		</div>
 		<div class="col-sm-6 h5">
-			出品者負担
+			${dmb.delivaryMethod }
 		</div>
 	</div>
 	<div class="row mt-5">
@@ -66,11 +68,13 @@
 			種類
 		</div>
 		<div class="col-sm-6 h5">
-			<ul>
-				<li>飯</li>
-				<li>麺</li>
-				<li>水</li>
-			</ul>
+			<c:forEach items="${typeList}" var="type">
+					<c:if test="${itemTypeList.contains(type.itemTypeId)}">
+						<ul>
+							<li>${type.itemTypeName }</li>
+						</ul>
+					</c:if>
+			</c:forEach>
 		</div>
 	</div>
 </div>

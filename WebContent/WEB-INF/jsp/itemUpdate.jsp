@@ -14,14 +14,14 @@
 <div class=container>
 	<h3 class="mgn-top text-center">商品情報更新</h3>
 
-		<form method="post" action="#">
+		<form method="post" action="ItemUpdate">
 			<div class="row mt-5">
 				<div class="col-sm-4"></div>
 				<div class="col-sm-2 h5">
 					商品名
 				</div>
 				<div class="col-sm-6">
-					<input type="text" name="itemName" style=width:350px;>
+					<textarea rows="3" cols="47"name="itemName"required >${item.itemName }</textarea>
 				</div>
 			</div>
 			<div class="row mt-5">
@@ -30,7 +30,7 @@
 					商品説明
 				</div>
 				<div class="col-sm-6">
-					<input type="text" name="itemDetail" style=width:350px;height:400px;>
+					<textarea rows="15" cols="47"name="itemDetail"required >${item.itemDetail}</textarea>
 				</div>
 			</div>
 			<div class="row mt-5">
@@ -39,7 +39,7 @@
 					価格
 				</div>
 				<div class="col-sm-6 h5">
-					<input type="number" name="itemPrice" style=width:150px; class="mr-3">円
+					<input type="number" name="itemPrice" style=width:150px; class="mr-3" required value="${item.itemPrice }">円
 				</div>
 			</div>
 			<div class="row mt-5">
@@ -48,19 +48,7 @@
 					個数
 				</div>
 				<div class="col-sm-6 h5">
-					<input type="number" name="itemNumber" style=width:150px; class="mr-3">個
-				</div>
-			</div>
-			<div class="row mt-5">
-				<div class="col-sm-4"></div>
-				<div class="col-sm-2 h5">
-					送料
-				</div>
-				<div class="col-sm-6 h5">
-					<select name="deliveryPrice" style=width:150px;>
-						<option value=0>出品者負担</option>
-						<option value=1>購入者負担</option>
-					</select>
+					<input type="number" name="itemNumber" style=width:150px; class="mr-3" required value="${item.itemNumber }">個
 				</div>
 			</div>
 			<div class="row mt-5">
@@ -69,40 +57,47 @@
 					種類
 				</div>
 				<div class="col-sm-6 h5">
-					<div class="form-inline mb-3">
-						<input type="checkbox" name="tag" value="1"><div class="mr-3">タグ１</div>
-						<input type="checkbox" name="tag" value="1"><div class="mr-3">タグ１</div>
-						<input type="checkbox" name="tag" value="1">タグ１
-					</div>
-					<div class="form-inline mb-3">
-						<input type="checkbox" name="tag" value="1"><div class="mr-3">タグ１</div>
-						<input type="checkbox" name="tag" value="1"><div class="mr-3">タグ１</div>
-						<input type="checkbox" name="tag" value="1">タグ１
-					</div>
-					<div class="form-inline">
-						<input type="checkbox" name="tag" value="1"><div class="mr-3">タグ１</div>
-						<input type="checkbox" name="tag" value="1"><div class="mr-3">タグ１</div>
-						<input type="checkbox" name="tag" value="1">タグ１
-					</div>
+					<c:forEach var="itbList" items="${itbList }">
+						<div class="form-inline mb-3">
+							<c:if test="${itiList.contains(itbList.itemTypeId) }">
+								<input type="checkbox" name="type" value="${itbList.itemTypeId }" checked="checked"><div>${itbList.itemTypeName }</div>
+							</c:if>
+							<c:if test="${!itiList.contains(itbList.itemTypeId) }">
+								<input type="checkbox" name="type" value="${itbList.itemTypeId }"><div>${itbList.itemTypeName }</div>
+							</c:if>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 			<div class="row mt-5">
 				<div class="col-sm-4"></div>
 				<div class="col-sm-2 h5">
-					写真
+					送料
 				</div>
 				<div class="col-sm-6 h5">
-					<input type="file" name="itemImg"  class="mr-3">
+					<select name="deliveryMethod" style=width:150px; required>
+						<c:forEach var="dmbList" items="${dmbList }">
+							<c:if test="${item.delivaryMethod == dmbList.delivaryMethodId }">
+								<option value=${dmbList. delivaryMethodId } selected>${dmbList.delivaryMethod}</option>
+							</c:if>
+							<c:if test="${item.delivaryMethod != dmbList.delivaryMethodId }">
+								<option value=${dmbList. delivaryMethodId }>${dmbList.delivaryMethod}</option>
+							</c:if>
+						</c:forEach>
+					</select>
 				</div>
 			</div>
 			<div class="row mx-auto"style=width:40%;>
 				<div class="mx-auto">
-					<input type="submit" class="btn btn-muted my-5" value="キャンセル">
+				<a href="MyPage">
+					<button type="button" class="btn btn-muted my-5">キャンセル</button>
+				</a>
 				</div>
 				<div class="mx-auto">
-					<input type="submit" class="btn btn-primary my-5" value="更新" style=width:110px;>
+					<input type="submit" class="btn btn-primary my-5" value="登録" style=width:110px;>
 				</div>
 			</div>
+			<input type="hidden" name="itemId" value="${item.itemId }">
 
 		</form>
 </div>

@@ -37,7 +37,7 @@
 			<tbody>
 				<tr>
 					<td>${resultBuy.formatDate}</td>
-					<td>${resultBuy.totalPrice }</td>
+					<td>${resultBuy.totalPrice }円</td>
 				</tr>
 			</tbody>
 		</table>
@@ -52,7 +52,7 @@
 					<tr>
 						<td>${item.itemName }</td>
 						<td>${item.sellNumber }</td>
-						<td>${item.itemPrice *item.sellNumber}</td>
+						<td>${item.itemPrice *item.sellNumber}円</td>
 					</tr>
 				</c:forEach>
 			</tbody>

@@ -2,10 +2,18 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ItemTypeTableDao {
 
+	/**商品ID登録
+	 *
+	 * @param itemId
+	 * @param strItemTypeId
+	 * @return
+	 */
 	public boolean entryItem(int itemId, String[] strItemTypeId) {
 		Connection con = null;
 
@@ -41,4 +49,73 @@ public class ItemTypeTableDao {
 		}
 	}
 
+
+	/**ItemIdからItemTypeIdを検索する。
+	 * @param itemId
+	 * @return
+	 */
+	public ArrayList<Integer> getItemTypeIdByItemId(int itemId){
+		Connection con = null;
+		ArrayList<Integer> itemTypeIdList = new ArrayList<Integer>();
+
+		try {
+			con = DBManager.getConnection();
+			String sql = "SELECT * FROM item_type_table WHERE item_id = ?";
+
+			PreparedStatement pStmt = con.prepareStatement(sql);
+			pStmt.setInt(1, itemId);
+
+			ResultSet rs = pStmt.executeQuery();
+			while(rs.next()) {
+				int id = rs.getInt("item_type_id");
+				itemTypeIdList.add(id);
+			}
+
+			System.out.println("get itemTypeIdList");
+			return itemTypeIdList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
+
+	/**itemIdに紐づくitemTypeIdを削除
+	 *
+	 * @param itemId
+	 */
+	public void itemTypeDeleteByItemId(int itemId) {
+		Connection con = null;
+
+		try {
+			con = DBManager.getConnection();
+
+			String sqlDelete = "DELETE FROM item_type_table WHERE item_id = ?";
+
+			PreparedStatement pStmt = con.prepareStatement(sqlDelete);
+			pStmt.setInt(1, itemId);
+
+			pStmt.executeUpdate();
+
+			System.out.println("delete");
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

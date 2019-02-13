@@ -44,21 +44,26 @@
 
 <div class=container>
 	<h3 class="text-center">最新の購入</h3>
-	<table class="table table-bordered">
-		<thead class="thead-light">
-			<tr>
-				<th>購入日時</th>
-				<th>合計</th>
-			</tr>
-			<tr>
-				<td>${buy.formatDate }</td>
-				<td>${buy.totalPrice }円</td>
-			</tr>
-		</tbody>
-	</table>
-	<p class="text-right">
+	<c:if test="${buy != null }">
+		<table class="table table-bordered">
+			<thead class="thead-light">
+				<tr>
+					<th>購入日時</th>
+					<th>合計</th>
+				</tr>
+				<tr>
+					<td>${buy.formatDate }</td>
+					<td>${buy.totalPrice }円</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="text-right">
 		<a href="#">購入履歴一覧</a>
-	</p>
+		</p>
+	</c:if>
+	<c:if test="${buy == null }">
+		<p class="text-center h4 text-danger">購入した商品はありません</p>
+	</c:if>
 </div>
 <hr>
 <div class="text-center mx-auto">
@@ -110,72 +115,43 @@
 	<div class="col-sm-6 ">
 
 		<h3 class="text-center">出品商品一覧</h3>
-		<table class="table table-bordered">
-			<thead class="thead-light">
-				<tr>
-					<th width="150px"></th>
-					<th width="150px">商品名</th>
-					<th width="150px">価格</th>
-					<th width="150px">残数</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-						<div class=row>
-							<div class="col-sm-4">
-								<a href="#" class="btn bg-info" style=color:white;>詳細</a>
-							</div>
-							<div class="col-sm-4">
-								<a href="#" class="btn bg-warning" style=color:white;>更新</a>
-							</div>
-							<div class="col-sm-4">
-								<a href="#" class="btn bg-danger" style=color:white;>削除</a>
-							</div>
-						</div>
-					</td>
-					<td>もも</td>
-					<td>500円</td>
-					<td>10個</td>
-				</tr>
-				<tr>
-					<td>
-						<div class=row>
-							<div class="col-sm-4">
-								<a href="#" class="btn bg-info" style=color:white;>詳細</a>
-							</div>
-							<div class="col-sm-4">
-								<a href="#" class="btn bg-warning" style=color:white;>更新</a>
-							</div>
-							<div class="col-sm-4">
-								<a href="#" class="btn bg-danger" style=color:white;>削除</a>
-							</div>
-						</div>
-					</td>
-					<td>もも</td>
-					<td>500円</td>
-					<td>10個</td>
-				</tr>
-				<tr>
-					<td>
-						<div class=row>
-							<div class="col-sm-4">
-								<a href="#" class="btn bg-info" style=color:white;>詳細</a>
-							</div>
-							<div class="col-sm-4">
-								<a href="#" class="btn bg-warning" style=color:white;>更新</a>
-							</div>
-							<div class="col-sm-4">
-								<a href="#" class="btn bg-danger" style=color:white;>削除</a>
-							</div>
-						</div>
-					</td>
-					<td>もも</td>
-					<td>500円</td>
-					<td>10個</td>
-				</tr>
-			</tbody>
-		</table>
+		<c:if test="${myItemList == null}">
+			<p class="text-center h4 text-danger">出品中の商品はありません
+		</c:if>
+		<c:if test="${myItemList != null}">
+			<table class="table table-bordered">
+				<thead class="thead-light">
+					<tr>
+						<th width="150px"></th>
+						<th width="150px">商品名</th>
+						<th width="50px">価格</th>
+						<th width="50px">残数</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${myItemList}" var="item">
+						<tr>
+							<td>
+								<div class=row>
+									<div class="col-sm-4">
+										<a href="MyItemDetail?itemId=${item.itemId }" class="btn bg-info" style=color:white;>詳細</a>
+									</div>
+									<div class="col-sm-4">
+										<a href="ItemUpdate?itemId=${item.itemId }" class="btn bg-warning" style=color:white;>更新</a>
+									</div>
+									<div class="col-sm-4">
+										<a href="ItemDelete?itemId=${item.itemId }" class="btn bg-danger" style=color:white;>削除</a>
+									</div>
+								</div>
+							</td>
+							<td>${item.itemName }</td>
+							<td>${item.itemPrice }円</td>
+							<td>${item.itemNumber }</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</c:if>
 	</div>
 </div>
 

@@ -16,12 +16,15 @@
 				<h3>商品削除</h3>
 			</div>
 			<form method="post" action="#">
-				<img class="card-img-top" src="img/image.jpg" alt="Card image cap">
-				<p class=text-center>サンプル名</p>
+				<input type="hidden" value="${item.itemId}" name="itemId">
+				<img class="card-img-top" src="img/${item.failName }" alt="Card image cap" style="height:35rem;width:30rem;">
+				<p class=text-center>${item.itemName}</p>
 				<p class=text-center>商品情報を削除します。よろしいですか？</p>
 				<div class="row">
 					<div class="mx-auto">
-						<input type="submit" class="btn btn-muted mt-4" value="キャンセル">
+						<a href="MyPage">
+							<button type="button" class="btn btn-muted mt-4">キャンセル</button>
+						</a>
 					</div>
 					<div class="mx-auto mb-5">
 						<input type="submit" class="btn btn-primary mt-4" style=width:110px; value="削除">

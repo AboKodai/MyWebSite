@@ -29,7 +29,7 @@ public class ItemDao {
 		try {
 			con = DBManager.getConnection();
 
-			String sql = "INSERT INTO item values(0,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO item values(0,?,?,?,?,?,?,?,1)";
 			PreparedStatement pStmt = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			pStmt.setInt(1, userId);
 			pStmt.setString(2, itemName);
@@ -314,18 +314,143 @@ public class ItemDao {
 
 			System.out.println("update itemNumber");
 
-	}catch (SQLException e) {
-		e.printStackTrace();
-	} finally {
-		try {
-			if (con != null) {
-				con.close();
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-}
+
+
+
+	/**商品更新
+	 * @param itemName
+	 * @param itemDetail
+	 * @param itemPrice
+	 * @param itemNumber
+	 * @param deliveryMethodId
+	 * @param fileName
+	 * @param itemId
+	 */
+	public void itemUpdate(String itemName ,String itemDetail, int itemPrice, int itemNumber, int deliveryMethodId, int itemId) {
+		Connection con = null;
+
+		try {
+			con = DBManager.getConnection();
+
+			String sql = "UPDATE item SET item_name = ?, item_detail = ?, item_price = ?, item_number = ?, delivery_Method_id = ? WHERE item_id = ?";
+
+			PreparedStatement pStmt = con.prepareStatement(sql);
+			pStmt.setString(1, itemName);
+			pStmt.setString(2, itemDetail);
+			pStmt.setInt(3, itemPrice);
+			pStmt.setInt(4, itemNumber);
+			pStmt.setInt(5, deliveryMethodId);
+			pStmt.setInt(6, itemId);
+			pStmt.executeUpdate();
+
+			System.out.println("item info update");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**ユーザIDをもとに商品情報を取得。出品商品一覧。
+	 *
+	 * @param userId
+	 * @return
+	 */
+	public ArrayList<ItemBeans> getItemByuserId(int userId){
+		Connection con = null;
+		ArrayList<ItemBeans> itemList = new ArrayList<ItemBeans>();
+		boolean isAdd = false;
+		try {
+			con = DBManager.getConnection();
+
+			String sql = "SELECT * FROM item WHERE user_id = ?";
+			PreparedStatement pStmt = con.prepareStatement(sql);
+			pStmt.setInt(1, userId);
+			ResultSet rs = pStmt.executeQuery();
+			while(rs.next()) {
+				if(rs.getInt("delete_flag") == 1) {
+					ItemBeans ib = new ItemBeans();
+					ib.setItemId(rs.getInt("item_id"));
+					ib.setUserId(rs.getInt("user_id"));
+					ib.setItemName(rs.getString("item_name"));
+					ib.setItemDetail(rs.getString("item_detail"));
+					ib.setItemPrice(rs.getInt("item_price"));
+					ib.setItemNumber(rs.getInt("item_number"));
+					ib.setDelivaryMethod(rs.getInt("delivery_method_id"));
+					ib.setFailName(rs.getString("file_name"));
+					itemList.add(ib);
+					isAdd = true;
+				}
+			}
+
+			if(isAdd) {
+
+				System.out.println("get itemList info");
+				return itemList;
+			}else {
+				return null;
+			}
+
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
+
+	public void itemDelete(int itemId) {
+		Connection con = null;
+
+		try {
+			con = DBManager.getConnection();
+
+			String sql = "UPDATE item SET delete_flag=0 WHERE item_id = ?";
+
+			PreparedStatement pStmt = con.prepareStatement(sql);
+			pStmt.setInt(1, itemId);
+
+			pStmt.executeUpdate();
+
+			System.out.println("item delete from item table");
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(con != null) {
+					con.close();
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
 
 

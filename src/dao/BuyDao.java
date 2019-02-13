@@ -121,6 +121,8 @@ public class BuyDao {
 				buy.setUserId(rs.getInt("buy_user_id"));
 				buy.setTotalPrice(rs.getInt("total_price"));
 				buy.setCheckboxInfo(rs.getInt("checkbox_info"));
+			}else {
+				return null;
 			}
 			System.out.println("get buy data");
 

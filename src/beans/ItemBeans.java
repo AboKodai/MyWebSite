@@ -11,6 +11,7 @@ public class ItemBeans {
 	private int itemTypeId;
 	private int delivaryMethod;
 	private String failName;
+	private int deleteFlag;
 
 	private int sellNumber;
 
@@ -74,6 +75,12 @@ public class ItemBeans {
 	}
 	public void setSellNumber(int sellNumber) {
 		this.sellNumber = sellNumber;
+	}
+	public int getDeleteFlag() {
+		return deleteFlag;
+	}
+	public void setDeleteFlag(int deleteFlag) {
+		this.deleteFlag = deleteFlag;
 	}
 
 

@@ -88,7 +88,9 @@
 			</div>
 			<div class="row mx-auto"style=width:40%;>
 				<div class="mx-auto">
-					<input type="submit" class="btn btn-muted my-5" value="キャンセル">
+				<a href="MyPage">
+					<button type="button" class="btn btn-muted my-5">キャンセル</button>
+				</a>
 				</div>
 				<div class="mx-auto">
 					<input type="submit" class="btn btn-primary my-5" value="登録" style=width:110px;>

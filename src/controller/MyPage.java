@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.BuyBeans;
+import beans.ItemBeans;
 import beans.UserBeans;
 import dao.BuyDao;
+import dao.ItemDao;
 
 /**
  * Servlet implementation class MyPage
@@ -35,6 +38,7 @@ public class MyPage extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		BuyDao buyDao = new BuyDao();
+		ItemDao itemDao = new ItemDao();
 		if(session.getAttribute("userInfo") == null) {
 			//ログインセッションがない場合ログイン画面にリダイレクト
 			response.sendRedirect("Login");
@@ -42,14 +46,17 @@ public class MyPage extends HttpServlet {
 		}
 		UserBeans user = (UserBeans) session.getAttribute("userInfo");
 		int userId = user.getUserId();
-		//購入履歴表示のための購入情報取得
+		//購入履歴表示のため
 		BuyBeans buy = buyDao.getBuyBeansByUserId(userId);
 		request.setAttribute("buy", buy);
 
-		//受注一覧表示のための
+		//受注一覧表示のため
 
-		//出品商品一覧のための
 
+		//出品商品一覧のため
+		ArrayList<ItemBeans> itemList = new ArrayList<ItemBeans>();
+		itemList = itemDao.getItemByuserId(userId);
+		request.setAttribute("myItemList", itemList);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/myPage.jsp");
 		dispatcher.forward(request, response);
@@ -59,8 +66,7 @@ public class MyPage extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
 	}
 
 }

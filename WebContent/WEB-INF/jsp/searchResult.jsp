@@ -50,7 +50,7 @@
 					<div class="col-md-3 text-center my-3">
 						<div class="card" style="width: 20rem;height:30rem">
 							<a href="ItemDetail?item_id=${itemList.itemId }">
-								<img class="card-img-top" src="img/${itemList.failName }"alt="Card image cap" style="max-height:20rem;width:20rem;">
+								<img class="card-img-top" src="img/${itemList.failName }"alt="Card image cap" style="max-height:15rem;width:20rem;">
 							</a>
 							<div class="card-body">
 								<p class="card-text">${itemList.itemName }</p>

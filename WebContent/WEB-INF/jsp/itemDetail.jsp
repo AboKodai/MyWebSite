@@ -23,11 +23,16 @@
 		<form action="ItemDetail" method = "post">
 			<h5 class="mt-4">
 				購入数
-				<select name="sellNumber">
-					<c:forEach var="i" step="1" begin="1" end="${item.itemNumber }">
-						<option value="${i}">${i}</option>
-					</c:forEach>
-				</select>
+				<c:if test="${item.itemNumber == 0 }">
+					：${sysMsg }
+				</c:if>
+				<c:if test="${item.itemNumber != 0 }">
+					<select name="sellNumber">
+						<c:forEach var="i" step="1" begin="1" end="${item.itemNumber }">
+							<option value="${i}">${i}</option>
+						</c:forEach>
+					</select>
+				</c:if>
 				<input type="hidden" name="itemId" value="${item.itemId }">
 			</h5>
 			<div class="mx-auto">

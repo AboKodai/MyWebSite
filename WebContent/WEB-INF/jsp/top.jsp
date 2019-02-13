@@ -27,8 +27,8 @@
 					<p style="margin-top: 30px;">＜ジャンル＞</p>
 					<c:forEach var="typeList" items="${typeList }">
 						<p>
-							<input type="checkbox" name="type"
-								value="${typeList.itemTypeId }" style="vertical-align: middle;">${typeList.itemTypeName }</p>
+							<input type="checkbox" name="type"value="${typeList.itemTypeId }" style="vertical-align: middle;">${typeList.itemTypeName }
+						</p>
 					</c:forEach>
 					<p>
 						<input type="submit" value="絞り込み">

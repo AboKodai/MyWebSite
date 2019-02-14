@@ -58,7 +58,7 @@
 			</tbody>
 		</table>
 		<p class="text-right">
-		<a href="#">購入履歴一覧</a>
+		<a href="BuyList">購入履歴一覧</a>
 		</p>
 	</c:if>
 	<c:if test="${buy == null }">

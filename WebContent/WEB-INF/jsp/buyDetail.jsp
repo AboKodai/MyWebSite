@@ -12,7 +12,19 @@
 <body>
 <jsp:include page="/baselayout/header.jsp" />
 <div class=container>
-	<h3 class="text-center mgn-top">購入情報</h3>
+	<div class="row mx-auto mgn-top"style=width:50%;>
+		<div class="text-center mx-auto">
+			<a href="BuyList">
+				<button type="button" class="btn btn-muted my-5">購入一覧へ</button>
+			</a>
+		</div>
+		<div class="text-center mx-auto">
+			<a href="MyPage">
+				<button type="button" class="btn btn-primary my-5">マイページへ</button>
+			</a>
+		</div>
+	</div>
+	<h3 class="text-center">購入情報</h3>
 	<div style=width:800px; class=mx-auto>
 		<table class="table table-bordered">
 			<thead class="thead-light">
@@ -23,8 +35,8 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>ｙｙｙｙ年ｍｍ月ｄｄ日hh時MM分ｓｓ秒</td>
-					<td>999999円</td>
+					<td>${resultBuy.formatDate}</td>
+					<td>${resultBuy.totalPrice }円</td>
 				</tr>
 			</tbody>
 		</table>
@@ -35,11 +47,13 @@
 					<th width=200>個数</th>
 					<th width=200>小計</th>
 				</tr>
-				<tr>
-					<td>モモ</td>
-					<td>8</td>
-					<td>8000円</td>
-				</tr>
+				<c:forEach items="${itemList }" var="item">
+					<tr>
+						<td>${item.itemName }</td>
+						<td>${item.sellNumber }</td>
+						<td>${item.itemPrice *item.sellNumber}円</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 	</div>

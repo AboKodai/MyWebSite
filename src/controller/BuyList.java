@@ -12,21 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.BuyBeans;
-import beans.ItemBeans;
+import beans.UserBeans;
 import dao.BuyDao;
-import dao.BuyDetailDao;
 
 /**
- * Servlet implementation class BuyDetail
+ * Servlet implementation class BuyList
  */
-@WebServlet("/BuyDetail")
-public class BuyDetail extends HttpServlet {
+@WebServlet("/BuyList")
+public class BuyList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BuyDetail() {
+    public BuyList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,27 +36,20 @@ public class BuyDetail extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		BuyDao buyDao = new BuyDao();
-		ArrayList<ItemBeans> itemList = new ArrayList<ItemBeans>();
-		BuyDetailDao bdDao = new BuyDetailDao();
-
+		ArrayList<BuyBeans> buyList = new ArrayList<BuyBeans>();
+		
 		//ログインセッションがない場合はログイン画面
 		if(session.getAttribute("userInfo") == null) {
 			response.sendRedirect("Login");
 		}
+		UserBeans user = (UserBeans)session.getAttribute("userInfo");
+		
+		//購入一覧を取得
+		buyList = buyDao.getBuyBeansListByUserId(user.getUserId());
+		request.setAttribute("buyList", buyList);
+		
 
-		//リクエストスコープからbuyIdを取得
-		int buyId = Integer.parseInt(request.getParameter("buyId"));
-
-		//購入商品情報
-		BuyBeans resultBuy = buyDao.getBuyBeansByBuyId(buyId);
-
-		//購入詳細情報
-		itemList = bdDao.getItemListForBuyDetail(buyId);
-
-		request.setAttribute("resultBuy", resultBuy);
-		request.setAttribute("itemList", itemList);
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/buyDetail.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/buyList.jsp");
 		dispatcher.forward(request, response);
 	}
 

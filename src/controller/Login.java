@@ -46,11 +46,9 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/**フォームに入力された値を取得し、ユーザ情報の確認。
-		 * ログインに成功したらマイページへ
-		 */
 		request.setCharacterEncoding("UTF-8");
 
+		//フォームの入力内容を取得
 		String loginId = request.getParameter("loginId");
 		String password = request.getParameter("password");
 
@@ -58,6 +56,7 @@ public class Login extends HttpServlet {
 		UserBeans user = userDao.findUser(loginId, password);
 
 		if(user == null) {
+			//ユーザ情報が見つからないとき
 			request.setAttribute("sysMsg", "ログインIDまたはパスワードが異なります");
 			request.setAttribute("loginId", loginId);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
@@ -67,7 +66,6 @@ public class Login extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		session.setAttribute("userInfo", user);
-		session.setAttribute("isLogin", true);
 		response.sendRedirect("MyPage");
 	}
 

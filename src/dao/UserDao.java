@@ -23,7 +23,7 @@ public class UserDao {
 		try {
 			con = DBManager.getConnection();
 
-			String sql = "SELECT * FROM user WHERE login_id = ? AND password = ?";
+			String sql = "SELECT * FROM user WHERE login_id = ? AND password = ? AND delete_flag=1";
 
 			PreparedStatement pStmt = con.prepareStatement(sql);
 
@@ -34,7 +34,7 @@ public class UserDao {
 			if (!rs.next()) {
 				return null;
 			}
-			System.out.println("ログイン成功");
+			System.out.println("login is conpleted");
 			int userIdInfo = rs.getInt("user_id");
 			String loginIdInfo = rs.getString("login_id");
 			String userNameInfo = rs.getString("user_name");
@@ -70,17 +70,17 @@ public class UserDao {
 
 		try {
 
-		//データベースに接続
+			//データベースに接続
 			con = DBManager.getConnection();
-		//値の取得
+			//値の取得
 			String loginId =user.getLoginId();
 			String userName = user.getUserName();
 			Date birthDate = user.getBirthDate();
 			String password = user.getPassword();
 			String homeAddress = user.getHomeAddress();
 			String address = user.getAddress();
-		//INSERT文の準備
-			String sql = "INSERT INTO user VALUES(0, ?, ? ,? ,? ,? ,?)";
+			//INSERT文の準備
+			String sql = "INSERT INTO user VALUES(0, ?, ? ,? ,? ,? ,?,1)";
 
 			PreparedStatement pStmt = con.prepareStatement(sql);
 			pStmt.setString(1, loginId);
@@ -189,30 +189,33 @@ public class UserDao {
 		}
 	}
 
-	/**ユーザ情報の削除
+	/**ユーザ退会処理
 	 *
 	 * @param userId
 	 * @return
 	 */
-	public boolean userDelete(int userId) {
+	public void userDelete(int userId) {
 		Connection con = null;
 
 		try {
 			con = DBManager.getConnection();
-		//DELETE文の準備
-			String sql = "DELETE FROM user WHERE user_id = ?";
-		//結果の取得
-			PreparedStatement pStmt = con.prepareStatement(sql);
-			pStmt.setInt(1, userId);
-			int rs = pStmt.executeUpdate();
+			//userテーブルのUPDATE文を準備
+			String sqlUser = "UPDATE user SET delete_flag=0 WHERE user_id = ?";
+			//実行
+			PreparedStatement pStmtUser = con.prepareStatement(sqlUser);
+			pStmtUser.setInt(1, userId);
+			pStmtUser.executeUpdate();
 
-			if (rs == 1) {
-				return true;
-			}
-			return false;
+			//itemテーブルのUPDATE文を準備
+			String sqlItem = "UPDATE item SET delete_flag=0 WHERE user_id = ?";
+			//実行
+			PreparedStatement pStmtItem = con.prepareStatement(sqlItem);
+			pStmtItem.setInt(1, userId);
+			pStmtItem.executeUpdate();
+
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
 		} finally {
 			try {
 				if (con != null) {
@@ -220,41 +223,10 @@ public class UserDao {
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
-				return false;
 			}
 		}
 	}
 
-	public boolean itemDelete(int userId) {
-		Connection con = null;
-
-		try {
-			con = DBManager.getConnection();
-		//DELETE文の準備
-			String sql = "DELETE FROM item WHERE user_id = ?";
-		//結果の取得
-			PreparedStatement pStmt = con.prepareStatement(sql);
-			pStmt.setInt(1, userId);
-			int rs = pStmt.executeUpdate();
-
-			if (rs == 1) {
-				return true;
-			}
-			return false;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return false;
-			}
-		}
-	}
 
 	/**ユーザ情報更新
 	 *

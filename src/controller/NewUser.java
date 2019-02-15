@@ -123,6 +123,7 @@ public class NewUser extends HttpServlet {
 		//入力された内容が問題ない場合、入力内容をセッションスコープにセット
 		UserBeans user = new UserBeans(loginId, userName, birthDate, password, homeAddress, address);
 		session.setAttribute("user", user);
+		session.setAttribute("birthDate", (String)request.getParameter("birthDate"));
 		//登録確認画面にリダイレクト
 		response.sendRedirect("NewUserCon");
 

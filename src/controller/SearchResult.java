@@ -39,41 +39,40 @@ public class SearchResult extends HttpServlet {
 		ArrayList<ItemBeans> ibList = new ArrayList<ItemBeans>();
 		ItemDao itemDao = new ItemDao();
 
-	//itemType一覧をセット
+		//itemType一覧をセット
 		ItemTypeDao itDao = new ItemTypeDao();
 		ArrayList<ItemTypeBeans> itbList = new ArrayList<ItemTypeBeans>();
 		itbList = itDao.findItemType();
 		request.setAttribute("typeList", itbList);
 
-	//１ページに表示する商品の数
+		//１ページに表示する商品の数
 		final int PAGE_MAX_ITEM_COUNT = 100;
 
-	//表示ページ番号未指定の場合、1ページ目を表示
+		//表示ページ番号未指定の場合、1ページ目を表示
 		int pageNum = Integer.parseInt(request.getParameter("pageNum") == null ? "1" : request.getParameter("pageNum"));
 
-	//入力された値を取得
+		//入力された値を取得
 		String searchWord = request.getParameter("searchWord");
 		String[] strItemTypeList =request.getParameterValues("type");
-		int[] itemTypeList;
+		ArrayList<Integer> itemTypeList = new ArrayList<Integer>();
 
 		if(strItemTypeList != null) {
-			itemTypeList = new int[strItemTypeList.length];
 		//String型配列をint型に変換
 			for(int i = 0 ; i < strItemTypeList.length;i++) {
-				itemTypeList[i] =Integer.parseInt(strItemTypeList[i]);
+				itemTypeList.add(Integer.parseInt(strItemTypeList[i]));
 			}
 		}else {
 			itemTypeList = null;
 		}
 
-	//検索されたキーワード及び種類をセッションスコープに格納
+		//検索されたキーワード及び種類をセッションスコープに格納
 		session.setAttribute("searchWord", searchWord);
-		session.setAttribute("itemTypeList", strItemTypeList);
+		session.setAttribute("itemTypeList", itemTypeList);
 
-	//検索結果をページ表示分のみ取得
+		//検索結果をページ表示分のみ取得
 		ibList = itemDao.findItem(searchWord, itemTypeList, pageNum, PAGE_MAX_ITEM_COUNT);
 
-	//表示ページの配列をセット
+		//表示ページの配列をセット
 		request.setAttribute("itemList", ibList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/searchResult.jsp");
 		dispatcher.forward(request, response);

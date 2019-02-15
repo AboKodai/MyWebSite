@@ -25,10 +25,10 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>ユーザ名</td>
-					<td>yyyy年mm月dd日hh時mm分ss秒</td>
-					<td>購入ユーザ住所</td>
-					<td>購入ユーザメールアドレス</td>
+					<td>${sell.buyUserName }</td>
+					<td>${sell.formatDate }</td>
+					<td>${sell.buyUserHomeAddress}</td>
+					<td>${sell.buyUserAddress }</td>
 				</tr>
 			</tbody>
 		</table>
@@ -41,14 +41,14 @@
 					<th>小計</th>
 				</tr>
 				<tr>
-					<td>モモ</td>
-					<td>8</td>
-					<td>8000円</td>
+					<td>${sell.itemName }</td>
+					<td>${sell.itemNumber }</td>
+					<td>${sell.itemPrice }円</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<form method="post" action="#">
+	<form method="post" action="SellDetail">
 		<div class="row">
 			<div class="text-p-re mr-4 ml-auto">
 				<input type="checkbox" name="">処理済にする

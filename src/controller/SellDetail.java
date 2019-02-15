@@ -8,6 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import beans.SellListBeans;
+import dao.BuyDao;
 
 /**
  * Servlet implementation class SellDetail
@@ -28,6 +32,20 @@ public class SellDetail extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		BuyDao buyDao = new BuyDao();
+
+		if(session.getAttribute("userInfo") == null) {
+			//ログインセッションがない場合ログイン画面にリダイレクト
+			response.sendRedirect("Login");
+			return;
+		}
+		//リクエストスコープから値を取得
+		int buyDetailId = Integer.parseInt(request.getParameter("buyDetailId"));
+
+		SellListBeans sell = buyDao.getSellBeans(buyDetailId);
+		request.setAttribute("sell", sell);
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/sellDetail.jsp");
 		dispatcher.forward(request, response);
 	}

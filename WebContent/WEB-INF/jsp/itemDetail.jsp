@@ -24,7 +24,7 @@
 			<h5 class="mt-4">
 				購入数
 				<c:if test="${item.itemNumber == 0 }">
-					：${sysMsg }
+					：<span class=text-danger>${sysMsg }</span>
 				</c:if>
 				<c:if test="${item.itemNumber != 0 }">
 					<select name="sellNumber">
@@ -35,12 +35,14 @@
 				</c:if>
 				<input type="hidden" name="itemId" value="${item.itemId }">
 			</h5>
-			<div class="mx-auto">
-				<button type="submit" class="btn btn-danger mt-4" value="addItem" name="select">カートに入れる</button>
-			</div>
-			<div class="mx-auto mb-5">
-				<button type="submit" class="btn btn-primary mt-4" style=width:140px; value="buy"name="select">購入手続き</button>
-			</div>
+			<c:if test="${item.itemNumber != 0 }">
+				<div class="mx-auto">
+					<button type="submit" class="btn btn-danger mt-4" value="addItem" name="select">カートに入れる</button>
+				</div>
+				<div class="mx-auto mb-5">
+					<button type="submit" class="btn btn-primary mt-4" style=width:140px; value="buy"name="select">購入手続き</button>
+				</div>
+			</c:if>
 		</form>
 	</div>
 </div>

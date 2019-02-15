@@ -50,28 +50,29 @@ public class NewUserCon extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 
-	//登録が確定されたか判定
+		//登録が確定されたか判定
 		String confirm = request.getParameter("confirm");
 		switch(confirm) {
 		case "cancel":
 			response.sendRedirect("NewUser");
 			break;
 
-	//登録が確定された場合
+		//登録が確定された場合
 		case "submit":
 			UserDao userDao = new  UserDao();
 			UserBeans user = new UserBeans();
-		//新規登録と同時にセッションスコープのインスタンスを削除
+			//新規登録と同時にセッションスコープのインスタンスを削除
 			user = (UserBeans)session.getAttribute("user");
 			boolean result = userDao.newUser((UserBeans)Helper.cutSessionAttribute(session, "user"));
+			session.removeAttribute("birthDate");
 			if(result) {
-			//ログイン処理
+				//ログイン処理
 				session.setAttribute("userInfo", userDao.findUser(user.getLoginId(), user.getPassword()));
 				System.out.println("登録成功");
 			}else {
 				System.out.println("登録失敗");
 			}
-		//マイページへリダイレクト
+			//マイページへリダイレクト
 			response.sendRedirect("MyPage");
 		}
 	}

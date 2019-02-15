@@ -16,7 +16,7 @@
 		</c:if>
 		<c:if test="${userInfo != null }">
 			<div class="col-sm-4 text-right pr-5">
-				<a href="MyPage?userId=${userInfo.userId }">${userInfo.userName}</a>　さん
+				<a href="MyPage?userId=${userInfo.userId }">${userInfo.userName}　さん</a>
 				<a class="text-dark p-4" href="Cart">カート</a>
 				<a class="btn btn-outline-danger text-right " href="Logout">ログアウト</a>
 			</div>

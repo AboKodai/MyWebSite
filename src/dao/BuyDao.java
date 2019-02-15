@@ -203,39 +203,160 @@ public class BuyDao {
 	 */
 	public ArrayList<SellListBeans> getSellList(int userId){
 		Connection con = null;
-		ArrayList<SellListBeans> buyList = new ArrayList<SellListBeans>();
+		ArrayList<SellListBeans> sellList = new ArrayList<SellListBeans>();
+		boolean isSell = false;
 
 		try {
 			con = DBManager.getConnection();
 
 			String sql =
-					"SELECT"
-					+ " buy.buy_user_id,"
-					+ " buy.buy_date,"
-					+ " buy_detail.checkbox,"
-					+ " buy_detail.item_number,"
-					+ " item.user_id,"
-					+ " item.item_name"
+					"SELECT user.user_name,"
+					+ " user.home_address,"
+					+ " sell.*"
 					+ " FROM"
-					+ " buy"
-					+ " JOIN buy_detail ON buy.buy_id = buy_detail.buy_id"
-					+ " JOIN item ON buy_detail.item_id = item.item_id"
+					+ " user JOIN"
+
+					+ " ( SELECT"
+					+ " b.buy_user_id,"
+					+ " b.buy_date,"
+					+ " bd.buy_detail_id,"
+					+ " bd.checkbox,"
+					+ " bd.item_number,"
+					+ " i.user_id,"
+					+ " i.item_name,"
+					+ " i.item_price"
+					+ " FROM"
+					+ " buy b"
+					+ " JOIN buy_detail bd ON b.buy_id = bd.buy_id"
+					+ " JOIN item i ON bd.item_id = i.item_id"
 					+ " WHERE"
-					+ " item.user_id = ?"
+					+ " i.user_id = ?"
 					+ " ORDER BY"
-					+ " buy.buy_id DESC";
+					+ " b.buy_id DESC) sell"
+
+					+ " ON user.user_id = sell.buy_user_id"
+					+ " WHERE"
+					+ " sell.buy_user_id != ?";
 
 			PreparedStatement pStmt = con.prepareStatement(sql);
 
 			pStmt.setInt(1, userId);
+			pStmt.setInt(2, userId);
 			ResultSet rs = pStmt.executeQuery();
 
 			while(rs.next()) {
 				SellListBeans sell = new SellListBeans();
-
+				sell.setBuyDate(rs.getTimestamp("buy_date"));
+				sell.setBuyUserId(rs.getInt("buy_user_id"));
+				sell.setCheckbox(rs.getInt("checkbox"));
+				sell.setItemName(rs.getString("item_name"));
+				sell.setItemNumber(rs.getInt("item_number"));
+				sell.setSellUserId(rs.getInt("user_id"));
+				sell.setBuyUserHomeAddress(rs.getString("home_address"));
+				sell.setBuyUserName(rs.getString("user_name"));
+				sell.setItemPrice(rs.getInt("item_price"));
+				sell.setBuyDetailId(rs.getInt("buy_detail_id"));
+				sellList.add(sell);
+				isSell = true;
 			}
 
+			System.out.println("get sellList");
+			if (isSell) {
+				return sellList;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
 
+	}
+
+	public SellListBeans getSellBeans(int buyDetailId){
+		Connection con = null;
+		boolean isSell = false;
+
+		try {
+			con = DBManager.getConnection();
+
+			String sql =
+					"SELECT user.user_name,"
+					+ " user.home_address,"
+					+ " user.address,"
+					+ " sell.*"
+					+ " FROM"
+					+ " user JOIN"
+
+					+ " (SELECT"
+					+ " b.buy_user_id,"
+					+ " b.buy_date,"
+					+ " bd.buy_detail_id,"
+					+ " bd.checkbox,"
+					+ " bd.item_number,"
+					+ " i.user_id,"
+					+ " i.item_name,"
+					+ " i.item_price"
+					+ " FROM"
+					+ " buy b"
+					+ " JOIN buy_detail bd ON b.buy_id = bd.buy_id"
+					+ " JOIN item i ON bd.item_id = i.item_id"
+					+ " WHERE"
+					+ " bd.buy_detail_id = ?"
+					+ " ORDER BY"
+					+ " b.buy_id DESC) sell"
+
+					+ " ON user.user_id = sell.buy_user_id";
+
+			PreparedStatement pStmt = con.prepareStatement(sql);
+
+			pStmt.setInt(1, buyDetailId);
+			ResultSet rs = pStmt.executeQuery();
+			SellListBeans sell = new SellListBeans();
+
+			while(rs.next()) {
+
+				sell.setBuyDate(rs.getTimestamp("buy_date"));
+				sell.setBuyUserId(rs.getInt("buy_user_id"));
+				sell.setCheckbox(rs.getInt("checkbox"));
+				sell.setItemName(rs.getString("item_name"));
+				sell.setItemNumber(rs.getInt("item_number"));
+				sell.setSellUserId(rs.getInt("user_id"));
+				sell.setBuyUserHomeAddress(rs.getString("home_address"));
+				sell.setBuyUserAddress(rs.getString("address"));
+				sell.setBuyUserName(rs.getString("user_name"));
+				sell.setItemPrice(rs.getInt("item_price"));
+				sell.setBuyDetailId(rs.getInt("buy_detail_id"));
+				isSell = true;
+			}
+
+			System.out.println("get sellList");
+			if (isSell) {
+				return sell;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
 		}
 	}
 

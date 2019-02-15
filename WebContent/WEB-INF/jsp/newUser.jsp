@@ -10,11 +10,14 @@
 <title>新規会員登録</title>
 </head>
 <body>
+
 <div class=container>
 	<div  class="mx-auto" style=width:500px;>
 		<div class="card mgn-top">
 			<div class="card-header bgc-main text-center">
-				<h2>食料品ECサイト</h2>
+				<a href="Top" class="text-dark">
+					<h2>食料品ECサイト</h2>
+				</a>
 				<h4>会員登録</h4>
 			</div>
 			<form method="post" action="NewUser">

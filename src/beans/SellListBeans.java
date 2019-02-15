@@ -11,6 +11,11 @@ public class SellListBeans {
 	private int itemNumber;
 	private int sellUserId;
 	private String itemName;
+	private String buyUserHomeAddress;
+	private String buyUserName;
+	private String buyUserAddress;
+	private int itemPrice;
+	private int buyDetailId;
 
 	public int getBuyUserId() {
 		return buyUserId;
@@ -48,9 +53,40 @@ public class SellListBeans {
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
+	public String getBuyUserHomeAddress() {
+		return buyUserHomeAddress;
+	}
+	public void setBuyUserHomeAddress(String buyUserHomeAddress) {
+		this.buyUserHomeAddress = buyUserHomeAddress;
+	}
+	public String getBuyUserName() {
+		return buyUserName;
+	}
+	public void setBuyUserName(String buyUserName) {
+		this.buyUserName = buyUserName;
+	}
+	public int getItemPrice() {
+		return itemPrice;
+	}
+	public void setItemPrice(int itemPrice) {
+		this.itemPrice = itemPrice;
+	}
+	public int getBuyDetailId() {
+		return buyDetailId;
+	}
+	public void setBuyDetailId(int buyDetailId) {
+		this.buyDetailId = buyDetailId;
+	}
 	public String getFormatDate() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日HH時mm分");
 		return sdf.format(buyDate);
 	}
+	public String getBuyUserAddress() {
+		return buyUserAddress;
+	}
+	public void setBuyUserAddress(String buyUserAddress) {
+		this.buyUserAddress = buyUserAddress;
+	}
+
 
 }

@@ -119,7 +119,7 @@ public class ItemDao {
 		try {
 			con = DBManager.getConnection();
 
-			sql = "SELECT * FROM item ORDER BY RAND() LIMIT 8";
+			sql = "SELECT * FROM item WHERE delete_flag = 1 ORDER BY RAND() LIMIT 8";
 			stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(sql);
@@ -158,7 +158,7 @@ public class ItemDao {
 	 *
 	 * @return
 	 */
-	public ArrayList<ItemBeans> findItem(String searchWord, int[] itemTypeIdList, int pageNum, int pageMaxItemCount ) {
+	public ArrayList<ItemBeans> findItem(String searchWord, ArrayList<Integer> itemTypeIdList, int pageNum, int pageMaxItemCount ) {
 		Connection con = null;
 		PreparedStatement pStmt = null;
 		String sql = null;
@@ -169,31 +169,42 @@ public class ItemDao {
 
 			if(searchWord.length() == 0 && itemTypeIdList == null) {
 			//全検索
-				sql = "SELECT * FROM item ORDER BY RAND() ASC LIMIT ?,?;";
+				sql = "SELECT * FROM item WHERE delete_flag = 1 ORDER BY RAND() ASC LIMIT ?,?;";
 				pStmt = con.prepareStatement(sql);
 				pStmt.setInt(1, startItemNum);
 				pStmt.setInt(2, pageMaxItemCount);
 			}
 			else if(searchWord.length() > 0 && itemTypeIdList == null) {
 			//商品名検索
-				sql = "SELECT * FROM item WHERE item_name LIKE '%" +searchWord+ "%' ORDER BY item_id ASC LIMIT ?,?";
+				sql =
+						"SELECT *"
+						+ " FROM item"
+						+ " WHERE item_name LIKE '%" +searchWord+ "%'"
+						+ " AND delete_flag = 1"
+						+ " ORDER BY item_id ASC LIMIT ?,?";
 				pStmt = con.prepareStatement(sql);
 				pStmt.setInt(1, startItemNum);
 				pStmt.setInt(2, pageMaxItemCount);
 			}
-			else if (searchWord.length() == 0 && itemTypeIdList.length > 0 ) {
+			else if (searchWord.length() == 0 && itemTypeIdList.size() > 0 ) {
 			//種類検索
-				sql = "SELECT item.*, item_type_table.*, item_type.* "
-						+ "FROM item INNER JOIN item_type_table ON item.item_id = item_type_table.item_id "
-						+ "INNER JOIN item_type ON item_type_table.item_type_id = item_type.item_type_id "
-						+ "WHERE ";
-				for(int i = 0 ; i < itemTypeIdList.length; i++) {
-					sql += "item_type.item_type_id ="+itemTypeIdList[i];
-					if(i<itemTypeIdList.length-1) {
+				sql = "SELECT item.*,"
+						+ " item_type_table.*,"
+						+ " item_type.*"
+						+ " FROM item"
+						+ " INNER JOIN item_type_table ON item.item_id = item_type_table.item_id"
+						+ " INNER JOIN item_type ON item_type_table.item_type_id = item_type.item_type_id"
+						+ " WHERE (";
+				for(int i = 0 ; i < itemTypeIdList.size(); i++) {
+					sql += "item_type.item_type_id ="+itemTypeIdList.get(i);
+					if(i<itemTypeIdList.size()-1) {
 						sql += " OR ";
 					}
 				}
-				sql += " GROUP BY item.item_id ORDER BY item.item_id ASC LIMIT ?,?";
+				sql +=
+						") AND delete_flag = 1"
+						+ " GROUP BY item.item_id"
+						+ " ORDER BY item.item_id ASC LIMIT ?,?";
 
 				pStmt = con.prepareStatement(sql);
 				pStmt.setInt(1, startItemNum);
@@ -201,17 +212,24 @@ public class ItemDao {
 			}
 			else {
 			//商品名検索＋種類検索
-				sql = "SELECT item.*, item_type_table.*, item_type.* "
-						+ "FROM item INNER JOIN item_type_table ON item.item_id = item_type_table.item_id "
-						+ "INNER JOIN item_type  ON item_type_table.item_type_id = item_type.item_type_id "
-						+ "WHERE (";
-				for(int i = 0 ; i < itemTypeIdList.length; i++) {
-					sql += "item_type.item_type_id ="+itemTypeIdList[i];
-					if(i<itemTypeIdList.length-1) {
+				sql = "SELECT item.*,"
+						+ " item_type_table.*,"
+						+ " item_type.*"
+						+ " FROM item"
+						+ " INNER JOIN item_type_table ON item.item_id = item_type_table.item_id"
+						+ " INNER JOIN item_type  ON item_type_table.item_type_id = item_type.item_type_id"
+						+ " WHERE (";
+				for(int i = 0 ; i < itemTypeIdList.size(); i++) {
+					sql += "item_type.item_type_id ="+itemTypeIdList.get(i);
+
+					if(i<itemTypeIdList.size()-1) {
 						sql += " OR ";
 					}
 				}
-				sql += ") AND item_name LIKE '%" +searchWord+"%' GROUP BY item.item_id ORDER BY item.item_id ASC LIMIT ?,?";
+				sql += ") AND item_name LIKE '%" +searchWord+"%'"
+						+ " AND delete_flag = 1"
+						+ " GROUP BY item.item_id"
+						+ " ORDER BY item.item_id ASC LIMIT ?,?";
 
 				pStmt = con.prepareStatement(sql);
 				pStmt.setInt(1, startItemNum);

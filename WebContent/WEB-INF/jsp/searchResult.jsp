@@ -23,12 +23,19 @@
 			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
 				<form method="get" action="SearchResult">
 					<input class="col-md-11" type="search" name="searchWord"
-						style="margin-top: 10px;" placeholder="検索ワード">
+						style="margin-top: 10px;" placeholder="検索ワード" value=${searchWord }>
 					<p style="margin-top: 30px;">＜ジャンル＞</p>
-						<c:forEach var="typeList" items="${typeList }">
-							<p>
-								<input type="checkbox" name="type"value="${typeList.itemTypeId }" style="vertical-align: middle;">${typeList.itemTypeName }
-							</p>
+						<c:forEach var="type" items="${typeList }">
+							<c:if test="${!itemTypeList.contains(type.itemTypeId) }">
+								<p>
+									<input type="checkbox" name="type"value="${type.itemTypeId }" style="vertical-align: middle;">${type.itemTypeName }
+								</p>
+							</c:if>
+							<c:if test="${itemTypeList.contains(type.itemTypeId) }">
+								<p>
+									<input type="checkbox" name="type"value="${type.itemTypeId }" checked="checked" style="vertical-align: middle;">${type.itemTypeName }
+								</p>
+							</c:if>
 						</c:forEach>
 					<p>
 						<input type="submit" value="絞り込み">
@@ -54,7 +61,7 @@
 							</a>
 							<div class="card-body">
 								<p class="card-text">${itemList.itemName }</p>
-								<p class="card-text">${itemList.itemPrice }　円</p>
+								<p class="card-text">${itemList.itemPrice }円</p>
 							</div>
 						</div>
 					</div>

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import beans.BuyBeans;
 import beans.ItemBeans;
+import beans.SellListBeans;
 import beans.UserBeans;
 import dao.BuyDao;
 import dao.ItemDao;
@@ -51,6 +52,9 @@ public class MyPage extends HttpServlet {
 		request.setAttribute("buy", buy);
 
 		//受注一覧表示のため
+		ArrayList<SellListBeans> sellList = new ArrayList<SellListBeans>();
+		sellList = buyDao.getSellList(userId);
+		request.setAttribute("sellList", sellList);
 
 
 		//出品商品一覧のため

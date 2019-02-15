@@ -65,51 +65,44 @@
 		<p class="text-center h4 text-danger">購入した商品はありません</p>
 	</c:if>
 </div>
+
 <hr>
+
 <div class="text-center mx-auto">
 		<a href="NewItem?user_id=${userInfo.userId}"><button type="submit" class="btn btn- my-5" >商品の出品</button></a>
 	</div>
 <div class="row px-5">
 	<div class="col-sm-6 ">
 		<h3 class="text-center">受注一覧</h3>
-		<table class="table table-bordered">
-			<thead class="thead-light">
-				<tr>
-					<th>発送状況</th>
-					<th>受注日時</th>
-					<th>商品</th>
-					<th>数量</th>
-					<th>購入者</th>
-					<th>住所</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td><a href="#" class="btn bg-info mr-1" style=color:white;>詳細</a>発送処理<input type="checkbox"  class="ml-1"></td>
-					<td>ユーザ名</td>
-					<td>yyyy年mm月dd日hh時mm分ss秒</td>
-					<td>購入ユーザ住所</td>
-				</tr>
-				<tr>
-					<td><a href="#" class="btn bg-info mr-1" style=color:white;>詳細</a>発送処理<input type="checkbox" class="ml-1"></td>
-					<td>ユーザ名</td>
-					<td>yyyy年mm月dd日hh時mm分ss秒</td>
-					<td>購入ユーザ住所</td>
-				</tr>
-				<tr>
-					<td><a href="#" class="btn bg-info mr-1" style=color:white;>詳細</a>発送処理<input type="checkbox" class="ml-1"></td>
-					<td>ユーザ名</td>
-					<td>yyyy年mm月dd日hh時mm分ss秒</td>
-					<td>購入ユーザ住所</td>
-				</tr>
-				<tr>
-					<td><a href="#" class="btn bg-info mr-1" style=color:white;>詳細</a>発送処理<input type="checkbox" class="ml-1"></td>
-					<td>ユーザ名</td>
-					<td>yyyy年mm月dd日hh時mm分ss秒</td>
-					<td>購入ユーザ住所</td>
-				</tr>
-			</tbody>
-		</table>
+		<c:if test="${sellList != null }">
+			<table class="table table-bordered">
+				<thead class="thead-light">
+					<tr>
+						<th>発送状況</th>
+						<th>受注日時</th>
+						<th>商品</th>
+						<th>数量</th>
+						<th>購入者</th>
+						<th>住所</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${sellList }" var="sell">
+						<tr>
+							<td><a href="SellDetail?buyDetailId=${sell.buyDetailId }" class="btn bg-info mr-1" style=color:white;>詳細</a>発送処理<input type="checkbox"  class="ml-1"></td>
+							<td>${sell.formatDate }</td>
+							<td>${sell.itemName }</td>
+							<td>${sell.itemNumber }</td>
+							<td>${sell.buyUserName}</td>
+							<td>${sell.buyUserHomeAddress }</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</c:if>
+		<c:if test="${sellList == null }">
+			<p class="text-center h4 text-danger">購入された商品はありません</p>
+		</c:if>
 	</div>
 
 	<div class="col-sm-6 ">

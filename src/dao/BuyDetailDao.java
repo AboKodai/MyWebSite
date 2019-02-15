@@ -20,7 +20,7 @@ public class BuyDetailDao {
 		try {
 			con= DBManager.getConnection();
 
-			String sql = "INSERT INTO buy_detail VALUES(0, ?, ?, ?)";
+			String sql = "INSERT INTO buy_detail VALUES(0, ?, ?, ?,0)";
 			PreparedStatement pStmt = con.prepareStatement(sql);
 			pStmt.setInt(1, bdb.getBuyId());
 			pStmt.setInt(2, bdb.getItemId());

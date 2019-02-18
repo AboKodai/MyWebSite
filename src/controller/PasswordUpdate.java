@@ -53,15 +53,18 @@ public class PasswordUpdate extends HttpServlet {
 
 		//現在のパスワード及び入力内容を取得
 		UserDao userDao = new UserDao();
-		UserBeans user = new UserBeans();
-		user = (UserBeans) session.getAttribute("userInfo");
-		String password = user.getPassword();
+		UserBeans userInfo = new UserBeans();
+		userInfo = (UserBeans) session.getAttribute("userInfo");
+		String password = userInfo.getPassword();
 		String inputPassword = request.getParameter("password");
 		String newPassword = request.getParameter("newPassword");
 		String newPasswordCon = request.getParameter("newPasswordCon");
+		String result = userDao.getMD5Password(inputPassword);
+		String resultNewPassword = userDao.getMD5Password(newPassword);
+
 
 		//エラーが発生する条件を複数設定
-		if (!password.equals(inputPassword) || !newPassword.equals(newPasswordCon)) {
+		if (!password.equals(result) || !newPassword.equals(newPasswordCon)) {
 			request.setAttribute("sysMsg", "パスワードが間違っています");
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/passwordUpdate.jsp");
@@ -70,14 +73,16 @@ public class PasswordUpdate extends HttpServlet {
 		}
 
 		//更新可能だった場合更新
-		if (userDao.passwordUpdate(user.getUserId(), newPassword)) {
+		if (userDao.passwordUpdate(userInfo.getUserId(), resultNewPassword)) {
 			System.out.println("更新成功");
 
 			//ログインセッションを更新
-			user = userDao.findUser(user.getLoginId(), newPassword);
+			UserBeans user = userDao.findUser(userInfo.getLoginId(), resultNewPassword);
+			session.setAttribute("userInfo", user);
 			//マイページへリダイレクト
 			response.sendRedirect("MyPage");
 		}
+
 	}
 
 }

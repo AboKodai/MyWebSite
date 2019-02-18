@@ -135,4 +135,28 @@ public class BuyDetailDao {
 		}
 	}
 }
+
+	/**チェックボックスの更新
+	 *
+	 * @param buyDetailId
+	 */
+	public void checkboxUpdate(int buyDetailId, int checkbox) {
+		Connection con = null;
+		try {
+			con= DBManager.getConnection();
+
+			String sql =
+					"UPDATE buy_detail"
+					+ " SET checkbox = ?"
+					+ " WHERE buy_detail_id = ?";
+
+			PreparedStatement pStmt = con.prepareStatement(sql);
+			pStmt.setInt(1, checkbox);
+			pStmt.setInt(2, buyDetailId);
+
+			pStmt.executeUpdate();
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}
+	}
 }

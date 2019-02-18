@@ -1,11 +1,17 @@
 package dao;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
+
+import javax.xml.bind.DatatypeConverter;
 
 import beans.UserBeans;
 
@@ -26,6 +32,8 @@ public class UserDao {
 			String sql = "SELECT * FROM user WHERE login_id = ? AND password = ? AND delete_flag=1";
 
 			PreparedStatement pStmt = con.prepareStatement(sql);
+
+
 
 			pStmt.setString(1, loginId);
 			pStmt.setString(2, password);
@@ -48,7 +56,7 @@ public class UserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
-		} finally {
+		}  finally {
 			try {
 				if (con != null) {
 					con.close();
@@ -83,6 +91,7 @@ public class UserDao {
 			String sql = "INSERT INTO user VALUES(0, ?, ? ,? ,? ,? ,?,1)";
 
 			PreparedStatement pStmt = con.prepareStatement(sql);
+
 			pStmt.setString(1, loginId);
 			pStmt.setString(2, userName);
 			pStmt.setTimestamp(3, new Timestamp(birthDate.getTime()));
@@ -100,7 +109,7 @@ public class UserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		} finally {
+		}  finally {
 			try {
 				if (con != null) {
 					con.close();
@@ -111,6 +120,7 @@ public class UserDao {
 			}
 		}
 	}
+
 
 	/**ログインIDが使用済みかどうかを確認する
 	 *
@@ -149,6 +159,8 @@ public class UserDao {
 			}
 		}
 	}
+
+
 
 	/**メールアドレスが使用済みかどうかを確認する
 	*
@@ -189,6 +201,8 @@ public class UserDao {
 		}
 	}
 
+
+
 	/**ユーザ退会処理
 	 *
 	 * @param userId
@@ -226,6 +240,7 @@ public class UserDao {
 			}
 		}
 	}
+
 
 
 	/**ユーザ情報更新
@@ -270,6 +285,9 @@ public class UserDao {
 			}
 		}
 	}
+
+
+
 	/**パスワードの更新
 	 *
 	 * @param userId
@@ -285,6 +303,7 @@ public class UserDao {
 			String sql = "UPDATE user SET password = ? WHERE user_id=?";
 		//結果の取得
 			PreparedStatement pStmt = con.prepareStatement(sql);
+
 			pStmt.setString(1, password);
 			pStmt.setInt(2, userId);
 			int rs = pStmt.executeUpdate();
@@ -296,7 +315,7 @@ public class UserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		} finally {
+		}  finally {
 			try {
 				if (con != null) {
 					con.close();
@@ -305,6 +324,26 @@ public class UserDao {
 				e.printStackTrace();
 				return false;
 			}
+		}
+	}
+
+	/**パスワードを暗号化
+	 *
+	 * @param password
+	 * @return
+	 */
+	public String getMD5Password(String password) {
+		try {
+			String source = password;
+			Charset charset = StandardCharsets.UTF_8;
+			String algorithm = "MD5";
+			byte[] bytes = MessageDigest.getInstance(algorithm).digest(source.getBytes(charset));
+			String result = DatatypeConverter.printHexBinary(bytes);
+			return result;
+		}catch(NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+
 		}
 	}
 }

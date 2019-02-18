@@ -50,30 +50,30 @@ public class UserUpdate extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 
-	//更新とキャンセルどちらが押されたかで分岐
+		//更新とキャンセルどちらが押されたかで分岐
 		String confirm = request.getParameter("confirm");
 		switch(confirm) {
-	//更新が押された場合
+		//更新が押された場合
 		case "permit":
 
-		//入力された値を取得
+			//入力された値を取得
 			String newLoginId = request.getParameter("loginId");
 			String newUserName = request.getParameter("userName");
 			String newHomeAddress = request.getParameter("homeAddress");
 			String newAddress = request.getParameter("address");
 
-		//入力された値が使用可能かどうか確認
+			//入力された値が使用可能かどうか確認
 			UserDao userDao = new UserDao();
 			UserBeans user = new UserBeans();
 			user = (UserBeans) session.getAttribute("userInfo");
 			boolean checkId = userDao.userCheckId(user.getLoginId(), newLoginId);
 			boolean checkAddress = userDao.userCheckAddress(user.getAddress(), newAddress);
-
-		//ログインIDが使用済みだった場合、エラーメッセージをセットしてユーザ情報更新画面に遷移
+			
+			//ログインIDが使用済みだった場合、エラーメッセージをセットしてユーザ情報更新画面に遷移
 			if(checkId) {
 				request.setAttribute("sysMsg", "このログインIDは既に使用されています");
 
-			//入力内容を引き継ぐため、セッションスコープにセット
+				//入力内容を引き継ぐため、セッションスコープにセット
 				UserBeans userUpdate = new UserBeans();
 				userUpdate.setLoginId(newLoginId);
 				userUpdate.setUserName(newUserName);
@@ -86,10 +86,10 @@ public class UserUpdate extends HttpServlet {
 				return;
 			}
 
-		//メールアドレスが使用済みだった場合、エラーメッセージをセットしてユーザ情報更新画面に遷移
+			//メールアドレスが使用済みだった場合、エラーメッセージをセットしてユーザ情報更新画面に遷移
 			if(checkAddress) {
 				request.setAttribute("sysMsg", "このメールアドレスは既に使用されています");
-			//入力内容を引き継ぐため、リクエストスコープにセット
+				//入力内容を引き継ぐため、リクエストスコープにセット
 				UserBeans userUpdate = new UserBeans();
 				userUpdate.setLoginId(newLoginId);
 				userUpdate.setUserName(newUserName);
@@ -102,12 +102,12 @@ public class UserUpdate extends HttpServlet {
 				return;
 			}
 
-		//入力された内容が問題ない場合、情報を更新
+			//入力された内容が問題ない場合、情報を更新
 			if(userDao.userUpdate(user.getUserId(), newLoginId, newUserName, newHomeAddress, newAddress)) {
 				System.out.println("更新成功");
-			//ログインセッションを上書き
+				//ログインセッションを上書き
 				session.setAttribute("userInfo", userDao.findUser(newLoginId, user.getPassword()));
-			//マイページにリダイレクト
+				//マイページにリダイレクト
 				response.sendRedirect("MyPage");
 			}
 			break;

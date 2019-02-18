@@ -52,8 +52,10 @@ public class Login extends HttpServlet {
 		String loginId = request.getParameter("loginId");
 		String password = request.getParameter("password");
 
+
 		UserDao userDao = new UserDao();
-		UserBeans user = userDao.findUser(loginId, password);
+		String result = userDao.getMD5Password(password);
+		UserBeans user = userDao.findUser(loginId, result);
 
 		if(user == null) {
 			//ユーザ情報が見つからないとき

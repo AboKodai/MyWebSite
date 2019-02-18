@@ -51,14 +51,20 @@
 	<form method="post" action="SellDetail">
 		<div class="row">
 			<div class="text-p-re mr-4 ml-auto">
-				<input type="checkbox" name="">処理済にする
+				<c:if test="${sell.checkbox == 0 }">
+					<input type="checkbox" name="checkbox" value="1" class="ml-1" >処理済
+				</c:if>
+				<c:if test="${sell.checkbox == 1 }">
+					<input type="checkbox" name="checkbox" class="ml-1" value="1" checked = "checked" >処理済
+				</c:if>
+				<input type="hidden" name="buyDetailId" value="${sell.buyDetailId }">
 			</div>
 			<div class="text-p-re ">
 				<input type="submit" value="適用">
 			</div>
 		</div>
 	</form>
-	<form action="#" method="get">
+	<form action="MyPage" method="get">
 				<div class="text-center mx-5">
 					<input type="submit" class="btn btn-primary my-5" value="マイページへ">
 				</div>

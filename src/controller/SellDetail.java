@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import beans.SellListBeans;
 import dao.BuyDao;
+import dao.BuyDetailDao;
 
 /**
  * Servlet implementation class SellDetail
@@ -54,8 +55,15 @@ public class SellDetail extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		BuyDetailDao bdDao = new  BuyDetailDao();
+		int buyDetailId = Integer.parseInt(request.getParameter("buyDetailId"));
+		if (request.getParameter("checkbox") == null) {
+			bdDao.checkboxUpdate(buyDetailId, 0);
+		}else if(Integer.parseInt(request.getParameter("checkbox")) == 1) {
+			bdDao.checkboxUpdate(buyDetailId, 1);
+		}
+		response.sendRedirect("SellDetail?buyDetailId="+buyDetailId);
 	}
 
 }

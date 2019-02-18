@@ -230,13 +230,12 @@ public class BuyDao {
 					+ " JOIN buy_detail bd ON b.buy_id = bd.buy_id"
 					+ " JOIN item i ON bd.item_id = i.item_id"
 					+ " WHERE"
-					+ " i.user_id = ?"
-					+ " ORDER BY"
-					+ " b.buy_id DESC) sell"
+					+ " i.user_id = ?) sell"
 
 					+ " ON user.user_id = sell.buy_user_id"
 					+ " WHERE"
-					+ " sell.buy_user_id != ?";
+					+ " sell.buy_user_id != ?"
+					+ " ORDER BY sell.buy_date DESC";
 
 			PreparedStatement pStmt = con.prepareStatement(sql);
 

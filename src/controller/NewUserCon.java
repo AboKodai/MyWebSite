@@ -62,8 +62,10 @@ public class NewUserCon extends HttpServlet {
 			UserDao userDao = new  UserDao();
 			UserBeans user = new UserBeans();
 			//新規登録と同時にセッションスコープのインスタンスを削除
-			user = (UserBeans)session.getAttribute("user");
-			boolean result = userDao.newUser((UserBeans)Helper.cutSessionAttribute(session, "user"));
+			user = (UserBeans)Helper.cutSessionAttribute(session, "user");
+			String resultPassword = userDao.getMD5Password(user.getPassword());
+			user.setPassword(resultPassword);
+			boolean result = userDao.newUser(user);
 			session.removeAttribute("birthDate");
 			if(result) {
 				//ログイン処理

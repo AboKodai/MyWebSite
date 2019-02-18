@@ -62,6 +62,9 @@
 							<div class="card-body">
 								<p class="card-text">${itemList.itemName }</p>
 								<p class="card-text">${itemList.itemPrice }円</p>
+								<c:if test="${itemList.itemNumber == 0 }">
+									<p class="text-danger">売り切れ</p>
+								</c:if>
 							</div>
 						</div>
 					</div>

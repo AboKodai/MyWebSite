@@ -168,14 +168,14 @@ public class ItemDao {
 			con = DBManager.getConnection();
 
 			if(searchWord.length() == 0 && itemTypeIdList == null) {
-			//全検索
+				//全検索
 				sql = "SELECT * FROM item WHERE delete_flag = 1 ORDER BY RAND() ASC LIMIT ?,?;";
 				pStmt = con.prepareStatement(sql);
 				pStmt.setInt(1, startItemNum);
 				pStmt.setInt(2, pageMaxItemCount);
 			}
 			else if(searchWord.length() > 0 && itemTypeIdList == null) {
-			//商品名検索
+				//商品名検索
 				sql =
 						"SELECT *"
 						+ " FROM item"
@@ -187,49 +187,55 @@ public class ItemDao {
 				pStmt.setInt(2, pageMaxItemCount);
 			}
 			else if (searchWord.length() == 0 && itemTypeIdList.size() > 0 ) {
-			//種類検索
-				sql = "SELECT item.*,"
-						+ " item_type_table.*,"
-						+ " item_type.*"
-						+ " FROM item"
-						+ " INNER JOIN item_type_table ON item.item_id = item_type_table.item_id"
-						+ " INNER JOIN item_type ON item_type_table.item_type_id = item_type.item_type_id"
-						+ " WHERE (";
+				//種類検索
+				sql = "SELECT i.*,"
+						+ " ittable.*,"
+						+ " it.*"
+						+ " FROM item i"
+						+ " INNER JOIN item_type_table ittable ON i.item_id = ittable.item_id"
+						+ " INNER JOIN item_type it ON ittable.item_type_id = it.item_type_id"
+						+ " WHERE";
 				for(int i = 0 ; i < itemTypeIdList.size(); i++) {
-					sql += "item_type.item_type_id ="+itemTypeIdList.get(i);
+					sql += " EXISTS (SELECT 1"
+							+ " FROM item_type_table"
+							+ " WHERE item_type_table.item_id = i.item_id"
+							+ " AND item_type_table.item_type_id ="+itemTypeIdList.get(i);
 					if(i<itemTypeIdList.size()-1) {
-						sql += " OR ";
+						sql += ") AND ";
 					}
 				}
 				sql +=
 						") AND delete_flag = 1"
-						+ " GROUP BY item.item_id"
-						+ " ORDER BY item.item_id ASC LIMIT ?,?";
+						+ " GROUP BY i.item_id"
+						+ " ORDER BY i.item_id ASC LIMIT ?,?";
 
 				pStmt = con.prepareStatement(sql);
 				pStmt.setInt(1, startItemNum);
 				pStmt.setInt(2, pageMaxItemCount);
 			}
 			else {
-			//商品名検索＋種類検索
-				sql = "SELECT item.*,"
-						+ " item_type_table.*,"
-						+ " item_type.*"
-						+ " FROM item"
-						+ " INNER JOIN item_type_table ON item.item_id = item_type_table.item_id"
-						+ " INNER JOIN item_type  ON item_type_table.item_type_id = item_type.item_type_id"
+				//商品名検索＋種類検索
+				sql = "SELECT i.*,"
+						+ " ittable.*,"
+						+ " it.*"
+						+ " FROM item i"
+						+ " INNER JOIN item_type_table ittable ON i.item_id = ittable.item_id"
+						+ " INNER JOIN item_type it ON ittable.item_type_id = it.item_type_id"
 						+ " WHERE (";
 				for(int i = 0 ; i < itemTypeIdList.size(); i++) {
-					sql += "item_type.item_type_id ="+itemTypeIdList.get(i);
+					sql += " EXISTS (SELECT 1"
+							+ " FROM item_type_table"
+							+ " WHERE item_type_table.item_id = i.item_id"
+							+ " AND item_type_table.item_type_id ="+itemTypeIdList.get(i);
 
 					if(i<itemTypeIdList.size()-1) {
-						sql += " OR ";
+						sql += ") AND ";
 					}
 				}
 				sql += ") AND item_name LIKE '%" +searchWord+"%'"
 						+ " AND delete_flag = 1"
-						+ " GROUP BY item.item_id"
-						+ " ORDER BY item.item_id ASC LIMIT ?,?";
+						+ " GROUP BY i.item_id"
+						+ " ORDER BY i.item_id ASC LIMIT ?,?";
 
 				pStmt = con.prepareStatement(sql);
 				pStmt.setInt(1, startItemNum);

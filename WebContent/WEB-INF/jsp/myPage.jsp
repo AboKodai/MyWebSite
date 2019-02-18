@@ -89,7 +89,16 @@
 				<tbody>
 					<c:forEach items="${sellList }" var="sell">
 						<tr>
-							<td><a href="SellDetail?buyDetailId=${sell.buyDetailId }" class="btn bg-info mr-1" style=color:white;>詳細</a>発送処理<input type="checkbox"  class="ml-1"></td>
+							<td>
+								<a href="SellDetail?buyDetailId=${sell.buyDetailId }" class="btn bg-info mr-1" style=color:white;>詳細</a>
+								発送処理
+								<c:if test="${sell.checkbox == 0 }">
+									<input type="checkbox"  class="ml-1" disabled="disabled">
+								</c:if>
+								<c:if test="${sell.checkbox == 1 }">
+									<input type="checkbox"  class="ml-1" checked = "checked" disabled="disabled">
+								</c:if>
+							</td>
 							<td>${sell.formatDate }</td>
 							<td>${sell.itemName }</td>
 							<td>${sell.itemNumber }</td>

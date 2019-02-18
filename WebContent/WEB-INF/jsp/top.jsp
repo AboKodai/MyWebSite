@@ -55,6 +55,9 @@
 							<div class="card-body">
 								<p class="card-text">${randomList.itemName }</p>
 								<p class="card-text">${randomList.itemPrice }円</p>
+								<c:if test="${randomList.itemNumber == 0 }">
+									<p class="text-danger">売り切れ</p>
+								</c:if>
 							</div>
 						</div>
 					</div>

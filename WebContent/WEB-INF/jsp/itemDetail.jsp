@@ -39,9 +39,6 @@
 				<div class="mx-auto">
 					<button type="submit" class="btn btn-danger mt-4" value="addItem" name="select">カートに入れる</button>
 				</div>
-				<div class="mx-auto mb-5">
-					<button type="submit" class="btn btn-primary mt-4" style=width:140px; value="buy"name="select">購入手続き</button>
-				</div>
 			</c:if>
 		</form>
 	</div>

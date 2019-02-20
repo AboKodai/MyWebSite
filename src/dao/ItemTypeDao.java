@@ -14,7 +14,7 @@ public class ItemTypeDao {
 	 *
 	 * @return
 	 */
-	public ArrayList<ItemTypeBeans> findItemType() {
+	public ArrayList<ItemTypeBeans> findItemType() throws SQLException{
 		Connection con = null;
 
 		try {
@@ -33,20 +33,14 @@ public class ItemTypeDao {
 			System.out.println("種類名をすべて取得");
 			return itbList;
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
+			if (con != null) {
+				con.close();
 			}
 		}
-
 	}
 
 }

@@ -39,51 +39,57 @@ public class ItemDetail extends HttpServlet {
 		ItemBeans item = new ItemBeans();
 		DeliveryMethodBeans dmb = new DeliveryMethodBeans();
 		DeliveryMethodDao dmDao = new DeliveryMethodDao();
-		item = itemDao.itemDetail( Integer.parseInt(request.getParameter("item_id")));
-		if(item.getItemNumber() == 0) {
-			//在庫なしのとき
-			request.setAttribute("sysMsg", "売り切れ");
+
+		try {
+			item = itemDao.itemDetail( Integer.parseInt(request.getParameter("item_id")));
+			if(item.getItemNumber() == 0) {
+				//在庫なしのとき
+				request.setAttribute("sysMsg", "売り切れ");
+			}
+			request.setAttribute("item", item);
+			dmb = dmDao.getDeliveryMethod(item.getDelivaryMethod());
+			request.setAttribute("dmb", dmb);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/itemDetail.jsp");
+			dispatcher.forward(request, response);
+		}catch(Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", e.toString());
+			response.sendRedirect("Error");
 		}
-		request.setAttribute("item", item);
-		dmb = dmDao.getDeliveryMethod(item.getDelivaryMethod());
-		request.setAttribute("dmb", dmb);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/itemDetail.jsp");
-		dispatcher.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		ItemDao itemDao = new ItemDao();
 
-	//商品IDを取得
+		try {
+		//商品IDを取得
 		int itemId = Integer.parseInt(request.getParameter("itemId"));
-	//IDをもとに商品情報を取得
+		//IDをもとに商品情報を取得
 		ItemBeans item = itemDao.itemDetail(itemId);
-	//購入数情報を取得
+		//購入数情報を取得
 		int sellNumber = Integer.parseInt(request.getParameter("sellNumber"));
-	//商品に購入数情報を追加
+		//商品に購入数情報を追加
 		item.setSellNumber(sellNumber);
-	//リクエストスコープに商品をセット
+		//リクエストスコープに商品をセット
 		request.setAttribute("item", item);
 		String selected = request.getParameter("select");
 		switch(selected) {
-	//カートに入れるが押された場合
+		//カートに入れるが押された場合
 		case "addItem":
 			RequestDispatcher dispatcher = request.getRequestDispatcher("AddItem");
 			dispatcher.forward(request, response);
 			break;
-	//購入手続きが押された場合
-		case "buy":
-			break;
-
-
-
-
 		}
+	}catch(Exception e) {
+		e.printStackTrace();
+		session.setAttribute("errorMsg", e.toString());
+		response.sendRedirect("Error");
+	}
 
 
 	}
-
 }

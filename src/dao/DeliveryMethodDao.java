@@ -11,7 +11,7 @@ import beans.DeliveryMethodBeans;
 
 public class DeliveryMethodDao {
 
-	public ArrayList<DeliveryMethodBeans> findDeliveryMethod() {
+	public ArrayList<DeliveryMethodBeans> findDeliveryMethod() throws SQLException{
 		Connection con = null;
 
 		try {
@@ -30,19 +30,13 @@ public class DeliveryMethodDao {
 			System.out.println("配送方法の取得");
 			return dmbList;
 		}catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
+			if (con != null) {
+				con.close();
 			}
 		}
-
 	}
 
 	/**配送方法IDから配送方法を取得
@@ -50,7 +44,7 @@ public class DeliveryMethodDao {
 	 * @param deliveryMethodId
 	 * @return
 	 */
-	public DeliveryMethodBeans getDeliveryMethod(int deliveryMethodId) {
+	public DeliveryMethodBeans getDeliveryMethod(int deliveryMethodId) throws SQLException{
 		Connection con = null;
 
 		try {
@@ -67,18 +61,12 @@ public class DeliveryMethodDao {
 			return dmb;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
+			if (con != null) {
+				con.close();
 			}
 		}
-
 	}
 }

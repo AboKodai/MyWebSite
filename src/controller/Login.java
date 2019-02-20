@@ -47,28 +47,34 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-
-		//フォームの入力内容を取得
-		String loginId = request.getParameter("loginId");
-		String password = request.getParameter("password");
-
-
-		UserDao userDao = new UserDao();
-		String result = userDao.getMD5Password(password);
-		UserBeans user = userDao.findUser(loginId, result);
-
-		if(user == null) {
-			//ユーザ情報が見つからないとき
-			request.setAttribute("sysMsg", "ログインIDまたはパスワードが異なります");
-			request.setAttribute("loginId", loginId);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
-			dispatcher.forward(request, response);
-			return;
-		}
-
 		HttpSession session = request.getSession();
-		session.setAttribute("userInfo", user);
-		response.sendRedirect("MyPage");
+
+		try {
+
+			//フォームの入力内容を取得
+			String loginId = request.getParameter("loginId");
+			String password = request.getParameter("password");
+
+
+			UserDao userDao = new UserDao();
+			String result = userDao.getMD5Password(password);
+			UserBeans user = userDao.findUser(loginId, result);
+
+			if(user == null) {
+				//ユーザ情報が見つからないとき
+				request.setAttribute("sysMsg", "ログインIDまたはパスワードが異なります");
+				request.setAttribute("loginId", loginId);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+				dispatcher.forward(request, response);
+				return;
+			}
+			session.setAttribute("userInfo", user);
+			response.sendRedirect("MyPage");
+		}catch(Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", e.toString());
+			response.sendRedirect("Error");
+		}
 	}
 
 }

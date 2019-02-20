@@ -40,25 +40,32 @@ public class BuyDetail extends HttpServlet {
 		ArrayList<ItemBeans> itemList = new ArrayList<ItemBeans>();
 		BuyDetailDao bdDao = new BuyDetailDao();
 
-		//ログインセッションがない場合はログイン画面
-		if(session.getAttribute("userInfo") == null) {
-			response.sendRedirect("Login");
+		try {
+
+			//ログインセッションがない場合はログイン画面
+			if(session.getAttribute("userInfo") == null) {
+				response.sendRedirect("Login");
+			}
+
+			//リクエストスコープからbuyIdを取得
+			int buyId = Integer.parseInt(request.getParameter("buyId"));
+
+			//購入商品情報
+			BuyBeans resultBuy = buyDao.getBuyBeansByBuyId(buyId);
+
+			//購入詳細情報
+			itemList = bdDao.getItemListForBuyDetail(buyId);
+
+			request.setAttribute("resultBuy", resultBuy);
+			request.setAttribute("itemList", itemList);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/buyDetail.jsp");
+			dispatcher.forward(request, response);
+		}catch(Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", e.toString());
+			response.sendRedirect("Error");
 		}
-
-		//リクエストスコープからbuyIdを取得
-		int buyId = Integer.parseInt(request.getParameter("buyId"));
-
-		//購入商品情報
-		BuyBeans resultBuy = buyDao.getBuyBeansByBuyId(buyId);
-
-		//購入詳細情報
-		itemList = bdDao.getItemListForBuyDetail(buyId);
-
-		request.setAttribute("resultBuy", resultBuy);
-		request.setAttribute("itemList", itemList);
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/buyDetail.jsp");
-		dispatcher.forward(request, response);
 	}
 
 	/**

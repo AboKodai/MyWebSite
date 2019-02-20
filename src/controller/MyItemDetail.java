@@ -41,35 +41,41 @@ public class MyItemDetail extends HttpServlet {
 		HttpSession session = request.getSession();
 		ItemDao itemDao = new ItemDao();
 
-		//ログインセッションがない場合ログイン画面にリダイレクト
-		if(session.getAttribute("userInfo")==null) {
-			response.sendRedirect("Login");
+		try {
+			//ログインセッションがない場合ログイン画面にリダイレクト
+			if(session.getAttribute("userInfo")==null) {
+				response.sendRedirect("Login");
+			}
+
+			//リクエストコープからitemIdを取得
+			int itemId =Integer.parseInt(request.getParameter("itemId"));
+			//商品情報を取得
+			ItemBeans item = itemDao.itemDetail(itemId);
+			//商品のdeliveryMethod情報を取得
+			DeliveryMethodDao  dmDao = new DeliveryMethodDao();
+			DeliveryMethodBeans dmb = dmDao.getDeliveryMethod(item.getDelivaryMethod());
+			//商品のitemType情報を取得
+			ItemTypeTableDao ittDao = new ItemTypeTableDao();
+			ArrayList<Integer> itemTypeList = new ArrayList<Integer>();
+			itemTypeList = ittDao.getItemTypeIdByItemId(itemId);
+			//itemTypeListを取得
+			ItemTypeDao itDao = new ItemTypeDao();
+			ArrayList<ItemTypeBeans> typeList = new ArrayList<ItemTypeBeans>();
+			typeList = itDao.findItemType();
+
+			//リクエストスコープにセット
+			request.setAttribute("item", item);
+			request.setAttribute("dmb", dmb);
+			request.setAttribute("itemTypeList", itemTypeList);
+			request.setAttribute("typeList", typeList);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/myItemDetail.jsp");
+			dispatcher.forward(request, response);
+		}catch(Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", e.toString());
+			response.sendRedirect("Error");
 		}
-
-		//リクエストコープからitemIdを取得
-		int itemId =Integer.parseInt(request.getParameter("itemId"));
-		//商品情報を取得
-		ItemBeans item = itemDao.itemDetail(itemId);
-		//商品のdeliveryMethod情報を取得
-		DeliveryMethodDao  dmDao = new DeliveryMethodDao();
-		DeliveryMethodBeans dmb = dmDao.getDeliveryMethod(item.getDelivaryMethod());
-		//商品のitemType情報を取得
-		ItemTypeTableDao ittDao = new ItemTypeTableDao();
-		ArrayList<Integer> itemTypeList = new ArrayList<Integer>();
-		itemTypeList = ittDao.getItemTypeIdByItemId(itemId);
-		//itemTypeListを取得
-		ItemTypeDao itDao = new ItemTypeDao();
-		ArrayList<ItemTypeBeans> typeList = new ArrayList<ItemTypeBeans>();
-		typeList = itDao.findItemType();
-
-		//リクエストスコープにセット
-		request.setAttribute("item", item);
-		request.setAttribute("dmb", dmb);
-		request.setAttribute("itemTypeList", itemTypeList);
-		request.setAttribute("typeList", typeList);
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/myItemDetail.jsp");
-		dispatcher.forward(request, response);
 	}
 
 	/**

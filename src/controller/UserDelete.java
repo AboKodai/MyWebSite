@@ -49,26 +49,33 @@ public class UserDelete extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 
-		//分岐準備
-		String confirm = request.getParameter("confirm");
-		switch(confirm) {
-		//キャンセルが押された場合
-		case "cancel":
-			//マイページにリダイレクト
-			response.sendRedirect("MyPage");
-			break;
+		try {
 
-		//退会するが押された場合
-		case "permit":
-			//ユーザに紐づく情報を削除
-			UserDao userDao = new UserDao();
-			UserBeans user = new UserBeans();
-			user = (UserBeans) session.getAttribute("userInfo");
-			userDao.userDelete(user.getUserId());
+			//分岐準備
+			String confirm = request.getParameter("confirm");
+			switch(confirm) {
+			//キャンセルが押された場合
+			case "cancel":
+				//マイページにリダイレクト
+				response.sendRedirect("MyPage");
+				break;
 
-			//ログアウト処理へ
-			response.sendRedirect("Logout");
+			//退会するが押された場合
+			case "permit":
+				//ユーザに紐づく情報を削除
+				UserDao userDao = new UserDao();
+				UserBeans user = new UserBeans();
+				user = (UserBeans) session.getAttribute("userInfo");
+				userDao.userDelete(user.getUserId());
 
+				//ログアウト処理へ
+				response.sendRedirect("Logout");
+			}
+
+		}catch(Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", e.toString());
+			response.sendRedirect("Error");
 		}
 	}
 

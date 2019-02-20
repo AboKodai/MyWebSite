@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import beans.BuyBeans;
 import beans.ItemBeans;
@@ -34,28 +35,35 @@ public class DecreaseItemNumber extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ItemDao itemDao = new ItemDao();
+		HttpSession session = request.getSession();
 
-		//リクエストスコープ情報の取得
-		BuyBeans resultBuy = (BuyBeans) request.getAttribute("resultBuy");
-		ArrayList<ItemBeans> resultBuyDetail = (ArrayList<ItemBeans>) request.getAttribute("resultBuyDetail");
+		try {
+			//リクエストスコープ情報の取得
+			BuyBeans resultBuy = (BuyBeans) request.getAttribute("resultBuy");
+			ArrayList<ItemBeans> resultBuyDetail = (ArrayList<ItemBeans>) request.getAttribute("resultBuyDetail");
 
-		//商品数量の更新
-		for(ItemBeans item : resultBuyDetail) {
-			//商品の現在数量を取得
-			ItemBeans itemTable = new ItemBeans();
-			itemTable = itemDao.itemDetail(item.getItemId());
-			int ItemNumber = itemTable.getItemNumber();
-			//購入された商品数量を取得
-			int decreaseItemNumber = item.getSellNumber();
+			//商品数量の更新
+			for(ItemBeans item : resultBuyDetail) {
+				//商品の現在数量を取得
+				ItemBeans itemTable = new ItemBeans();
+				itemTable = itemDao.itemDetail(item.getItemId());
+				int ItemNumber = itemTable.getItemNumber();
+				//購入された商品数量を取得
+				int decreaseItemNumber = item.getSellNumber();
 
-			int newItemNumber = ItemNumber - decreaseItemNumber;
+				int newItemNumber = ItemNumber - decreaseItemNumber;
 
-			//商品数量を更新
-			itemDao.decreaseItemNumber(newItemNumber, item.getItemId());
+				//商品数量を更新
+				itemDao.decreaseItemNumber(newItemNumber, item.getItemId());
 
-				}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/buyResult.jsp");
-		dispatcher.forward(request, response);
+					}
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/buyResult.jsp");
+			dispatcher.forward(request, response);
+		}catch(Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", e.toString());
+			response.sendRedirect("Error");
+		}
 	}
 
 	/**

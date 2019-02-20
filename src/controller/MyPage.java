@@ -40,30 +40,37 @@ public class MyPage extends HttpServlet {
 		HttpSession session = request.getSession();
 		BuyDao buyDao = new BuyDao();
 		ItemDao itemDao = new ItemDao();
-		if(session.getAttribute("userInfo") == null) {
-			//ログインセッションがない場合ログイン画面にリダイレクト
-			response.sendRedirect("Login");
-			return;
+
+		try {
+			if(session.getAttribute("userInfo") == null) {
+				//ログインセッションがない場合ログイン画面にリダイレクト
+				response.sendRedirect("Login");
+				return;
+			}
+			UserBeans user = (UserBeans) session.getAttribute("userInfo");
+			int userId = user.getUserId();
+			//購入履歴表示のため
+			BuyBeans buy = buyDao.getBuyBeansByUserId(userId);
+			request.setAttribute("buy", buy);
+
+			//受注一覧表示のため
+			ArrayList<SellListBeans> sellList = new ArrayList<SellListBeans>();
+			sellList = buyDao.getSellList(userId);
+			request.setAttribute("sellList", sellList);
+
+
+			//出品商品一覧のため
+			ArrayList<ItemBeans> itemList = new ArrayList<ItemBeans>();
+			itemList = itemDao.getItemByuserId(userId);
+			request.setAttribute("myItemList", itemList);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/myPage.jsp");
+			dispatcher.forward(request, response);
+		}catch(Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", e.toString());
+			response.sendRedirect("Error");
 		}
-		UserBeans user = (UserBeans) session.getAttribute("userInfo");
-		int userId = user.getUserId();
-		//購入履歴表示のため
-		BuyBeans buy = buyDao.getBuyBeansByUserId(userId);
-		request.setAttribute("buy", buy);
-
-		//受注一覧表示のため
-		ArrayList<SellListBeans> sellList = new ArrayList<SellListBeans>();
-		sellList = buyDao.getSellList(userId);
-		request.setAttribute("sellList", sellList);
-
-
-		//出品商品一覧のため
-		ArrayList<ItemBeans> itemList = new ArrayList<ItemBeans>();
-		itemList = itemDao.getItemByuserId(userId);
-		request.setAttribute("myItemList", itemList);
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/myPage.jsp");
-		dispatcher.forward(request, response);
 	}
 
 	/**

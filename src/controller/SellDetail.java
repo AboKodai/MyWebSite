@@ -36,19 +36,25 @@ public class SellDetail extends HttpServlet {
 		HttpSession session = request.getSession();
 		BuyDao buyDao = new BuyDao();
 
-		if(session.getAttribute("userInfo") == null) {
-			//ログインセッションがない場合ログイン画面にリダイレクト
-			response.sendRedirect("Login");
-			return;
+		try {
+			if(session.getAttribute("userInfo") == null) {
+				//ログインセッションがない場合ログイン画面にリダイレクト
+				response.sendRedirect("Login");
+				return;
+			}
+			//リクエストスコープから値を取得
+			int buyDetailId = Integer.parseInt(request.getParameter("buyDetailId"));
+
+			SellListBeans sell = buyDao.getSellBeans(buyDetailId);
+			request.setAttribute("sell", sell);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/sellDetail.jsp");
+			dispatcher.forward(request, response);
+		}catch(Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", e.toString());
+			response.sendRedirect("Error");
 		}
-		//リクエストスコープから値を取得
-		int buyDetailId = Integer.parseInt(request.getParameter("buyDetailId"));
-
-		SellListBeans sell = buyDao.getSellBeans(buyDetailId);
-		request.setAttribute("sell", sell);
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/sellDetail.jsp");
-		dispatcher.forward(request, response);
 	}
 
 	/**
@@ -56,14 +62,22 @@ public class SellDetail extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		BuyDetailDao bdDao = new  BuyDetailDao();
-		int buyDetailId = Integer.parseInt(request.getParameter("buyDetailId"));
-		if (request.getParameter("checkbox") == null) {
-			bdDao.checkboxUpdate(buyDetailId, 0);
-		}else if(Integer.parseInt(request.getParameter("checkbox")) == 1) {
-			bdDao.checkboxUpdate(buyDetailId, 1);
+		HttpSession session = request.getSession();
+
+		try {
+			BuyDetailDao bdDao = new  BuyDetailDao();
+			int buyDetailId = Integer.parseInt(request.getParameter("buyDetailId"));
+			if (request.getParameter("checkbox") == null) {
+				bdDao.checkboxUpdate(buyDetailId, 0);
+			}else if(Integer.parseInt(request.getParameter("checkbox")) == 1) {
+				bdDao.checkboxUpdate(buyDetailId, 1);
+			}
+			response.sendRedirect("SellDetail?buyDetailId="+buyDetailId);
+		}catch(Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", e.toString());
+			response.sendRedirect("Error");
 		}
-		response.sendRedirect("SellDetail?buyDetailId="+buyDetailId);
 	}
 
 }

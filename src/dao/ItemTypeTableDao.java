@@ -14,7 +14,7 @@ public class ItemTypeTableDao {
 	 * @param strItemTypeId
 	 * @return
 	 */
-	public boolean entryItem(int itemId, String[] strItemTypeId) {
+	public boolean entryItem(int itemId, String[] strItemTypeId) throws SQLException{
 		Connection con = null;
 
 		try {
@@ -34,17 +34,12 @@ public class ItemTypeTableDao {
 				}
 			}
 			return true;
-		}catch(SQLException e) {
-			e.printStackTrace();
-			return false;
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return false;
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
@@ -54,7 +49,7 @@ public class ItemTypeTableDao {
 	 * @param itemId
 	 * @return
 	 */
-	public ArrayList<Integer> getItemTypeIdByItemId(int itemId){
+	public ArrayList<Integer> getItemTypeIdByItemId(int itemId) throws SQLException{
 		Connection con = null;
 		ArrayList<Integer> itemTypeIdList = new ArrayList<Integer>();
 
@@ -73,17 +68,12 @@ public class ItemTypeTableDao {
 
 			System.out.println("get itemTypeIdList");
 			return itemTypeIdList;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
@@ -92,7 +82,7 @@ public class ItemTypeTableDao {
 	 *
 	 * @param itemId
 	 */
-	public void itemTypeDeleteByItemId(int itemId) {
+	public void itemTypeDeleteByItemId(int itemId) throws SQLException{
 		Connection con = null;
 
 		try {
@@ -107,14 +97,11 @@ public class ItemTypeTableDao {
 
 			System.out.println("delete");
 		}catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+			if (con != null) {
+				con.close();
 			}
 		}
 	}

@@ -34,20 +34,26 @@ public class ItemDelete extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 
-		//ログインセッションがない場合はログイン画面へ
-		if(session.getAttribute("userInfo") == null) {
-			response.sendRedirect("Login");
+		try {
+			//ログインセッションがない場合はログイン画面へ
+			if(session.getAttribute("userInfo") == null) {
+				response.sendRedirect("Login");
+			}
+			//リクエストスコープからitemIdを取得
+			int itemId = Integer.parseInt(request.getParameter("itemId"));
+			//itemIdをもとに商品情報を取得
+			ItemDao itemDao = new ItemDao();
+			ItemBeans item = itemDao.itemDetail(itemId);
+
+			request.setAttribute("item", item);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/itemDelete.jsp");
+			dispatcher.forward(request, response);
+		}catch(Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", e.toString());
+			response.sendRedirect("Error");
 		}
-		//リクエストスコープからitemIdを取得
-		int itemId = Integer.parseInt(request.getParameter("itemId"));
-		//itemIdをもとに商品情報を取得
-		ItemDao itemDao = new ItemDao();
-		ItemBeans item = itemDao.itemDetail(itemId);
-
-		request.setAttribute("item", item);
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/itemDelete.jsp");
-		dispatcher.forward(request, response);
 	}
 
 	/**
@@ -55,12 +61,19 @@ public class ItemDelete extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
 
-		int itemId = Integer.parseInt(request.getParameter("itemId"));
-		ItemDao itemDao = new ItemDao();
-		itemDao.itemDelete(itemId);
+		try {
+			int itemId = Integer.parseInt(request.getParameter("itemId"));
+			ItemDao itemDao = new ItemDao();
+			itemDao.itemDelete(itemId);
 
-		response.sendRedirect("MyPage");
+			response.sendRedirect("MyPage");
+		}catch(Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", e.toString());
+			response.sendRedirect("Error");
+		}
 
 
 	}

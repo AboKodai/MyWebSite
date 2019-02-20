@@ -40,27 +40,34 @@ public class NewItem extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		if(session.getAttribute("userInfo") == null) {
-			//ログインセッションがない場合ログイン画面にリダイレクト
-			response.sendRedirect("Login");
-			return;
 
+		try {
+			if(session.getAttribute("userInfo") == null) {
+				//ログインセッションがない場合ログイン画面にリダイレクト
+				response.sendRedirect("Login");
+				return;
+
+			}
+
+			//商品の種類を取得
+			ItemTypeDao itDao = new ItemTypeDao();
+			ArrayList<ItemTypeBeans> itbList = new ArrayList<ItemTypeBeans>();
+			itbList = itDao.findItemType();
+			//送料を取得
+			DeliveryMethodDao dmDao = new DeliveryMethodDao();
+			ArrayList<DeliveryMethodBeans> dmbList = new ArrayList<DeliveryMethodBeans>();
+			dmbList = dmDao.findDeliveryMethod();
+			//リクエストスコープにセット
+			request.setAttribute("itbList", itbList);
+			request.setAttribute("dmbList", dmbList);
+			//商品登録画面にフォワード
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/newItem.jsp");
+			dispatcher.forward(request, response);
+		}catch(Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", e.toString());
+			response.sendRedirect("Error");
 		}
-
-		//商品の種類を取得
-		ItemTypeDao itDao = new ItemTypeDao();
-		ArrayList<ItemTypeBeans> itbList = new ArrayList<ItemTypeBeans>();
-		itbList = itDao.findItemType();
-	//送料を取得
-		DeliveryMethodDao dmDao = new DeliveryMethodDao();
-		ArrayList<DeliveryMethodBeans> dmbList = new ArrayList<DeliveryMethodBeans>();
-		dmbList = dmDao.findDeliveryMethod();
-	//リクエストスコープにセット
-		request.setAttribute("itbList", itbList);
-		request.setAttribute("dmbList", dmbList);
-	//商品登録画面にフォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/newItem.jsp");
-		dispatcher.forward(request, response);
 		}
 
 	/**
@@ -72,30 +79,36 @@ public class NewItem extends HttpServlet {
 		ItemDao itemDao = new ItemDao();
 		ItemTypeTableDao ittDao = new ItemTypeTableDao();
 
+		try {
 
-	//入力された内容を取得
-		String itemName = request.getParameter("itemName");
-		String itemDetail = request.getParameter("itemDetail");
-		int itemPrice = Integer.parseInt(request.getParameter("itemPrice"));
-		int  itemNumber= Integer.parseInt(request.getParameter("itemNumber"));
-		String[]itemTypeList = request.getParameterValues("type");
-		int deliveryMethodId = Integer.parseInt(request.getParameter("deliveryMethod"));
-		String fileName = request.getParameter("fileName");
+			//入力された内容を取得
+			String itemName = request.getParameter("itemName");
+			String itemDetail = request.getParameter("itemDetail");
+			int itemPrice = Integer.parseInt(request.getParameter("itemPrice"));
+			int  itemNumber= Integer.parseInt(request.getParameter("itemNumber"));
+			String[]itemTypeList = request.getParameterValues("type");
+			int deliveryMethodId = Integer.parseInt(request.getParameter("deliveryMethod"));
+			String fileName = request.getParameter("fileName");
 
-	//セッションスコープからユーザIDを取得
-		UserBeans ub = new UserBeans();
-		ub = (UserBeans)session.getAttribute("userInfo");
-		int userId = ub.getUserId();
+			//セッションスコープからユーザIDを取得
+			UserBeans ub = new UserBeans();
+			ub = (UserBeans)session.getAttribute("userInfo");
+			int userId = ub.getUserId();
 
-	//itemテーブルに商品を登録と同時にitemIdの取得
-		int itemId = itemDao.newItem(userId, itemName, itemDetail, itemPrice, itemNumber, deliveryMethodId, fileName);
+			//itemテーブルに商品を登録と同時にitemIdの取得
+			int itemId = itemDao.newItem(userId, itemName, itemDetail, itemPrice, itemNumber, deliveryMethodId, fileName);
 
-	//itemIDとitemTypeListをもとにitemTypeTableに登録
-		ittDao.entryItem(itemId,itemTypeList );
-		System.out.println("種類登録成功");
+			//itemIDとitemTypeListをもとにitemTypeTableに登録
+			ittDao.entryItem(itemId,itemTypeList );
+			System.out.println("種類登録成功");
 
-	//マイページへリダイレクト
-		response.sendRedirect("MyPage");
+			//マイページへリダイレクト
+			response.sendRedirect("MyPage");
+		}catch(Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMsg", e.toString());
+			response.sendRedirect("Error");
+		}
 	}
 
 }

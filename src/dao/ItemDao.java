@@ -23,7 +23,7 @@ public class ItemDao {
 	 * @param fileName
 	 * @return itemId
 	 */
-	public int newItem(int userId, String itemName, String itemDetail,int itemPrice, int itemNumber, int deliveryMethodId, String fileName) {
+	public int newItem(int userId, String itemName, String itemDetail,int itemPrice, int itemNumber, int deliveryMethodId, String fileName) throws SQLException{
 		Connection con = null;
 		int itemId = -1;
 		try {
@@ -46,20 +46,14 @@ public class ItemDao {
 
 			System.out.println("entry item");
 			return itemId;
-		}catch(SQLException e) {
-			e.printStackTrace();
-			return -1;
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return -1;
+			if (con != null) {
+				con.close();
 			}
 		}
-
 	}
 
 	/**ユーザIDと商品名から商品を検索
@@ -68,7 +62,7 @@ public class ItemDao {
 	 * @param itemName
 	 * @return
 	 */
-	public ItemBeans findItem(int userId, String itemName) {
+	public ItemBeans findItem(int userId, String itemName) throws SQLException{
 		Connection con = null;
 
 		try {
@@ -80,7 +74,7 @@ public class ItemDao {
 			pStmt.setString(2, itemName);
 			ResultSet rs = pStmt.executeQuery();
 			ItemBeans ib = new ItemBeans();
-		//結果をセット
+			//結果をセット
 			ib.setItemId(rs.getInt("item_id"));
 			ib.setUserId(rs.getInt("user_id"));
 			ib.setItemName(rs.getString("item_name"));
@@ -93,16 +87,11 @@ public class ItemDao {
 			return ib;
 
 		}catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
@@ -111,7 +100,7 @@ public class ItemDao {
 	 *
 	 * @return
 	 */
-	public ArrayList<ItemBeans> getRandomItem() {
+	public ArrayList<ItemBeans> getRandomItem() throws SQLException{
 		Connection con = null;
 		Statement stmt = null;
 		String sql = null;
@@ -140,16 +129,11 @@ public class ItemDao {
 			System.out.println("get randon Item");
 			return ibList;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
@@ -158,7 +142,7 @@ public class ItemDao {
 	 *
 	 * @return
 	 */
-	public ArrayList<ItemBeans> findItem(String searchWord, ArrayList<Integer> itemTypeIdList, int pageNum, int pageMaxItemCount ) {
+	public ArrayList<ItemBeans> findItem(String searchWord, ArrayList<Integer> itemTypeIdList, int pageNum, int pageMaxItemCount ) throws SQLException{
 		Connection con = null;
 		PreparedStatement pStmt = null;
 		String sql = null;
@@ -258,17 +242,12 @@ public class ItemDao {
 			}
 			System.out.println("get all item");
 			return ibList;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
@@ -278,7 +257,7 @@ public class ItemDao {
 	 * @param itemId
 	 * @return
 	 */
-	public ItemBeans itemDetail(int itemId) {
+	public ItemBeans itemDetail(int itemId) throws SQLException{
 		Connection con = null;
 
 		try {
@@ -304,16 +283,11 @@ public class ItemDao {
 			return item;
 
 		}catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
@@ -323,7 +297,7 @@ public class ItemDao {
 	 * @param buyId
 	 * @param userId
 	 */
-	public void decreaseItemNumber(int itemNumber, int itemId) {
+	public void decreaseItemNumber(int itemNumber, int itemId) throws SQLException{
 		Connection con = null;
 
 		try {
@@ -339,14 +313,11 @@ public class ItemDao {
 			System.out.println("update itemNumber");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
@@ -362,7 +333,7 @@ public class ItemDao {
 	 * @param fileName
 	 * @param itemId
 	 */
-	public void itemUpdate(String itemName ,String itemDetail, int itemPrice, int itemNumber, int deliveryMethodId, int itemId) {
+	public void itemUpdate(String itemName ,String itemDetail, int itemPrice, int itemNumber, int deliveryMethodId, int itemId) throws SQLException{
 		Connection con = null;
 
 		try {
@@ -381,14 +352,11 @@ public class ItemDao {
 
 			System.out.println("item info update");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
@@ -398,7 +366,7 @@ public class ItemDao {
 	 * @param userId
 	 * @return
 	 */
-	public ArrayList<ItemBeans> getItemByuserId(int userId){
+	public ArrayList<ItemBeans> getItemByuserId(int userId) throws SQLException{
 		Connection con = null;
 		ArrayList<ItemBeans> itemList = new ArrayList<ItemBeans>();
 		boolean isAdd = false;
@@ -434,21 +402,16 @@ public class ItemDao {
 			}
 
 		}catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
 
-	public void itemDelete(int itemId) {
+	public void itemDelete(int itemId) throws SQLException{
 		Connection con = null;
 
 		try {
@@ -463,15 +426,46 @@ public class ItemDao {
 
 			System.out.println("item delete from item table");
 
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				if(con != null) {
-					con.close();
-				}
-			}catch(SQLException e) {
-				e.printStackTrace();
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+	}
+
+
+	/**商品在庫の確認
+	 *
+	 * @param itemId
+	 * @return
+	 */
+	public int getItemNumberByItemId(int itemId) throws SQLException{
+		Connection con = null;
+		int number = -1;
+
+		try {
+			con=DBManager.getConnection();
+
+			String sql = "SELECT item_number FROM item WHERE item_id = ?";
+
+			PreparedStatement pStmt = con.prepareStatement(sql);
+			pStmt.setInt(1, itemId);
+
+			ResultSet rs = pStmt.executeQuery();
+			while(rs.next()) {
+				number = rs.getInt(1);
+			}
+
+			return number;
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
+		} finally {
+			if (con != null) {
+				con.close();
 			}
 		}
 	}

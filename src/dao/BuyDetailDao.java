@@ -15,7 +15,7 @@ public class BuyDetailDao {
 	 *
 	 * @param bdb
 	 */
-	public void insertBuyDetail(BuyDetailBeans bdb) {
+	public void insertBuyDetail(BuyDetailBeans bdb) throws SQLException{
 		Connection con = null;
 		try {
 			con= DBManager.getConnection();
@@ -30,17 +30,13 @@ public class BuyDetailDao {
 
 			System.out.println("insert buyDetail");
 		}catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+			if (con != null) {
+				con.close();
 			}
 		}
-
 	}
 
 	/**購入詳細情報検索
@@ -48,7 +44,7 @@ public class BuyDetailDao {
 	 * @param buyId
 	 * @return
 	 */
-	public ArrayList<BuyDetailBeans> getBuyDetailBeansByBuyId(int buyId){
+	public ArrayList<BuyDetailBeans> getBuyDetailBeansByBuyId(int buyId) throws SQLException{
 		Connection con = null;
 		try {
 			con= DBManager.getConnection();
@@ -73,16 +69,11 @@ public class BuyDetailDao {
 			System.out.println("get BuyDetailBeansList");
 			return bdbList;
 		}catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
@@ -92,7 +83,7 @@ public class BuyDetailDao {
 	 * @param buyId
 	 * @return
 	 */
-	public ArrayList<ItemBeans> getItemListForBuyDetail(int buyId){
+	public ArrayList<ItemBeans> getItemListForBuyDetail(int buyId) throws SQLException{
 		Connection con = null;
 		try {
 			con= DBManager.getConnection();
@@ -122,16 +113,11 @@ public class BuyDetailDao {
 			System.out.println("get itemBeansList");
 			return itemList;
 	}catch (SQLException e) {
-		e.printStackTrace();
-		return null;
+		System.out.println(e.getMessage());
+		throw new SQLException(e);
 	} finally {
-		try {
-			if (con != null) {
-				con.close();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+		if (con != null) {
+			con.close();
 		}
 	}
 }
@@ -140,7 +126,7 @@ public class BuyDetailDao {
 	 *
 	 * @param buyDetailId
 	 */
-	public void checkboxUpdate(int buyDetailId, int checkbox) {
+	public void checkboxUpdate(int buyDetailId, int checkbox) throws SQLException{
 		Connection con = null;
 		try {
 			con= DBManager.getConnection();
@@ -155,8 +141,13 @@ public class BuyDetailDao {
 			pStmt.setInt(2, buyDetailId);
 
 			pStmt.executeUpdate();
-	}catch(SQLException e) {
-		e.printStackTrace();
+	}catch (SQLException e) {
+		System.out.println(e.getMessage());
+		throw new SQLException(e);
+	} finally {
+		if (con != null) {
+			con.close();
+		}
 	}
-	}
+}
 }

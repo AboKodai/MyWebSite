@@ -23,7 +23,7 @@ public class UserDao {
 	 * @param password
 	 * @return
 	 */
-	public UserBeans findUser(String loginId, String password) {
+	public UserBeans findUser(String loginId, String password) throws SQLException{
 		Connection con = null;
 
 		try {
@@ -54,17 +54,12 @@ public class UserDao {
 			return new UserBeans(userIdInfo, loginIdInfo, userNameInfo, passwordInfo, birthDateInfo,homeAddressInfo,address);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}  finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
-			}
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
+		} finally {
+			if (con != null) {
+				con.close();
+			} 
 		}
 	}
 
@@ -73,7 +68,7 @@ public class UserDao {
 	 * @param user
 	 * @return
 	 */
-	public boolean newUser(UserBeans user) {
+	public boolean newUser(UserBeans user) throws SQLException{
 		Connection con = null;
 
 		try {
@@ -106,18 +101,13 @@ public class UserDao {
 			} else {
 				return false;
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}  finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return false;
-			}
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
+		} finally {
+			if (con != null) {
+				con.close();
+			} 
 		}
 	}
 
@@ -128,7 +118,7 @@ public class UserDao {
 	 * @return boolean
 	 * ログインIDが使用済みだった場合はtrueを使用されていなければfalseを返す
 	 */
-	public boolean userCheckId(String loginId ,String newLoginId) {
+	public boolean userCheckId(String loginId ,String newLoginId) throws SQLException{
 		Connection con = null;
 
 		try {
@@ -146,17 +136,12 @@ public class UserDao {
 			}
 			return false;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return false;
-			}
+			if (con != null) {
+				con.close();
+			} 
 		}
 	}
 
@@ -168,7 +153,7 @@ public class UserDao {
 	* @return boolean
 	* メールアドレスが使用済みだった場合はtrueを使用されていなければfalse
 	*/
-	public boolean userCheckAddress(String address ,String newAddress) {
+	public boolean userCheckAddress(String address ,String newAddress) throws SQLException{
 		Connection con = null;
 
 		try {
@@ -186,18 +171,13 @@ public class UserDao {
 				return true;
 			}
 			return false;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return false;
-			}
+			if (con != null) {
+				con.close();
+			} 
 		}
 	}
 
@@ -208,7 +188,7 @@ public class UserDao {
 	 * @param userId
 	 * @return
 	 */
-	public void userDelete(int userId) {
+	public void userDelete(int userId) throws SQLException{
 		Connection con = null;
 
 		try {
@@ -229,15 +209,12 @@ public class UserDao {
 
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			if (con != null) {
+				con.close();
+			} 
 		}
 	}
 
@@ -251,14 +228,14 @@ public class UserDao {
 	 * @param address
 	 * @return
 	 */
-	public boolean userUpdate(int userId, String loginId, String userName, String homeAddress, String address) {
+	public boolean userUpdate(int userId, String loginId, String userName, String homeAddress, String address) throws SQLException{
 		Connection con = null;
 
 		try {
 			con = DBManager.getConnection();
-		//UPDATE文の準備
+			//UPDATE文の準備
 			String sql = "UPDATE user SET login_id = ?,user_name=?,home_address=?,address=? WHERE user_id=?";
-		//結果の取得
+			//結果の取得
 			PreparedStatement pStmt = con.prepareStatement(sql);
 			pStmt.setString(1, loginId);
 			pStmt.setString(2, userName);
@@ -272,17 +249,12 @@ public class UserDao {
 			}
 			return false;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return false;
-			}
+			if (con != null) {
+				con.close();
+			} 
 		}
 	}
 
@@ -294,14 +266,14 @@ public class UserDao {
 	 * @param password
 	 * @return
 	 */
-	public boolean passwordUpdate(int userId, String password) {
+	public boolean passwordUpdate(int userId, String password) throws SQLException{
 		Connection con = null;
 
 		try {
 			con = DBManager.getConnection();
-		//UPDATE文の準備
+			//UPDATE文の準備
 			String sql = "UPDATE user SET password = ? WHERE user_id=?";
-		//結果の取得
+			//結果の取得
 			PreparedStatement pStmt = con.prepareStatement(sql);
 
 			pStmt.setString(1, password);
@@ -313,17 +285,12 @@ public class UserDao {
 			}
 			return false;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}  finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return false;
-			}
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
+		} finally {
+			if (con != null) {
+				con.close();
+			} 
 		}
 	}
 

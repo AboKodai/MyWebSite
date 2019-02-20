@@ -18,6 +18,9 @@
 	<h3 class="mgn-top text-center">カート</h3>
 	<c:if test="${sysMsg != null }">
 		<p class="text-center text-danger"> ${sysMsg }</p>
+		<c:forEach items="${itemNameList }" var="itemName">
+			<p class="text-center"> ${itemName}</p>
+		</c:forEach>
 	</c:if>
 	<form action="ItemDeleteFromCart" method="get" class="mx-auto">
 		<div class="row mx-auto"style=width:45%;>

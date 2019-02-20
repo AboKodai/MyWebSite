@@ -33,12 +33,13 @@ public class ItemDeleteFromCart extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-	//削除する商品IDを取得
+		//削除する商品IDを取得
 		String[] deleteItemList = request.getParameterValues("itemDelete");
-	//カートを取得
+		//カートを取得
 		ArrayList<ItemBeans> cart = (ArrayList<ItemBeans>)session.getAttribute("cart");
 		String sysMsg = "";
 		if(deleteItemList != null) {
+			
 		//対象商品の削除
 			for(String deleteItemId: deleteItemList) {
 				for(ItemBeans cartItem: cart) {

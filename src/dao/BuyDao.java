@@ -19,7 +19,7 @@ public class BuyDao {
 	 * @param buy
 	 * @return
 	 */
-	public int insertBuyInfo(BuyBeans buy) {
+	public int insertBuyInfo(BuyBeans buy) throws SQLException{
 		Connection con = null;
 		int buyId = -1;
 
@@ -41,16 +41,11 @@ public class BuyDao {
 
 			return buyId;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return -1;
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return -1;
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
@@ -60,7 +55,7 @@ public class BuyDao {
 	 * @param buyId
 	 * @return
 	 */
-	public BuyBeans getBuyBeansByBuyId(int buyId) {
+	public BuyBeans getBuyBeansByBuyId(int buyId) throws SQLException{
 		Connection con = null;
 
 		try {
@@ -85,16 +80,11 @@ public class BuyDao {
 
 			return buy;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
@@ -103,7 +93,7 @@ public class BuyDao {
 	 * @param userId
 	 * @return
 	 */
-	public BuyBeans getBuyBeansByUserId(int userId) {
+	public BuyBeans getBuyBeansByUserId(int userId) throws SQLException{
 		Connection con = null;
 
 		try {
@@ -130,16 +120,11 @@ public class BuyDao {
 
 			return buy;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
@@ -148,7 +133,7 @@ public class BuyDao {
 	 * @param userId
 	 * @return
 	 */
-	public ArrayList<BuyBeans> getBuyBeansListByUserId(int userId) {
+	public ArrayList<BuyBeans> getBuyBeansListByUserId(int userId) throws SQLException{
 		Connection con = null;
 		ArrayList<BuyBeans> buyList = new ArrayList<BuyBeans>();
 		boolean getList = false;
@@ -182,16 +167,11 @@ public class BuyDao {
 				return null;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
@@ -201,7 +181,7 @@ public class BuyDao {
 	 * @param userId
 	 * @return
 	 */
-	public ArrayList<SellListBeans> getSellList(int userId){
+	public ArrayList<SellListBeans> getSellList(int userId) throws SQLException{
 		Connection con = null;
 		ArrayList<SellListBeans> sellList = new ArrayList<SellListBeans>();
 		boolean isSell = false;
@@ -266,22 +246,16 @@ public class BuyDao {
 				return null;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
+			if (con != null) {
+				con.close();
 			}
 		}
-
 	}
 
-	public SellListBeans getSellBeans(int buyDetailId){
+	public SellListBeans getSellBeans(int buyDetailId) throws SQLException{
 		Connection con = null;
 		boolean isSell = false;
 
@@ -345,19 +319,12 @@ public class BuyDao {
 				return null;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
 		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
-
-
 }

@@ -142,21 +142,17 @@ public class ItemDao {
 	 *
 	 * @return
 	 */
-	public ArrayList<ItemBeans> findItem(String searchWord, ArrayList<Integer> itemTypeIdList, int pageNum, int pageMaxItemCount ) throws SQLException{
+	public ArrayList<ItemBeans> findItem(String searchWord, ArrayList<Integer> itemTypeIdList) throws SQLException{
 		Connection con = null;
-		PreparedStatement pStmt = null;
+		Statement stmt = null;
 		String sql = null;
 
 		try {
-			int startItemNum = (pageNum - 1) * pageMaxItemCount;
 			con = DBManager.getConnection();
 
 			if(searchWord.length() == 0 && itemTypeIdList == null) {
 				//全検索
-				sql = "SELECT * FROM item WHERE delete_flag = 1 ORDER BY RAND() ASC LIMIT ?,?;";
-				pStmt = con.prepareStatement(sql);
-				pStmt.setInt(1, startItemNum);
-				pStmt.setInt(2, pageMaxItemCount);
+				sql = "SELECT * FROM item WHERE delete_flag = 1 ORDER BY RAND()";
 			}
 			else if(searchWord.length() > 0 && itemTypeIdList == null) {
 				//商品名検索
@@ -165,10 +161,7 @@ public class ItemDao {
 						+ " FROM item"
 						+ " WHERE item_name LIKE '%" +searchWord+ "%'"
 						+ " AND delete_flag = 1"
-						+ " ORDER BY item_id ASC LIMIT ?,?";
-				pStmt = con.prepareStatement(sql);
-				pStmt.setInt(1, startItemNum);
-				pStmt.setInt(2, pageMaxItemCount);
+						+ " ORDER BY item_id ASC";
 			}
 			else if (searchWord.length() == 0 && itemTypeIdList.size() > 0 ) {
 				//種類検索
@@ -191,11 +184,8 @@ public class ItemDao {
 				sql +=
 						") AND delete_flag = 1"
 						+ " GROUP BY i.item_id"
-						+ " ORDER BY i.item_id ASC LIMIT ?,?";
+						+ " ORDER BY i.item_id ASC";
 
-				pStmt = con.prepareStatement(sql);
-				pStmt.setInt(1, startItemNum);
-				pStmt.setInt(2, pageMaxItemCount);
 			}
 			else {
 				//商品名検索＋種類検索
@@ -205,7 +195,7 @@ public class ItemDao {
 						+ " FROM item i"
 						+ " INNER JOIN item_type_table ittable ON i.item_id = ittable.item_id"
 						+ " INNER JOIN item_type it ON ittable.item_type_id = it.item_type_id"
-						+ " WHERE (";
+						+ " WHERE ";
 				for(int i = 0 ; i < itemTypeIdList.size(); i++) {
 					sql += " EXISTS (SELECT 1"
 							+ " FROM item_type_table"
@@ -219,14 +209,12 @@ public class ItemDao {
 				sql += ") AND item_name LIKE '%" +searchWord+"%'"
 						+ " AND delete_flag = 1"
 						+ " GROUP BY i.item_id"
-						+ " ORDER BY i.item_id ASC LIMIT ?,?";
+						+ " ORDER BY i.item_id ASC";
 
-				pStmt = con.prepareStatement(sql);
-				pStmt.setInt(1, startItemNum);
-				pStmt.setInt(2, pageMaxItemCount);
 			}
 
-			ResultSet rs = pStmt.executeQuery();
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
 			ArrayList<ItemBeans> ibList = new ArrayList<ItemBeans>();
 			while (rs.next()) {
 				ItemBeans ib = new ItemBeans();

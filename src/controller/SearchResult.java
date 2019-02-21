@@ -46,12 +46,6 @@ public class SearchResult extends HttpServlet {
 			itbList = itDao.findItemType();
 			request.setAttribute("typeList", itbList);
 
-			//１ページに表示する商品の数
-			final int PAGE_MAX_ITEM_COUNT = 100;
-
-			//表示ページ番号未指定の場合、1ページ目を表示
-			int pageNum = Integer.parseInt(request.getParameter("pageNum") == null ? "1" : request.getParameter("pageNum"));
-
 			//入力された値を取得
 			String searchWord = request.getParameter("searchWord");
 			String[] strItemTypeList =request.getParameterValues("type");
@@ -71,7 +65,7 @@ public class SearchResult extends HttpServlet {
 			session.setAttribute("itemTypeList", itemTypeList);
 
 			//検索結果をページ表示分のみ取得
-			ibList = itemDao.findItem(searchWord, itemTypeList, pageNum, PAGE_MAX_ITEM_COUNT);
+			ibList = itemDao.findItem(searchWord, itemTypeList);
 
 			//表示ページの配列をセット
 			request.setAttribute("itemList", ibList);
